@@ -8,15 +8,13 @@ import { createClient } from "@/lib/supabase/server";
 export async function login(formData: FormData, captchaToken: string) {
   const supabase = await createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
+  const { error, data: user } = await supabase.auth.signInWithPassword({
+    // type-casting here for convenience
+    // in practice, you should validate your inputs
     email: formData.get("email") as string,
     password: formData.get("password") as string,
     options: { captchaToken },
-  };
-
-  const { error, data: user } = await supabase.auth.signInWithPassword(data);
+  });
 
   console.log("login complete");
   console.log(user);
@@ -30,18 +28,20 @@ export async function login(formData: FormData, captchaToken: string) {
   redirect("/");
 }
 
-export async function signup(formData: FormData, captchaToken: string) {
+export async function signup(
+  formData: FormData,
+  captchaToken: string,
+  baseUrl: string
+) {
   const supabase = await createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
+  const { error, data: user } = await supabase.auth.signUp({
+    // type-casting here for convenience
+    // in practice, you should validate your inputs
     email: formData.get("email") as string,
     password: formData.get("password") as string,
-    options: { captchaToken },
-  };
-
-  const { error, data: user } = await supabase.auth.signUp(data);
+    options: { captchaToken, emailRedirectTo: baseUrl },
+  });
 
   console.log("signup complete");
   console.log(user);

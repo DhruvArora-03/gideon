@@ -1,7 +1,14 @@
-import { type NextRequest } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
+import { isUnauthorizedAdminRoute } from "@/lib/admin";
 
 export async function middleware(request: NextRequest) {
+  if (isUnauthorizedAdminRoute(request.nextUrl.pathname)) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/";
+    return NextResponse.redirect(url);
+  }
+
   return await updateSession(request);
 }
 
