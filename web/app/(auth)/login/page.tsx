@@ -1,6 +1,7 @@
 "use client";
 
 import { login, signup } from "@/app/(auth)/login/actions";
+import InviteWidget from "@/components/InviteWidget";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { useState } from "react";
 
@@ -39,11 +40,7 @@ export default function LoginPage() {
           onSuccess={(token) => setCaptchaToken(token)}
         />
       </form>
-
-      <form className="[&>div>input]:bg-inherit flex flex-col gap-4 p-10 w-full">
-        <label>Invite new user</label>
-        <input></input>
-      </form>
+      <InviteWidget />
     </>
   );
 }
