@@ -2,8 +2,8 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Gideon Employee Management System",
-    short_name: "GEMS",
+    name: "Gideon Admin",
+    // short_name: "GEMS",
     description: "A Progressive Web App built with Next.js",
     start_url: "/",
     display: "standalone",
