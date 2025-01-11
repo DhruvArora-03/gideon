@@ -3,6 +3,14 @@ import { z } from "zod";
 export const inviteFormSchema = z
   .object({
     email: z.string().email(),
+    first_name: z.string().min(2, "Too short"),
+    last_name: z.string().min(2, "Too short"),
+    phone_number: z
+      .string()
+      .regex(
+        /^\d{3}-\d{3}-\d{4}$/,
+        "Phone number must be in the format 123-456-7890"
+      ),
   })
   .required();
 export type InviteFormSchema = z.infer<typeof inviteFormSchema>;

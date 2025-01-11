@@ -37,11 +37,10 @@ export const dbProfiles = createTable(
       .references(() => usersTable.id, { onDelete: "cascade" }),
     created_at: getCreatedAtColumn(),
     updated_at: getUpdatedAtColumn(),
-    email: text("email").notNull(),
+    email: text("email").notNull().unique(),
     first_name: text("first_name").notNull(),
     last_name: text("last_name").notNull(),
     phone_number: text("phone_number").notNull(),
-    birthday: date("birthday").notNull(),
   },
   () => [
     pgPolicy("Users can view their own profile", {

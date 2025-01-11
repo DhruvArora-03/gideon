@@ -10,16 +10,14 @@ begin
     email,
     first_name,
     last_name,
-    phone_number,
-    birthday
+    phone_number
   )
   values (
     new.id,
-    new.email ->> 'email',
+    new.email,
     new.raw_user_meta_data ->> 'first_name',
     new.raw_user_meta_data ->> 'last_name',
-    new.raw_user_meta_data ->> 'phone_number',
-    new.raw_user_meta_data ->> 'birthday'
+    new.raw_user_meta_data ->> 'phone_number'
   );
   return new;
 end;
