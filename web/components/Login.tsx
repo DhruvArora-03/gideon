@@ -86,14 +86,9 @@ export default function Login() {
               siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
               onSuccess={(token) => setCaptchaToken(token)}
             />
-            <div className="w-full mt-2 flex flex-col sm:flex-row gap-2">
-              <Button className="w-full" type="button" variant="secondary">
-                Sign up
-              </Button>
-              <Button className="w-full" type="submit">
-                Log in
-              </Button>
-            </div>
+            <Button className="w-full mt-2 " type="submit">
+              Log in
+            </Button>
           </form>
         </Form>
       </CardContent>

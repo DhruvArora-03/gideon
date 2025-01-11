@@ -121,7 +121,7 @@ password_requirements = ""
 
 [auth.email]
 # Allow/disallow new user signups via email to your project.
-enable_signup = true
+enable_signup = false
 # If enabled, a user will be required to confirm any email change on both the old, and new email
 # addresses. If disabled, only the new email is required to confirm.
 double_confirm_changes = true
@@ -146,13 +146,9 @@ pass = "env(SMTP_PASSWORD)"
 admin_email = "noreply@melissatutoring.com"
 sender_name = "Gideon Admin"
 
-[auth.email.template.confirmation]
-subject = "Gideon Admin Account Confirmation"
-content_path = "./supabase/templates/confirmation.html"
-
-# [auth.email.template.invite]
-# subject = "You have been invited"
-# content_path = "./supabase/templates/invite.html"
+[auth.email.template.invite]
+subject = "Gideon Admin Account Created"
+content_path = "./supabase/templates/invite.html"
 
 [auth.sms]
 # Allow/disallow new user signups via SMS to your project.

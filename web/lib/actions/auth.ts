@@ -27,33 +27,6 @@ export async function login(values: LoginFormSchema, captchaToken: string) {
   redirect("/");
 }
 
-// export async function signup(
-//   formData: FormData,
-//   captchaToken: string,
-//   baseUrl: string
-// ) {
-//   const supabase = await createClient();
-
-//   const { error, data: user } = await supabase.auth.signUp({
-//     // type-casting here for convenience
-//     // in practice, you should validate your inputs
-//     email: formData.get("email") as string,
-//     password: formData.get("password") as string,
-//     options: { captchaToken, emailRedirectTo: baseUrl },
-//   });
-
-//   console.log("signup complete");
-//   console.log(user);
-//   console.log(error);
-
-//   if (error) {
-//     redirect("/error");
-//   }
-
-//   revalidatePath("/", "layout");
-//   redirect("/");
-// }
-
 export async function invite(baseUrl: string, values: InviteFormSchema) {
   const { email, ...userData } = values;
 
@@ -72,4 +45,18 @@ export async function invite(baseUrl: string, values: InviteFormSchema) {
     console.error(error);
     throw new Error("Error inviting user");
   }
+}
+
+export async function deleteUser(id: string) {
+  const supabase = await createAdminClient();
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.admin.deleteUser(id);
+
+  if (!user || error) {
+    console.error(error);
+  }
+
+  console.log(user);
 }
