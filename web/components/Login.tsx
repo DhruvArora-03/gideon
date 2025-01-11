@@ -62,7 +62,7 @@ export default function Login() {
               control={form.control}
               name="email"
               render={({ field }) => (
-                <FormItem className="w-full">
+                <FormItem>
                   <FormControl>
                     <Input type="email" placeholder="Email" {...field} />
                   </FormControl>
@@ -74,7 +74,7 @@ export default function Login() {
               control={form.control}
               name="password"
               render={({ field }) => (
-                <FormItem className="w-full">
+                <FormItem>
                   <FormControl>
                     <Input type="password" placeholder="Password" {...field} />
                   </FormControl>
