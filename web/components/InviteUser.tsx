@@ -36,10 +36,10 @@ export default function InviteWidget() {
     },
   });
 
-  const onSubmit = useCallback(
-    (values: InviteFormSchema) => invite(window.location.origin, values),
-    []
-  );
+  const onSubmit = useCallback(async (values: InviteFormSchema) => {
+    form.reset();
+    await invite(window.location.origin, values);
+  }, []);
 
   return (
     <Card className="max-w-sm">
