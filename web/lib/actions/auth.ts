@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 
 import { createClient } from "@/lib/supabase/server";
 import { LoginFormSchema } from "@/lib/validation";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 export async function login(values: LoginFormSchema, captchaToken: string) {
   const supabase = await createClient();
@@ -24,20 +25,6 @@ export async function login(values: LoginFormSchema, captchaToken: string) {
 
   revalidatePath("/", "layout");
   redirect("/");
-}
-
-export async function invite(email: string) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.admin.inviteUserByEmail(email);
-
-  if (!user || error) {
-    console.error(error);
-  }
-
-  console.log(user);
 }
 
 // export async function signup(
@@ -66,3 +53,17 @@ export async function invite(email: string) {
 //   revalidatePath("/", "layout");
 //   redirect("/");
 // }
+
+export async function invite(email: string) {
+  const supabase = await createAdminClient();
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.admin.inviteUserByEmail(email);
+
+  if (!user || error) {
+    console.error(error);
+  }
+
+  console.log(user);
+}
