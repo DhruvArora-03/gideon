@@ -27,6 +27,10 @@ import { z } from "zod";
 
 export default function Login() {
   const [captchaToken, setCaptchaToken] = useState<string>();
+  if (!process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY) {
+    throw new Error("NEXT_PUBLIC_TURNSTILE_SITE_KEY is not set");
+  }
+
   const form = useForm<z.infer<typeof loginFormSchema>>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -80,7 +84,7 @@ export default function Login() {
               )}
             />
             <Turnstile
-              siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+              siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
               onSuccess={(token) => setCaptchaToken(token)}
             />
             <div className="w-full mt-2 flex flex-col sm:flex-row gap-2">

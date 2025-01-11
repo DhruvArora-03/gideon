@@ -12,9 +12,6 @@ export async function middleware(request: NextRequest) {
   return await updateSession(request);
 }
 
-console.log("env");
-console.log(process.env);
-
 export const config = {
   matcher: [
     /*
