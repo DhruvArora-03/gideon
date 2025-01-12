@@ -42,7 +42,7 @@ export default function InviteWidget() {
   }, []);
 
   return (
-    <Card className="max-w-sm">
+    <Card className="max-w-md">
       <CardHeader>
         <CardTitle>Invite User</CardTitle>
         <CardDescription>
@@ -60,8 +60,8 @@ export default function InviteWidget() {
               name="first_name"
               render={({ field }) => (
                 <FormItem>
-                  <div className="grid grid-cols-[1fr,2fr] items-baseline space-y-2">
-                    <FormLabel>First Name</FormLabel>
+                  <div className="sm:grid sm:grid-cols-form sm:items-baseline space-y-2">
+                    <FormLabel className="text-bold">First Name</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="John"
@@ -70,7 +70,7 @@ export default function InviteWidget() {
                       />
                     </FormControl>
                   </div>
-                  <FormDescription className="hidden">
+                  <FormDescription className="sr-only">
                     The new user's first name
                   </FormDescription>
                   <FormMessage />
@@ -82,13 +82,13 @@ export default function InviteWidget() {
               name="last_name"
               render={({ field }) => (
                 <FormItem>
-                  <div className="grid grid-cols-[1fr,2fr] items-baseline space-y-2">
-                    <FormLabel>Last Name</FormLabel>
+                  <div className="sm:grid sm:grid-cols-form sm:items-baseline space-y-2">
+                    <FormLabel className="text-bold">Last Name</FormLabel>
                     <FormControl>
                       <Input placeholder="Doe" autoComplete="none" {...field} />
                     </FormControl>
                   </div>
-                  <FormDescription className="hidden">
+                  <FormDescription className="sr-only">
                     The new user's last name
                   </FormDescription>
                   <FormMessage />
@@ -100,8 +100,8 @@ export default function InviteWidget() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <div className="grid grid-cols-[1fr,2fr] items-baseline space-y-2">
-                    <FormLabel>Email</FormLabel>
+                  <div className="sm:grid sm:grid-cols-form sm:items-baseline space-y-2">
+                    <FormLabel className="text-bold">Email</FormLabel>
                     <FormControl>
                       <Input
                         type="email"
@@ -111,7 +111,7 @@ export default function InviteWidget() {
                       />
                     </FormControl>
                   </div>
-                  <FormDescription className="hidden">
+                  <FormDescription className="sr-only">
                     The new user's email address
                   </FormDescription>
                   <FormMessage />
@@ -123,8 +123,8 @@ export default function InviteWidget() {
               name="phone_number"
               render={({ field }) => (
                 <FormItem>
-                  <div className="grid grid-cols-[1fr,2fr] items-baseline space-y-2">
-                    <FormLabel>Phone Number</FormLabel>
+                  <div className="sm:grid sm:grid-cols-form sm:items-baseline space-y-2">
+                    <FormLabel className="text-bold">Phone Number</FormLabel>
                     <FormControl>
                       <Input
                         type="phone_number"
@@ -134,7 +134,7 @@ export default function InviteWidget() {
                       />
                     </FormControl>
                   </div>
-                  <FormDescription className="hidden">
+                  <FormDescription className="sr-only">
                     The new user's phone number
                   </FormDescription>
                   <FormMessage />
