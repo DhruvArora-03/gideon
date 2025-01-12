@@ -74,7 +74,7 @@ export default function InviteUser() {
                     </FormControl>
                   </div>
                   <FormDescription className="sr-only">
-                    The new user's first name
+                    The new user&apos;s first name
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -92,7 +92,7 @@ export default function InviteUser() {
                     </FormControl>
                   </div>
                   <FormDescription className="sr-only">
-                    The new user's last name
+                    The new user&apos;s last name
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -115,7 +115,7 @@ export default function InviteUser() {
                     </FormControl>
                   </div>
                   <FormDescription className="sr-only">
-                    The new user's email address
+                    The new user&apos;s email address
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -138,7 +138,7 @@ export default function InviteUser() {
                     </FormControl>
                   </div>
                   <FormDescription className="sr-only">
-                    The new user's phone number
+                    The new user&apos;s phone number
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
