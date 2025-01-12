@@ -15,7 +15,7 @@ export default function PageWrapper(props: PageProps) {
       {props.previousHref && (
         <Button className="absolute left-0 top-0" variant={"link"} asChild>
           <Link href={props.previousHref}>
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft />
             {props.previousPageTitle
               ? `Back to ${props.previousPageTitle}`
               : "Back"}

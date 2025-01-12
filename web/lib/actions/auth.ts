@@ -23,13 +23,15 @@ export async function login(values: LoginFormSchema, captchaToken: string) {
     redirect("/error");
   }
 
-  revalidatePath("/", "layout");
-  redirect("/");
+  revalidatePath("/dashboard", "layout");
+  redirect("/dashboard");
 }
 
 export async function logout() {
   const supabase = await createClient();
   await supabase.auth.signOut();
+
+  // redirect handled in dashboard layout - checks if user is logged in
 }
 
 export async function invite(baseUrl: string, values: InviteFormSchema) {
@@ -42,7 +44,7 @@ export async function invite(baseUrl: string, values: InviteFormSchema) {
     data: { user },
     error,
   } = await supabase.auth.admin.inviteUserByEmail(email, {
-    redirectTo: baseUrl,
+    redirectTo: `${baseUrl}/dashboard/settings/change-password`,
     data: userData,
   });
 

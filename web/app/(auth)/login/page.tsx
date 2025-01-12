@@ -49,12 +49,12 @@ export default function LoginPage() {
   );
 
   return (
-    <PageWrapper>
+    <PageWrapper className="flex items-center justify-center">
       <Card>
         <CardHeader>
           <CardTitle>Log in</CardTitle>
           <CardDescription>
-            Welcome back! Use your credentials to access your dashboard
+            Welcome back! Use your credentials to log in
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -98,7 +98,6 @@ export default function LoginPage() {
           </Form>
         </CardContent>
       </Card>
-      <InviteUser />
     </PageWrapper>
   );
 }

@@ -20,7 +20,7 @@ export default async function DashboardPage() {
   return (
     <PageWrapper>
       <Button variant={"link"} asChild>
-        <Link href={"/dashboard/profile"}>Profile</Link>
+        <Link href={"/dashboard/settings"}>Settings</Link>
       </Button>
       <p>you:</p>
       {Object.entries(profile).map(([key, value]) => (

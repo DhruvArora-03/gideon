@@ -5,8 +5,8 @@ export default function ChangePasswordPage() {
   return (
     <PageWrapper
       className="flex items-center justify-center"
-      previousHref="/dashboard/profile"
-      previousPageTitle="Profile"
+      previousHref="/dashboard/settings"
+      previousPageTitle="Settings"
     >
       <ResetPassword />
     </PageWrapper>

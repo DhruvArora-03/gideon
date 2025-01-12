@@ -24,6 +24,7 @@ import {
   ResetPasswordFormSchema,
 } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LockKeyhole } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 export default function ResetPassword() {
@@ -95,7 +96,7 @@ export default function ResetPassword() {
               )}
             />
             <Button className="w-full mt-4 " type="submit">
-              Confirm New Password
+              <LockKeyhole /> Confirm Password Change
             </Button>
           </form>
         </Form>

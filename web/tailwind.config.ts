@@ -57,7 +57,7 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       gridTemplateColumns: {
-        form: "100px 1fr",
+        form: "120px 1fr",
       },
     },
   },
