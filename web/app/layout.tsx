@@ -28,7 +28,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-title" content="GEMS" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased p-4`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased p-4 min-h-screen h-full`}
       >
         {children}
       </body>
