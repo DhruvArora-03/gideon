@@ -25,7 +25,7 @@ import { Send } from "lucide-react";
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 
-export default function InviteWidget() {
+export default function InviteUser() {
   const form = useForm<InviteFormSchema>({
     resolver: zodResolver(inviteFormSchema),
     defaultValues: {
@@ -36,10 +36,13 @@ export default function InviteWidget() {
     },
   });
 
-  const onSubmit = useCallback(async (values: InviteFormSchema) => {
-    form.reset();
-    await invite(window.location.origin, values);
-  }, []);
+  const onSubmit = useCallback(
+    async (values: InviteFormSchema) => {
+      form.reset();
+      await invite(window.location.origin, values);
+    },
+    [form]
+  );
 
   return (
     <Card className="max-w-md">
