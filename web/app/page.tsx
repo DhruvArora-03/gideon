@@ -1,4 +1,8 @@
+import PageWrapper from "@/components/PageWrapper";
+import { Button } from "@/components/ui/button";
+import { getProfileById } from "@/lib/actions/queries";
 import { createClient } from "@/lib/supabase/server";
+import Link from "next/link";
 
 export default async function Home() {
   const supabase = await createClient();
@@ -7,19 +11,23 @@ export default async function Home() {
     error,
   } = await supabase.auth.getUser();
   if (!user || error) {
-    return <p>you are not logged in</p>;
+    throw new Error("User not found");
   }
 
+  const profile = await getProfileById(user.id);
+  console.log(profile);
+
   return (
-    <div>
+    <PageWrapper>
+      <Button variant={"link"} asChild>
+        <Link href={"/profile"}>Profile</Link>
+      </Button>
       <p>you:</p>
-      <div>
-        {Object.keys(user).map((key) => (
-          <p key={key}>
-            {key}: {(user as any)[key]}
-          </p>
-        ))}
-      </div>
-    </div>
+      {Object.entries(profile).map(([key, value]) => (
+        <p key={key}>
+          {key}: {value.toString()}
+        </p>
+      ))}
+    </PageWrapper>
   );
 }
