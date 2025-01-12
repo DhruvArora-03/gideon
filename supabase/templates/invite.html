@@ -2,4 +2,4 @@
 
 <p>Welcome {{ .Data.first_name }},</p>
 <p>Follow this link to set a password for your new account:</p>
-<a href="{{ .ConfirmationURL }}">Set your password</a>
+<a href="{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=email">Set your password</a>
