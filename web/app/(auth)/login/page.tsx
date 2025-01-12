@@ -1,6 +1,5 @@
 "use client";
 
-import InviteUser from "@/components/InviteUser";
 import PageWrapper from "@/components/PageWrapper";
 import PasswordInput from "@/components/PasswordInput";
 import { Button } from "@/components/ui/button";
