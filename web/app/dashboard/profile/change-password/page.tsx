@@ -3,7 +3,11 @@ import ResetPassword from "@/components/ResetPassword";
 
 export default function ChangePasswordPage() {
   return (
-    <PageWrapper className="flex items-center justify-center">
+    <PageWrapper
+      className="flex items-center justify-center"
+      previousHref="/dashboard/profile"
+      previousPageTitle="Profile"
+    >
       <ResetPassword />
     </PageWrapper>
   );

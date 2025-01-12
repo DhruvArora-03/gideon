@@ -32,6 +32,8 @@ export default function LoginPage() {
     throw new Error("NEXT_PUBLIC_TURNSTILE_SITE_KEY is not set");
   }
 
+  console.log(captchaToken);
+
   const form = useForm<LoginFormSchema>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
@@ -43,7 +45,7 @@ export default function LoginPage() {
   const onSubmit = useCallback(
     (values: LoginFormSchema) =>
       captchaToken ? login(values, captchaToken) : alert("Invalid Captcha"),
-    []
+    [captchaToken]
   );
 
   return (

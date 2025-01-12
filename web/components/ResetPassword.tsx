@@ -18,6 +18,7 @@ import {
   FormLabel,
   FormDescription,
 } from "@/components/ui/form";
+import { resetPassword } from "@/lib/actions/auth";
 import {
   resetPasswordFormSchema,
   ResetPasswordFormSchema,
@@ -35,7 +36,8 @@ export default function ResetPassword() {
   });
 
   const onSubmit = async (values: ResetPasswordFormSchema) => {
-    console.log(values);
+    form.reset();
+    await resetPassword(values.new_password);
   };
 
   return (

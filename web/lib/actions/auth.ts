@@ -27,6 +27,11 @@ export async function login(values: LoginFormSchema, captchaToken: string) {
   redirect("/");
 }
 
+export async function logout() {
+  const supabase = await createClient();
+  await supabase.auth.signOut();
+}
+
 export async function invite(baseUrl: string, values: InviteFormSchema) {
   const { email, ...userData } = values;
 
@@ -44,6 +49,19 @@ export async function invite(baseUrl: string, values: InviteFormSchema) {
   if (!user || error) {
     console.error(error);
     throw new Error("Error inviting user");
+  }
+}
+
+export async function resetPassword(password: string) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.updateUser({ password });
+
+  if (!user || error) {
+    console.error(error);
+    throw new Error("Error resetting password");
   }
 }
 
