@@ -1,8 +1,11 @@
 import { sql } from "drizzle-orm";
 import {
+  date,
+  integer,
   pgPolicy,
   pgSchema,
   pgTableCreator,
+  serial,
   text,
   timestamp,
   uuid,
@@ -45,6 +48,27 @@ export const dbProfiles = createTable(
       for: "select",
       to: ["public"],
       using: sql`(select auth.uid()) = id`,
+    }),
+  ]
+).enableRLS();
+
+export const dbSlots = createTable(
+  "slots",
+  {
+    id: serial().primaryKey(),
+    created_at: getCreatedAtColumn(),
+    updated_at: getUpdatedAtColumn(),
+    date: date().notNull(),
+    start_time: timestamp().notNull(),
+    end_time: timestamp().notNull(),
+    capacity: integer().notNull(),
+  },
+  () => [
+    pgPolicy("Anyone can view slots", {
+      as: "permissive",
+      for: "select",
+      to: ["public"],
+      using: sql`true`,
     }),
   ]
 ).enableRLS();
