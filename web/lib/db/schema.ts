@@ -101,4 +101,11 @@ export const dbAssignments = createTable(
     }),
   ]
 ).enableRLS();
+
 export type Profile = typeof dbProfiles.$inferSelect;
+
+export type NewSlot = typeof dbSlots.$inferSelect;
+export type Slot = typeof dbSlots.$inferSelect;
+
+export type NewAssignment = typeof dbAssignments.$inferSelect;
+export type Assignment = typeof dbAssignments.$inferSelect;
