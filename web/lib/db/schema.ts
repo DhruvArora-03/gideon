@@ -12,11 +12,9 @@ import {
 const createTable = pgTableCreator((name) => `${name}`);
 
 const getCreatedAtColumn = () =>
-  timestamp("created_at", { withTimezone: true, mode: "date" })
-    .notNull()
-    .defaultNow();
+  timestamp({ withTimezone: true, mode: "date" }).notNull().defaultNow();
 const getUpdatedAtColumn = () =>
-  timestamp("updated_at", { withTimezone: true, mode: "date" })
+  timestamp({ withTimezone: true, mode: "date" })
     .notNull()
     .defaultNow()
     .$onUpdateFn(() => new Date());
@@ -24,22 +22,22 @@ const getUpdatedAtColumn = () =>
 const authSchema = pgSchema("auth");
 
 const usersTable = authSchema.table("users", {
-  id: uuid("id").primaryKey(),
+  id: uuid().primaryKey(),
 });
 
 export const dbProfiles = createTable(
   "profiles",
   {
     // Matches id from auth.users table in Supabase
-    id: uuid("id")
+    id: uuid()
       .primaryKey()
       .references(() => usersTable.id, { onDelete: "cascade" }),
     created_at: getCreatedAtColumn(),
     updated_at: getUpdatedAtColumn(),
-    email: text("email").notNull().unique(),
-    first_name: text("first_name").notNull(),
-    last_name: text("last_name").notNull(),
-    phone_number: text("phone_number").notNull(),
+    email: text().notNull().unique(),
+    first_name: text().notNull(),
+    last_name: text().notNull(),
+    phone_number: text().notNull(),
   },
   () => [
     pgPolicy("Users can view their own profile", {
