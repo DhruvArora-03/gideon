@@ -2,6 +2,7 @@ import { sql } from "drizzle-orm";
 import {
   date,
   integer,
+  pgEnum,
   pgPolicy,
   pgSchema,
   pgTableCreator,
@@ -72,5 +73,11 @@ export const dbSlots = createTable(
     }),
   ]
 ).enableRLS();
+
+export const dbAssignmentStatus = pgEnum("assignment_status", [
+  "confirmed",
+  "waitlisted",
+  "cancelled",
+]);
 
 export type Profile = typeof dbProfiles.$inferSelect;
