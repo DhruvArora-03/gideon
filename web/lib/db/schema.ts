@@ -80,4 +80,25 @@ export const dbAssignmentStatus = pgEnum("assignment_status", [
   "cancelled",
 ]);
 
+export const dbAssignments = createTable(
+  "assignments",
+  {
+    id: serial().primaryKey(),
+    created_at: getCreatedAtColumn(),
+    updated_at: getUpdatedAtColumn(),
+    user_id: uuid().notNull(),
+    slot_id: integer().references(() => dbSlots.id, {
+      onDelete: "cascade",
+    }),
+    assignment_status: dbAssignmentStatus().notNull(),
+  },
+  () => [
+    pgPolicy("Users can view their own assignments", {
+      as: "permissive",
+      for: "select",
+      to: ["public"],
+      using: sql`(select auth.uid()) = user_id`,
+    }),
+  ]
+).enableRLS();
 export type Profile = typeof dbProfiles.$inferSelect;
