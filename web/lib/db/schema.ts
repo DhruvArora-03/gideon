@@ -86,10 +86,16 @@ export const dbAssignments = createTable(
     id: serial().primaryKey(),
     created_at: getCreatedAtColumn(),
     updated_at: getUpdatedAtColumn(),
-    user_id: uuid().notNull(),
-    slot_id: integer().references(() => dbSlots.id, {
-      onDelete: "cascade",
-    }),
+    user_id: uuid()
+      .notNull()
+      .references(() => dbProfiles.id, {
+        onDelete: "cascade",
+      }),
+    slot_id: integer()
+      .notNull()
+      .references(() => dbSlots.id, {
+        onDelete: "cascade",
+      }),
     assignment_status: dbAssignmentStatus().notNull(),
   },
   () => [
