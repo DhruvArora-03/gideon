@@ -29,7 +29,7 @@ const usersTable = authSchema.table('users', {
 	id: uuid().primaryKey()
 });
 
-export const dbProfiles = createTable(
+export const profiles = createTable(
 	'profiles',
 	{
 		// Matches id from auth.users table in Supabase
@@ -53,7 +53,7 @@ export const dbProfiles = createTable(
 	]
 ).enableRLS();
 
-export const dbSlots = createTable(
+export const slots = createTable(
 	'slots',
 	{
 		id: serial().primaryKey(),
@@ -80,7 +80,7 @@ export const dbAssignmentStatus = pgEnum('assignment_status', [
 	'cancelled'
 ]);
 
-export const dbAssignments = createTable(
+export const assignments = createTable(
 	'assignments',
 	{
 		id: serial().primaryKey(),
@@ -88,12 +88,12 @@ export const dbAssignments = createTable(
 		updated_at: getUpdatedAtColumn(),
 		user_id: uuid()
 			.notNull()
-			.references(() => dbProfiles.id, {
+			.references(() => profiles.id, {
 				onDelete: 'cascade'
 			}),
 		slot_id: integer()
 			.notNull()
-			.references(() => dbSlots.id, {
+			.references(() => slots.id, {
 				onDelete: 'cascade'
 			}),
 		assignment_status: dbAssignmentStatus().notNull()
@@ -108,10 +108,10 @@ export const dbAssignments = createTable(
 	]
 ).enableRLS();
 
-export type Profile = typeof dbProfiles.$inferSelect;
+export type Profile = typeof profiles.$inferSelect;
 
-export type NewSlot = typeof dbSlots.$inferSelect;
-export type Slot = typeof dbSlots.$inferSelect;
+export type NewSlot = typeof slots.$inferSelect;
+export type Slot = typeof slots.$inferSelect;
 
-export type NewAssignment = typeof dbAssignments.$inferSelect;
-export type Assignment = typeof dbAssignments.$inferSelect;
+export type NewAssignment = typeof assignments.$inferSelect;
+export type Assignment = typeof assignments.$inferSelect;
