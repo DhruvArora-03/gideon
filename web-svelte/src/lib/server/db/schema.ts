@@ -59,7 +59,7 @@ export const slots = createTable(
     capacity: integer().notNull(),
   },
   () => [
-    pgPolicy('Anyone can view slots', {
+    pgPolicy('Authenticated users can view slots', {
       as: 'permissive',
       for: 'select',
       to: authenticatedRole,
