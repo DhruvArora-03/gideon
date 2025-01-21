@@ -1,3 +1,9 @@
-<h1>Welcome to your library project</h1>
-<p>Create your package using @sveltejs/package and preview/showcase your work with SvelteKit</p>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script lang="ts">
+  const { data } = $props();
+  const { slots } = $derived(data);
+</script>
+
+<h1>Hello World</h1>
+{#each slots as slot (slot.id)}
+  <div>{slot.date}</div>
+{/each}

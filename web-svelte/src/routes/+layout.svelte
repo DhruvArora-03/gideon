@@ -1,6 +1,26 @@
 <script lang="ts">
-	import '../app.css';
-	let { children } = $props();
+  import '../app.css';
+  import { ModeWatcher } from 'mode-watcher';
+
+  import { invalidate } from '$app/navigation';
+  import { onMount } from 'svelte';
+
+  let { data, children } = $props();
+  let { session, supabase } = $derived(data);
+
+  onMount(() => {
+    const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
+      if (newSession?.expires_at !== session?.expires_at) {
+        console.log('session changed - invalidating');
+        invalidate('supabase:auth');
+      }
+    });
+
+    return () => data.subscription.unsubscribe();
+  });
 </script>
 
-{@render children()}
+<div class="h-full min-h-screen p-4">
+  <ModeWatcher />
+  {@render children()}
+</div>
