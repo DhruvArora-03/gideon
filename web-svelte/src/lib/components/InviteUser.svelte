@@ -17,7 +17,7 @@
   type Props = {
     data: SuperValidated<Infer<typeof inviteFormSchema>>;
   };
-  const { data }: Props = $props();
+  let { data }: Props = $props();
 
   const form = superForm(data, {
     validators: zodClient(inviteFormSchema),
@@ -34,7 +34,7 @@
     </CardDescription>
   </CardHeader>
   <CardContent>
-    <form method="POST" action="/auth?/invite" use:enhance>
+    <form method="POST" action="?/invite" use:enhance>
       <Field {form} name="first_name">
         <Control let:attrs>
           <Label>
@@ -97,6 +97,11 @@
         <Description class="sr-only">The new user's phone number</Description>
         <FieldErrors />
       </Field>
+      {#if $message}
+        <p class="mt-4">
+          {$message}
+        </p>
+      {/if}
       <Button class="mt-4 w-full" type="submit" disabled={$submitting}>
         {#if $submitting}
           <LoaderCircle class="animate-spin" /> Sending Invite...
@@ -104,9 +109,6 @@
           <Send /> Send Invite
         {/if}
       </Button>
-      <p class="mt-4">
-        Message: {$message}
-      </p>
     </form>
   </CardContent>
 </Card>
