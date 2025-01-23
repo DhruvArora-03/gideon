@@ -1,6 +1,6 @@
 <script lang="ts">
-  const { data } = $props();
-  const { slots } = $derived(data);
+  let { data } = $props();
+  const { slots } = data;
 </script>
 
 <h1>Hello World</h1>
