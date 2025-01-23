@@ -76,3 +76,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer base {
+  /* style icons inside of buttons */
+  button > svg {
+    @apply mr-2 h-4 w-4;
+  }
+}

@@ -99,9 +99,9 @@
       </Field>
       <Button class="mt-4 w-full" type="submit" disabled={$submitting}>
         {#if $submitting}
-          <LoaderCircle class="mr-2 h-4 w-4 animate-spin" /> Sending Invite...
+          <LoaderCircle class="animate-spin" /> Sending Invite...
         {:else}
-          <Send class="mr-2 h-4 w-4" /> Send Invite
+          <Send /> Send Invite
         {/if}
       </Button>
       <p class="mt-4">
