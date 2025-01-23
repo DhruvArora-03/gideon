@@ -15,7 +15,8 @@ export type InviteFormSchema = z.infer<typeof inviteFormSchema>;
 export const loginFormSchema = z
   .object({
     email: z.string().email(),
-    password: z.string(),
+    password: z.string().nonempty('Please enter your password'),
+    'cf-turnstile-response': z.string().nonempty('Please complete turnstile'),
   })
   .required();
 export type LoginFormSchema = z.infer<typeof loginFormSchema>;
