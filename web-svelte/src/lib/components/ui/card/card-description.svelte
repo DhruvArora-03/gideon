@@ -1,13 +1,13 @@
 <script lang="ts">
-	import type { HTMLAttributes } from "svelte/elements";
-	import { cn } from "$lib/utils.js";
+  import type { HTMLAttributes } from 'svelte/elements';
+  import { cn } from '$lib/utils';
 
-	type $$Props = HTMLAttributes<HTMLParagraphElement>;
-
-	let className: $$Props["class"] = undefined;
-	export { className as class };
+  type Props = HTMLAttributes<HTMLParagraphElement>;
+  let { children, class: className, ...props }: Props = $props();
 </script>
 
-<p class={cn("text-muted-foreground text-sm", className)} {...$$restProps}>
-	<slot />
+<p class={cn('text-muted-foreground text-sm', className)} {...props}>
+  {#if children}
+    {@render children()}
+  {/if}
 </p>
