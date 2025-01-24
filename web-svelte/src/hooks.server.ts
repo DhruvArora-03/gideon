@@ -76,8 +76,15 @@ const authGuard: Handle = async ({ event, resolve }) => {
     redirect(303, '/home');
   }
 
+  return resolve(event);
+};
+
+const drizzle: Handle = async ({ event, resolve }) => {
+  const { session } = await event.locals.safeGetSession();
+
+  event.locals.db = await createDrizzleSupabaseClient(session);
 
   return resolve(event);
 };
 
-export const handle: Handle = sequence(supabase, authGuard);
+export const handle: Handle = sequence(supabase, authGuard, drizzle);
