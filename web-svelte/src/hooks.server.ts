@@ -3,6 +3,7 @@ import { type Handle, redirect } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public';
+import { createDrizzleSupabaseClient } from '$lib/server/db';
 
 const supabase: Handle = async ({ event, resolve }) => {
   /**
@@ -75,9 +76,6 @@ const authGuard: Handle = async ({ event, resolve }) => {
     redirect(303, '/home');
   }
 
-  if (event.url.pathname === '/') {
-    redirect(303, event.locals.session ? '/home' : '/login');
-  }
 
   return resolve(event);
 };
