@@ -1,3 +1,4 @@
+import { relations } from 'drizzle-orm';
 import { eq, sql } from 'drizzle-orm';
 import {
   date,
@@ -54,8 +55,8 @@ export const slots = createTable(
     created_at: getCreatedAtColumn(),
     updated_at: getUpdatedAtColumn(),
     date: date().notNull(),
-    start_time: timestamp().notNull(),
-    end_time: timestamp().notNull(),
+    start_time: timestamp({ withTimezone: true, mode: 'date' }).notNull(),
+    end_time: timestamp({ withTimezone: true, mode: 'date' }).notNull(),
     capacity: integer().notNull(),
   },
   () => [
@@ -68,11 +69,28 @@ export const slots = createTable(
   ],
 ).enableRLS();
 
-export const dbAssignmentStatus = pgEnum('assignment_status', [
+export type NewSlot = typeof slots.$inferSelect;
+export type Slot = typeof slots.$inferSelect;
+
+export const slotsRelations = relations(slots, ({ many }) => {
+  return {
+    assignments: many(assignments, {
+      relationName: 'slot_assignments',
+    }),
+  };
+});
+
+export type SlotWithAssignments = Slot & {
+  assignments: Assignment[];
+};
+
+export const assignmentStatus = pgEnum('assignment_status', [
   'confirmed',
   'waitlisted',
   'cancelled',
 ]);
+
+export type AssignmentStatus = (typeof assignmentStatus.enumValues)[number];
 
 export const assignments = createTable(
   'assignments',
@@ -90,7 +108,7 @@ export const assignments = createTable(
       .references(() => slots.id, {
         onDelete: 'cascade',
       }),
-    assignment_status: dbAssignmentStatus().notNull(),
+    assignment_status: assignmentStatus().notNull(),
   },
   (table) => [
     pgPolicy('Users can view their own assignments', {
@@ -102,10 +120,15 @@ export const assignments = createTable(
   ],
 ).enableRLS();
 
-export type Profile = typeof profiles.$inferSelect;
-
-export type NewSlot = typeof slots.$inferSelect;
-export type Slot = typeof slots.$inferSelect;
-
 export type NewAssignment = typeof assignments.$inferSelect;
 export type Assignment = typeof assignments.$inferSelect;
+
+export const assignmentsRelations = relations(assignments, ({ one }) => {
+  return {
+    slot: one(slots, {
+      fields: [assignments.slot_id],
+      references: [slots.id],
+      relationName: 'slot_assignments',
+    }),
+  };
+});
