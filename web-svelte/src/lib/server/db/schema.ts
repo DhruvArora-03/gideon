@@ -95,5 +95,10 @@ export const assignmentsRelations = relations(assignments, ({ one }) => {
       references: [slots.id],
       relationName: 'slot_assignments',
     }),
+    user: one(profiles, {
+      fields: [assignments.user_id],
+      references: [profiles.id],
+      relationName: 'assignment_user',
+    }),
   };
 });
