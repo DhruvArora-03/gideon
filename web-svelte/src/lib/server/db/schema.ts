@@ -1,6 +1,5 @@
 import { relations } from 'drizzle-orm';
 import {
-  date,
   integer,
   pgEnum,
   pgTableCreator,
@@ -39,7 +38,6 @@ export const slots = createTable('slots', {
   id: serial().primaryKey(),
   created_at: getCreatedAtColumn(),
   updated_at: getUpdatedAtColumn(),
-  date: date().notNull(),
   start_time: timestamp({ withTimezone: true, mode: 'date' }).notNull(),
   end_time: timestamp({ withTimezone: true, mode: 'date' }).notNull(),
   capacity: integer().notNull(),
