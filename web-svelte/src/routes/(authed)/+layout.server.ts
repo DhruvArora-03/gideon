@@ -1,9 +1,9 @@
-import { redirect } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ locals: { session, user } }) => {
   if (!session || !user) {
-    redirect(303, '/login');
+    error(401, 'Unauthorized');
   }
 
   return { session, user };
