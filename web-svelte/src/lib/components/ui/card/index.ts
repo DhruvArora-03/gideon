@@ -5,6 +5,6 @@ import CardFooter from './card-footer.svelte';
 import CardHeader from './card-header.svelte';
 import CardTitle from './card-title.svelte';
 
-export { Card as Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle };
+export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle };
 
 export type HeadingLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
