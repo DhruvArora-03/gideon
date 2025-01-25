@@ -5,6 +5,7 @@
         "SUPABASE",
         "superforms",
         "turbopack",
+        "Waitlist",
         "waitlisted"
     ]
 }
