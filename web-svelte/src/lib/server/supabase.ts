@@ -1,4 +1,4 @@
-import { AuthError, createClient } from '@supabase/supabase-js';
+import { createClient, type UserResponse } from '@supabase/supabase-js';
 import { PUBLIC_SUPABASE_URL } from '$env/static/public';
 import { SERVICE_ROLE_KEY } from '$env/static/private';
 import type { InviteFormSchema } from '$lib/validation';
@@ -11,16 +11,12 @@ const createAdminClient = async () => {
 export async function inviteUserByEmail(
   baseUrl: string,
   user: InviteFormSchema,
-): Promise<{ error: AuthError | null }> {
+): Promise<UserResponse> {
   const { email, ...userData } = user;
 
   const supabase = await createAdminClient();
-  const { error } = await supabase.auth.admin.inviteUserByEmail(email, {
+  return await supabase.auth.admin.inviteUserByEmail(email, {
     redirectTo: `${baseUrl}/dashboard/settings/change-password`,
     data: userData,
   });
-
-  return {
-    error,
-  };
 }
