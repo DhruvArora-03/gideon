@@ -8,50 +8,25 @@
     CardHeader,
     CardTitle,
   } from '$lib/components/ui/card';
-  import { dateFormat, timeFormat } from '$lib/date';
-  import type { Assignment, AssignmentStatus, SlotWithAssignments } from '$lib/server/db/schema';
+  import { formatTime } from '$lib/date';
+  import type { AssignmentStatus, SlotWithAssignments } from '$lib/server/db/schema';
   import { cn } from '$lib/utils';
-  import { CalendarCheck, Clock, LogOut, UserPlus } from 'lucide-svelte';
+  import { AlarmClockPlus, CalendarCheck, Clock, LogOut, UserPlus, XCircle } from 'lucide-svelte';
 
   type Props = {
-    slot: SlotWithAssignments;
+    data: SlotWithAssignments;
     userId: string;
   };
-  let { slot, userId }: Props = $props();
+  let { data, userId }: Props = $props();
 
-  const start = timeFormat.format(slot.start_time);
-  const end = timeFormat.format(slot.end_time);
   const status: AssignmentStatus =
-    slot.assignments
-      .filter((a) => a.user_id === userId)
-      .sort((a, b) => b.created_at.getTime() - a.created_at.getTime())[0]?.assignment_status ??
-    'cancelled';
-  const date = new Date(slot.date);
-
-  const userAssignments = new Map<string, Assignment>();
-  let slotsLeft = slot.capacity;
-
-  for (const a of slot.assignments) {
-    const existing = userAssignments.get(a.user_id);
-
-    if (existing && existing.created_at > a.created_at) {
-      continue;
-    }
-
-    const wasConfirmed = existing?.assignment_status === 'confirmed';
-    const isConfirmed = a.assignment_status === 'confirmed';
-
-    userAssignments.set(a.user_id, a);
-
-    if (isConfirmed && !wasConfirmed) {
-      slotsLeft--;
-    } else if (!isConfirmed && wasConfirmed) {
-      slotsLeft++;
-    }
-  }
+    data.assignments.find((a) => a.user_id === userId)?.assignment_status ?? 'cancelled';
+  const slotsLeft =
+    data.capacity - data.assignments.filter((a) => a.assignment_status === 'confirmed').length;
 
   function signUp() {
     //     fetch('/');
+    alert('signed up!');
     invalidate('getSlots');
   }
 
@@ -61,46 +36,41 @@
   }
 </script>
 
-<Card class={'max-w-sm'}>
+<Card class="max-w-sm space-y-2 p-3 [&>*]:p-0">
   <CardHeader>
-    <CardTitle class="inline-flex items-center justify-between">
-      {dateFormat.format(date)}
-      <span
-        class={cn(
-          'inline-flex items-center gap-1 text-sm font-semibold [&>svg]:w-4',
-          status === 'confirmed' && 'text-green',
-        )}
-      >
-        {#if status === 'confirmed'}
-          <CalendarCheck /> Confirmed
-        {:else if status === 'waitlisted'}
-          <Clock /> Waitlisted
-        {:else}
-          5 spots left!
-        {/if}
-      </span>
+    <CardTitle
+      class={cn('flex w-full items-center gap-1 text-sm font-semibold [&>svg]:h-4 [&>svg]:w-4')}
+    >
+      {#if status === 'confirmed'}
+        <CalendarCheck /> Confirmed
+      {:else if status === 'waitlisted'}
+        <Clock /> Waitlisted
+      {:else if slotsLeft === 0}
+        <AlarmClockPlus /> Join Waitlist
+      {:else}
+        <p class="text-green">Available!</p>
+      {/if}
     </CardTitle>
-    <CardDescription class="inline-flex items-start justify-between">
-      {`${start} - ${end}`}
+    <CardDescription>
+      <p class="md:flex md:flex-col lg:block">
+        <span>{formatTime(data.start_time)}</span>
+        <span class="md:hidden lg:inline">{' - '}</span>
+        <span>{formatTime(data.end_time)}</span>
+      </p>
+      <p>
+        {data.capacity - slotsLeft} / {data.capacity} taken
+      </p>
     </CardDescription>
   </CardHeader>
   <CardContent>
-    <div class="flex gap-2">
-      <Button
-        class="w-full"
-        variant="destructive"
-        onclick={cancel}
-        disabled={status === 'cancelled'}
-      >
-        <LogOut />Cancel
+    {#if status === 'confirmed' || status === 'waitlisted'}
+      <Button class="w-full" variant="destructive" onclick={cancel}>
+        <LogOut /> Cancel
       </Button>
-      <Button
-        class="w-full"
-        onclick={signUp}
-        disabled={status === 'confirmed' || status === 'waitlisted'}
-      >
+    {:else}
+      <Button class="w-full" onclick={signUp} disabled={slotsLeft === 0}>
         <UserPlus /> Sign Up
       </Button>
-    </div>
+    {/if}
   </CardContent>
 </Card>

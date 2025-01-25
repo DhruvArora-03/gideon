@@ -20,7 +20,7 @@
   });
 </script>
 
-<div class="h-full min-h-screen p-4">
+<div class="h-full min-h-screen w-full p-4">
   <ModeWatcher />
   {@render children()}
 </div>
