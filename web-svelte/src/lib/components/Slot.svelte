@@ -68,7 +68,7 @@
       <span
         class={cn(
           'inline-flex items-center gap-1 text-sm font-semibold [&>svg]:w-4',
-          status === 'confirmed' && 'text-green-500',
+          status === 'confirmed' && 'text-green',
         )}
       >
         {#if status === 'confirmed'}
