@@ -36,7 +36,7 @@
   }
 </script>
 
-<Card class="max-w-sm space-y-2 p-3 [&>*]:p-0">
+<Card class="w-full max-w-sm space-y-2 p-3 [&>*]:p-0 ">
   <CardHeader>
     <CardTitle
       class={cn('flex w-full items-center gap-1 text-sm font-semibold [&>svg]:h-4 [&>svg]:w-4')}
