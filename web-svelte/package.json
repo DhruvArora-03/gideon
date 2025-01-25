@@ -44,6 +44,7 @@
 		"bits-ui": "^0.22.0",
 		"clsx": "^2.1.1",
 		"drizzle-kit": "^0.30.2",
+		"embla-carousel-svelte": "^8.5.2",
 		"env-cmd": "^10.1.0",
 		"eslint": "^9.18.0",
 		"eslint-config-prettier": "^10.0.1",
