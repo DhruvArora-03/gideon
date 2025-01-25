@@ -4,6 +4,7 @@ import type { Actions } from './$types';
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { loginFormSchema } from '$lib/validation';
+import { isAuthError } from '@supabase/supabase-js';
 
 export const load = async () => {
   return {
@@ -31,8 +32,14 @@ export const actions: Actions = {
     });
 
     if (error) {
+      if (isAuthError(error)) {
+        return message(form, 'Invalid email or password', {
+          status: 500,
+        });
+      }
+
       console.error(error);
-      return message(form, 'Invalid email or password', {
+      return message(form, 'Something went wrong. Please try again later.', {
         status: 500,
       });
     }
