@@ -11,7 +11,14 @@
   import { formatDate, formatDateWithWeekday, formatTime } from '$lib/date';
   import type { AssignmentStatus, SlotWithAssignments } from '$lib/server/db/schema';
   import { cn } from '$lib/utils';
-  import { AlarmClockPlus, CalendarCheck, Clock, LogOut, UserPlus } from 'lucide-svelte';
+  import {
+    AlarmClockPlus,
+    CalendarCheck,
+    Clock,
+    LoaderCircle,
+    LogOut,
+    UserPlus,
+  } from 'lucide-svelte';
   import { toast } from 'svelte-sonner';
 
   type Props = {
@@ -25,7 +32,12 @@
   const slotsLeft =
     data.capacity - data.assignments.filter((a) => a.assignment_status === 'confirmed').length;
 
-  function signUp() {
+  let loading = $state(false);
+
+  async function signUp() {
+    loading = true;
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     try {
       toast.success('Signed up!', {
         description: `Confirmed shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
@@ -34,10 +46,13 @@
       toast.error('Error!', {
         description: `Error signing up for shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
       });
+    } finally {
+      loading = false;
     }
   }
 
-  function cancel() {
+  async function cancel() {
+    loading = true;
     try {
       toast.success('Cancelled!', {
         description: `Cancelled shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
@@ -46,6 +61,8 @@
       toast.error('Error!', {
         description: `Error cancelling shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
       });
+    } finally {
+      loading = false;
     }
   }
 </script>
@@ -78,12 +95,20 @@
   </CardHeader>
   <CardContent>
     {#if status === 'confirmed' || status === 'waitlisted'}
-      <Button class="w-full" variant="destructive" onclick={cancel}>
-        <LogOut /> Cancel
+      <Button class="w-full" variant="destructive" onclick={cancel} disabled={loading}>
+        {#if loading}
+          <LoaderCircle class="animate-spin" /> Cancelling...
+        {:else}
+          <LogOut /> Cancel
+        {/if}
       </Button>
     {:else}
-      <Button class="w-full" onclick={signUp} disabled={slotsLeft === 0}>
-        <UserPlus /> Sign Up
+      <Button class="w-full" onclick={signUp} disabled={loading || slotsLeft === 0}>
+        {#if loading}
+          <LoaderCircle class="animate-spin" /> Signing up...
+        {:else}
+          <UserPlus /> Sign up
+        {/if}
       </Button>
     {/if}
   </CardContent>
