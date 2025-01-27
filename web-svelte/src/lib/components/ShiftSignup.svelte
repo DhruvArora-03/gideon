@@ -46,8 +46,8 @@
     <CardContent>
       <CarouselContent>
         {#each weeks as week}
-          <CarouselItem class="basis-full">
-            <Card class="h-full">
+          <CarouselItem>
+            <Card class="h-fit">
               <CardHeader>
                 <CardTitle>
                   {formatDate(week.start)} - {formatDate(addDays(week.start, 6))}
@@ -73,9 +73,6 @@
                         <div class="flex flex-row gap-2 md:flex-col md:gap-0">
                           {#each day as slot}
                             <Slot data={slot} {userId} />
-                            {#if slot.id !== 17}
-                              <Slot data={slot} {userId} />
-                            {/if}
                           {/each}
                         </div>
                       {:else}
