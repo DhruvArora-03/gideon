@@ -66,9 +66,7 @@
                         {formatDateWithWeekday(addDays(week.start, index))}
                       </h4>
                       {#if getDaysBetween(week.start, new Date()) === index}
-                        <div
-                          class="text-green-foreground bg-green flex flex-1 items-center justify-center rounded-lg p-4 text-center"
-                        >
+                        <div class="text-green-foreground bg-green rounded-lg p-4 text-center">
                           Today
                         </div>
                       {:else if day.length > 0}
@@ -81,9 +79,7 @@
                           {/each}
                         </div>
                       {:else}
-                        <div
-                          class="text-muted-foreground flex flex-1 items-center justify-center rounded-lg p-4 text-center"
-                        >
+                        <div class="text-muted-foreground rounded-lg p-4 text-center">
                           No shifts available
                         </div>
                       {/if}
