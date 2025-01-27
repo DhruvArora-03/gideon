@@ -2,10 +2,10 @@
   import Slot from '$lib/components/Slot.svelte';
   import {
     Card,
-    CardHeader,
-    CardTitle,
     CardContent,
     CardDescription,
+    CardHeader,
+    CardTitle,
   } from '$lib/components/ui/card';
   import {
     CarouselItem,
@@ -14,8 +14,8 @@
     CarouselRoot,
   } from '$lib/components/ui/carousel';
   import CarouselContent from '$lib/components/ui/carousel/carousel-content.svelte';
-  import { addDays, formatDate, formatDateWithWeekday, getDaysBetween } from '$lib/date';
   import type { Week } from '$lib/date';
+  import { addDays, formatDate, formatDateWithWeekday, getDaysBetween } from '$lib/date';
   import type { SlotWithAssignments } from '$lib/server/db/schema';
   import { organizeSlots } from '$lib/slots';
 

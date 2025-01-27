@@ -1,9 +1,9 @@
 <script lang="ts">
-  import '../app.css';
-  import { ModeWatcher } from 'mode-watcher';
-
   import { invalidate } from '$app/navigation';
+  import { Toaster } from '$lib/components/ui/sonner';
+  import { ModeWatcher } from 'mode-watcher';
   import { onMount } from 'svelte';
+  import '../app.css';
 
   let { data, children } = $props();
   let { session, supabase } = $derived(data);
@@ -22,5 +22,6 @@
 
 <div class="h-full min-h-screen w-full p-4">
   <ModeWatcher />
+  <Toaster />
   {@render children()}
 </div>

@@ -8,10 +8,11 @@
     CardHeader,
     CardTitle,
   } from '$lib/components/ui/card';
-  import { formatTime } from '$lib/date';
+  import { formatDate, formatDateWithWeekday, formatTime } from '$lib/date';
   import type { AssignmentStatus, SlotWithAssignments } from '$lib/server/db/schema';
   import { cn } from '$lib/utils';
-  import { AlarmClockPlus, CalendarCheck, Clock, LogOut, UserPlus, XCircle } from 'lucide-svelte';
+  import { AlarmClockPlus, CalendarCheck, Clock, LogOut, UserPlus } from 'lucide-svelte';
+  import { toast } from 'svelte-sonner';
 
   type Props = {
     data: SlotWithAssignments;
@@ -25,14 +26,27 @@
     data.capacity - data.assignments.filter((a) => a.assignment_status === 'confirmed').length;
 
   function signUp() {
-    //     fetch('/');
-    alert('signed up!');
-    invalidate('getSlots');
+    try {
+      toast.success('Signed up!', {
+        description: `Confirmed shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
+      });
+    } catch (e) {
+      toast.error('Error!', {
+        description: `Error signing up for shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
+      });
+    }
   }
 
   function cancel() {
-    //     fetch('/');
-    invalidate('getSlots');
+    try {
+      toast.success('Cancelled!', {
+        description: `Cancelled shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
+      });
+    } catch (e) {
+      toast.error('Error!', {
+        description: `Error cancelling shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
+      });
+    }
   }
 </script>
 
