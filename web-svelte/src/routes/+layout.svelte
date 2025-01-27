@@ -22,6 +22,6 @@
 
 <div class="h-full min-h-screen w-full p-4">
   <ModeWatcher />
-  <Toaster />
+  <Toaster richColors />
   {@render children()}
 </div>
