@@ -13,6 +13,7 @@
   import { inviteFormSchema } from '$lib/validation';
   import { LoaderCircle, Send } from 'lucide-svelte';
   import { zodClient } from 'sveltekit-superforms/adapters';
+  import { toast } from 'svelte-sonner';
 
   type Props = {
     data: SuperValidated<Infer<typeof inviteFormSchema>>;
@@ -21,6 +22,29 @@
 
   const form = superForm(data, {
     validators: zodClient(inviteFormSchema),
+    onSubmit: () => {
+      toast.info('Invite being processed...', {
+        description: `Please wait while we create the user and send an invite to ${$formData.email}`,
+      });
+    },
+
+    onResult: ({ result }) => {
+      if (result.type === 'success') {
+        toast.success('User invited successfully', {
+          description: result.data?.form.message,
+        });
+      } else if (result.type === 'failure') {
+        console.log('Result data:', result.data?.form);
+
+        toast.error('Invitation failed', {
+          description: result.data?.form.message || 'An unknown failure occurred',
+        });
+      } else if (result.type === 'error') {
+        toast.error('An error occurred', {
+          description: result.error?.message || 'An unknown error occurred',
+        });
+      }
+    },
   });
 
   const { form: formData, message, enhance, submitting } = form;
@@ -97,11 +121,6 @@
         <Description class="sr-only">The new user's phone number</Description>
         <FieldErrors />
       </Field>
-      {#if $message}
-        <p class="mt-4">
-          {$message}
-        </p>
-      {/if}
       <Button class="mt-4 w-full" type="submit" disabled={$submitting}>
         {#if $submitting}
           <LoaderCircle class="animate-spin" /> Sending Invite...

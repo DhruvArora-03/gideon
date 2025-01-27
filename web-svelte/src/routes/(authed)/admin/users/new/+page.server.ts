@@ -25,11 +25,11 @@ export const actions: Actions = {
     const { error } = await inviteUserByEmail(event.url.origin, form.data);
     if (error) {
       console.error(error);
-      return message(form, 'Something went wrong', {
+      return message(form, `Something went wrong, could not invite ${form.data.email}`, {
         status: 500,
       });
     }
 
-    return message(form, 'Invite sent successfully');
+    return message(form, `Invite sent to ${form.data.email}`);
   },
 };
