@@ -97,7 +97,7 @@
     {#if status === 'confirmed' || status === 'waitlisted'}
       <Button class="w-full" variant="destructive" onclick={cancel} disabled={loading}>
         {#if loading}
-          <LoaderCircle class="animate-spin" /> Cancelling...
+          <LoaderCircle class="animate-spin" />
         {:else}
           <LogOut /> Cancel
         {/if}
@@ -105,7 +105,7 @@
     {:else}
       <Button class="w-full" onclick={signUp} disabled={loading || slotsLeft === 0}>
         {#if loading}
-          <LoaderCircle class="animate-spin" /> Signing up...
+          <LoaderCircle class="animate-spin" />
         {:else}
           <UserPlus /> Sign up
         {/if}
