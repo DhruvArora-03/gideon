@@ -1,5 +1,4 @@
 <script lang="ts">
-  import LogoutButton from '$lib/components/LogoutButton.svelte';
   import PageWrapper from '$lib/components/PageWrapper.svelte';
   import ShiftSignup from '$lib/components/ShiftSignup.svelte';
 
@@ -7,8 +6,6 @@
 </script>
 
 <PageWrapper>
-  <!-- <h1>Home!</h1> -->
-  <LogoutButton supabase={data.supabase} />
   {#await data.slots}
     <p>Loading...</p>
   {:then slots}
