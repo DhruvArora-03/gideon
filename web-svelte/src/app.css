@@ -82,7 +82,8 @@
 
 @layer base {
   /* style icons inside of buttons */
-  button > svg {
+  button > svg,
+  a > svg {
     @apply mr-2 h-4 w-4;
   }
 }
