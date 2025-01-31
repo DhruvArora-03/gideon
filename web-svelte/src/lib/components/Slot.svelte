@@ -12,9 +12,9 @@
   import type { AssignmentStatus, SlotWithAssignments } from '$lib/server/db/schema';
   import { cn } from '$lib/utils';
   import {
-    AlarmClockPlus,
     CalendarCheck,
-    Clock,
+    CalendarClock,
+    CalendarPlus,
     LoaderCircle,
     LogOut,
     UserPlus,
@@ -51,6 +51,23 @@
     }
   }
 
+  async function waitlist() {
+    loading = true;
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    try {
+      toast.success('Waitlisted!', {
+        description: `Joined waitlist for shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
+      });
+    } catch (e) {
+      toast.error('Error!', {
+        description: `Error joining waitlist for shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
+      });
+    } finally {
+      loading = false;
+    }
+  }
+
   async function cancel() {
     loading = true;
     try {
@@ -75,11 +92,11 @@
       {#if status === 'confirmed'}
         <CalendarCheck /> Confirmed
       {:else if status === 'waitlisted'}
-        <Clock /> Waitlisted
+        <CalendarClock /> Waitlisted
       {:else if slotsLeft === 0}
-        <AlarmClockPlus /> Join Waitlist
+        <span class="text-yellow-500">Unavailable</span>
       {:else}
-        <p class="text-green">Available!</p>
+        <span class="text-green">Available!</span>
       {/if}
     </CardTitle>
     <CardDescription>
@@ -102,12 +119,20 @@
           <LogOut /> Cancel
         {/if}
       </Button>
-    {:else}
-      <Button class="w-full" onclick={signUp} disabled={loading || slotsLeft === 0}>
+    {:else if slotsLeft === 0}
+      <Button class="w-full" variant="secondary" onclick={waitlist} disabled={loading}>
         {#if loading}
           <LoaderCircle class="animate-spin" />
         {:else}
-          <UserPlus /> Sign up
+          <UserPlus /> Join Waitlist
+        {/if}
+      </Button>
+    {:else}
+      <Button class="w-full" onclick={signUp} disabled={loading}>
+        {#if loading}
+          <LoaderCircle class="animate-spin" />
+        {:else}
+          <CalendarPlus /> Sign up
         {/if}
       </Button>
     {/if}
