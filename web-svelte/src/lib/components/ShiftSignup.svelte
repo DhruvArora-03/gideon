@@ -29,65 +29,75 @@
   let weeks: Week[] = $derived(organizeSlots(slots));
 </script>
 
-<CarouselRoot opts={{ align: 'start' }}>
-  <Card class="w-full border-none shadow-none [&>*]:px-0 sm:[&>*]:px-6">
-    <CardHeader>
-      <CardTitle>Shift Signup</CardTitle>
-      <CardDescription class="flex w-full gap-4">
-        <p>
-          Here is where you can sign up for shifts. Click or drag horizontally to view more weeks.
-        </p>
-        <div class="ml-auto shrink-0 whitespace-nowrap">
-          <CarouselPrevious disableDefaultPositioning />
-          <CarouselNext disableDefaultPositioning />
-        </div>
-      </CardDescription>
-    </CardHeader>
-    <CardContent>
-      <CarouselContent>
-        {#each weeks as week}
-          <CarouselItem>
-            <Card class="h-fit">
-              <CardHeader>
-                <CardTitle>
-                  {formatDate(week.start)} - {formatDate(addDays(week.start, 6))}
-                </CardTitle>
-                <CardDescription class="sr-only">
-                  Available shifts for {formatDate(week.start)} - {formatDate(
-                    addDays(week.start, 6),
-                  )}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div class="grid grid-cols-1 gap-1 md:grid-cols-7">
-                  {#each week.days as day, index}
-                    <div class="flex flex-col gap-2">
-                      <h4 class="mt-2 font-semibold md:mt-0">
-                        {formatDateWithWeekday(addDays(week.start, index))}
-                      </h4>
-                      {#if getDaysBetween(week.start, new Date()) === index}
-                        <div class="text-green-foreground bg-green rounded-lg p-4 text-center">
-                          Today
-                        </div>
-                      {:else if day.length > 0}
-                        <div class="flex flex-row gap-2 md:flex-col md:gap-0">
-                          {#each day as slot}
-                            <Slot data={slot} {userId} />
-                          {/each}
-                        </div>
-                      {:else}
-                        <div class="text-muted-foreground rounded-lg p-4 text-center">
-                          No shifts available
-                        </div>
-                      {/if}
-                    </div>
-                  {/each}
-                </div>
-              </CardContent>
-            </Card>
-          </CarouselItem>
-        {/each}
-      </CarouselContent>
-    </CardContent>
-  </Card>
-</CarouselRoot>
+{#snippet mainContent(carouselOrientation: 'horizontal' | 'vertical')}
+  <CarouselRoot orientation={carouselOrientation} opts={{ align: 'start' }}>
+    <Card class="w-full border-none shadow-none [&>*]:px-0 sm:[&>*]:px-6">
+      <CardHeader>
+        <CardTitle>Shift Signup</CardTitle>
+        <CardDescription class="flex w-full gap-4">
+          <p>
+            Here is where you can sign up for shifts. Click or drag horizontally to view more weeks.
+          </p>
+          <div class="ml-auto shrink-0 whitespace-nowrap">
+            <CarouselPrevious disableDefaultPositioning />
+            <CarouselNext disableDefaultPositioning />
+          </div>
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <CarouselContent>
+          {#each weeks as week}
+            <CarouselItem>
+              <Card class="h-fit">
+                <CardHeader>
+                  <CardTitle>
+                    {formatDate(week.start)} - {formatDate(addDays(week.start, 6))}
+                  </CardTitle>
+                  <CardDescription class="sr-only">
+                    Available shifts for {formatDate(week.start)} - {formatDate(
+                      addDays(week.start, 6),
+                    )}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div class="grid grid-cols-1 gap-1 md:grid-cols-7">
+                    {#each week.days as day, index}
+                      <div class="flex flex-col gap-2">
+                        <h4 class="mt-2 font-semibold md:mt-0">
+                          {formatDateWithWeekday(addDays(week.start, index))}
+                        </h4>
+                        {#if getDaysBetween(week.start, new Date()) === index}
+                          <div class="text-green-foreground bg-green rounded-lg p-4 text-center">
+                            Today
+                          </div>
+                        {:else if day.length > 0}
+                          <div class="flex flex-row gap-2 md:flex-col md:gap-0">
+                            {#each day as slot}
+                              <Slot data={slot} {userId} />
+                            {/each}
+                          </div>
+                        {:else}
+                          <div class="text-muted-foreground rounded-lg p-4 text-center">
+                            No shifts available
+                          </div>
+                        {/if}
+                      </div>
+                    {/each}
+                  </div>
+                </CardContent>
+              </Card>
+            </CarouselItem>
+          {/each}
+        </CarouselContent>
+      </CardContent>
+    </Card>
+  </CarouselRoot>
+{/snippet}
+
+<div class="md:hidden">
+  {@render mainContent('horizontal')}
+</div>
+
+<div class="hidden md:block">
+  {@render mainContent('vertical')}
+</div>
