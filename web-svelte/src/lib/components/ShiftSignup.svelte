@@ -18,6 +18,7 @@
   import { addDays, formatDate, formatDateWithWeekday, getDaysBetween } from '$lib/date';
   import type { SlotWithAssignments } from '$lib/server/db/schema';
   import { organizeSlots } from '$lib/slots';
+  import { cn } from '$lib/utils';
 
   type Props = {
     slots: SlotWithAssignments[];
@@ -36,9 +37,16 @@
         <CardTitle>Shift Signup</CardTitle>
         <CardDescription class="flex w-full gap-4">
           <p>
-            Here is where you can sign up for shifts. Click or drag horizontally to view more weeks.
+            View information for all upcoming shifts. Use the buttons on each shift to take action.
+            <span class={cn({ hidden: carouselOrientation === 'vertical' })}>
+              Click or drag horizontally to view more weeks.
+            </span>
           </p>
-          <div class="ml-auto shrink-0 whitespace-nowrap">
+          <div
+            class={cn('shrink-3 ml-auto whitespace-nowrap', {
+              hidden: carouselOrientation === 'vertical',
+            })}
+          >
             <CarouselPrevious disableDefaultPositioning />
             <CarouselNext disableDefaultPositioning />
           </div>
