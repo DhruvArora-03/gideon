@@ -1,9 +1,9 @@
 <script lang="ts">
   import LogoutButton from '$lib/components/LogoutButton.svelte';
-  import type { PageData } from './$types';
+  import type { PageProps } from './$types';
 
-  let { supabase }: PageData = $props();
+  let { data }: PageProps = $props();
 </script>
 
 <h1>Settings</h1>
-<LogoutButton {supabase} />
+<LogoutButton supabase={data.supabase} />

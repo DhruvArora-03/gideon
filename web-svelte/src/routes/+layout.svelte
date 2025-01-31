@@ -20,7 +20,7 @@
   });
 </script>
 
-<div class="h-full min-h-screen w-full pb-16 md:pb-0">
+<div class="mx-auto h-full min-h-screen w-full p-4 pb-16 md:pb-0">
   <ModeWatcher />
   <Toaster richColors />
   {@render children()}
