@@ -1,17 +1,17 @@
 {
-	"extends": "./.svelte-kit/tsconfig.json",
-	"compilerOptions": {
-		"allowJs": true,
-		"checkJs": true,
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"allowImportingTsExtensions": true,
-		"resolveJsonModule": true,
-		"skipLibCheck": true,
-		"sourceMap": true,
-		"strict": true,
-		// disabled these bc of some warning with './$types' and now it works, pls dont ask why
-		// "module": "NodeNext",
-		// "moduleResolution": "NodeNext"
-	}
+  "extends": "./.svelte-kit/tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true
+    // disabled these bc of some warning with './$types' and now it works, pls dont ask why
+    // "module": "NodeNext",
+    // "moduleResolution": "NodeNext"
+  }
 }
