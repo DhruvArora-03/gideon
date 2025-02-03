@@ -55,7 +55,7 @@
       <CardContent>
         <CarouselContent>
           {#each weeks as week}
-            <CarouselItem class="basis-1/2">
+            <CarouselItem>
               <Card class="h-fit">
                 <CardHeader>
                   <CardTitle>
@@ -75,7 +75,7 @@
                           {formatDateWithWeekday(addDays(week.start, index))}
                         </h4>
                         {#if getDaysBetween(week.start, new Date()) === index}
-                          <div class="rounded-lg bg-green p-4 text-center text-green-foreground">
+                          <div class="bg-green text-green-foreground rounded-lg p-4 text-center">
                             Today
                           </div>
                         {:else if day.length > 0}
@@ -86,7 +86,7 @@
                             {/each}
                           </div>
                         {:else}
-                          <div class="rounded-lg p-4 text-center text-muted-foreground">
+                          <div class="text-muted-foreground rounded-lg p-4 text-center">
                             No shifts available
                           </div>
                         {/if}
