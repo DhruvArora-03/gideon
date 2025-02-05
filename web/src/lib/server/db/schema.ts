@@ -43,7 +43,7 @@ export const slots = createTable('slots', {
   capacity: integer().notNull(),
 });
 
-export type NewSlot = typeof slots.$inferSelect;
+export type NewSlot = typeof slots.$inferInsert;
 export type Slot = typeof slots.$inferSelect;
 
 export const slotsRelations = relations(slots, ({ many }) => {
@@ -83,7 +83,7 @@ export const assignments = createTable('assignments', {
   assignment_status: assignmentStatus().notNull(),
 });
 
-export type NewAssignment = typeof assignments.$inferSelect;
+export type NewAssignment = typeof assignments.$inferInsert;
 export type Assignment = typeof assignments.$inferSelect;
 
 export const assignmentsRelations = relations(assignments, ({ one }) => {
