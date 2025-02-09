@@ -76,6 +76,7 @@
         throw new Error('Failed to join waitlist');
       }
 
+      invalidate('/api/slots');
       toast.success('Waitlisted!', {
         description: `Joined waitlist for shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
       });
@@ -126,7 +127,7 @@
       {:else if status === 'waitlisted'}
         <CalendarClock /> Waitlisted
       {:else if slotsLeft === 0}
-        <span class="text-yellow-500">Unavailable</span>
+        <span class="text-destructive">Unavailable</span>
       {:else}
         <span class="text-green">Available!</span>
       {/if}

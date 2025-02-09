@@ -10,7 +10,6 @@
   let { supabase }: Props = $props();
 
   async function logout() {
-    alert('logout');
     await supabase.auth.signOut();
     goto('/login');
   }
