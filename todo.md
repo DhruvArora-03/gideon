@@ -1,0 +1,9 @@
+- [ ] https://svelte.dev/tutorial/kit/updated-state - create a message to reload
+- [ ] https://svelte.dev/tutorial/kit/fallback-errors - fallback error page
+- [ ] https://svelte.dev/tutorial/kit/error-pages - error page
+- [ ] Look into preloading - https://svelte.dev/tutorial/kit/preload
+- [ ] Add dark mode toggle to nav bar (https://www.shadcn-svelte.com/docs/dark-mode/svelte)
+- [ ] Fix leave waitlist button
+- [x] Add nav bar
+- [x] Wire up shift signup buttons
+- [x] Use toast to show success after inviting user
