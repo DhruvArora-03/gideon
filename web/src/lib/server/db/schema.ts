@@ -58,11 +58,7 @@ export type SlotWithAssignments = Slot & {
   assignments: Assignment[];
 };
 
-export const assignmentStatus = pgEnum('assignment_status', [
-  'confirmed',
-  'waitlisted',
-  'cancelled',
-]);
+export const assignmentStatus = pgEnum('assignment_status', ['confirmed', 'waitlisted']);
 
 export type AssignmentStatus = (typeof assignmentStatus.enumValues)[number];
 

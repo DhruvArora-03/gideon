@@ -14,7 +14,6 @@ export const load = async () => {
 
 export const actions: Actions = {
   default: async (event) => {
-    console.log('REACHED');
     const form = await superValidate(event, zod(loginFormSchema));
     console.log(form.data);
     console.log(`Logging in user: ${form.data.email}`);

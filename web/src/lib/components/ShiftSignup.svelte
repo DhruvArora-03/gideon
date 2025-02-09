@@ -24,8 +24,7 @@
     slots: SlotWithAssignments[];
     userId: string;
   };
-  let { userId, ...props }: Props = $props();
-  let slots = $state(props.slots);
+  let { userId, slots }: Props = $props();
 
   let weeks: Week[] = $derived(organizeSlots(slots));
 </script>
@@ -81,7 +80,6 @@
                         {:else if day.length > 0}
                           <div class="flex flex-row gap-2 lg:flex-col lg:gap-0">
                             {#each day as slot}
-                              <Slot data={slot} {userId} />
                               <Slot data={slot} {userId} />
                             {/each}
                           </div>

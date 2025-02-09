@@ -8,7 +8,7 @@
     CardHeader,
     CardTitle,
   } from '$lib/components/ui/card';
-  import { formatDate, formatDateWithWeekday, formatTime } from '$lib/date';
+  import { formatDateWithWeekday, formatTime } from '$lib/date';
   import type { AssignmentStatus, SlotWithAssignments } from '$lib/server/db/schema';
   import { cn } from '$lib/utils';
   import {
@@ -27,22 +27,34 @@
   };
   let { data, userId }: Props = $props();
 
-  const status: AssignmentStatus =
-    data.assignments.find((a) => a.user_id === userId)?.assignment_status ?? 'cancelled';
-  const slotsLeft =
-    data.capacity - data.assignments.filter((a) => a.assignment_status === 'confirmed').length;
+  const status: AssignmentStatus | null = $derived(
+    data.assignments.find((a) => a.user_id === userId)?.assignment_status ?? null,
+  );
+  const slotsLeft = $derived(
+    data.capacity - data.assignments.filter((a) => a.assignment_status === 'confirmed').length,
+  );
 
   let loading = $state(false);
 
   async function signUp() {
     loading = true;
-    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     try {
+      const res = await fetch('/api/slots/signup', {
+        method: 'POST',
+        body: JSON.stringify({ slotId: data.id, userId }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to sign up');
+      }
+
+      invalidate('/api/slots');
       toast.success('Signed up!', {
         description: `Confirmed shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
       });
     } catch (e) {
+      console.warn(e);
       toast.error('Error!', {
         description: `Error signing up for shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
       });
@@ -53,13 +65,22 @@
 
   async function waitlist() {
     loading = true;
-    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     try {
+      const res = await fetch('/api/slots/waitlist', {
+        method: 'POST',
+        body: JSON.stringify({ slotId: data.id, userId }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to join waitlist');
+      }
+
       toast.success('Waitlisted!', {
         description: `Joined waitlist for shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
       });
     } catch (e) {
+      console.warn(e);
       toast.error('Error!', {
         description: `Error joining waitlist for shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
       });
@@ -71,10 +92,21 @@
   async function cancel() {
     loading = true;
     try {
+      const res = await fetch('/api/slots/cancel', {
+        method: 'POST',
+        body: JSON.stringify({ slotId: data.id, userId }),
+      });
+
+      if (!res.ok) {
+        throw new Error('Failed to cancel shift');
+      }
+
+      invalidate('/api/slots');
       toast.success('Cancelled!', {
         description: `Cancelled shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
       });
     } catch (e) {
+      console.warn(e);
       toast.error('Error!', {
         description: `Error cancelling shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
       });
