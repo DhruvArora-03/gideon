@@ -27,7 +27,7 @@ export type Week = {
   days: SlotWithAssignments[][];
 };
 
-export const createWeek = (start: Date) => {
+export const createWeek = (start: Date): Week => {
   const week: Week = {
     start,
     days: Array.from({ length: 7 }, () => []),
@@ -35,19 +35,19 @@ export const createWeek = (start: Date) => {
   return week;
 };
 
-export const addDays = (date: Date, days: number) => {
+export const addDays = (date: Date, days: number): Date => {
   const d = new Date(date);
   d.setDate(d.getDate() + days);
   return d;
 };
 
-export const getStartOfWeek = (date: Date) => {
+export const getStartOfWeek = (date: Date): Date => {
   const d = new Date(date);
   d.setDate(d.getDate() - d.getDay());
   return d;
 };
 
-export const getDaysBetween = (date1: Date, date2: Date) => {
+export const getDaysBetween = (date1: Date, date2: Date): number => {
   const d1 = new Date(date1);
   const d2 = new Date(date2);
   d1.setHours(0, 0, 0, 0);
