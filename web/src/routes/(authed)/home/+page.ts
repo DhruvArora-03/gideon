@@ -8,7 +8,8 @@ export const load: PageLoad = async ({ fetch }) => {
   return {
     random: Math.random(),
     slots: json.map(
-      (x: SlotWithAssignments) =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (x: any) =>
         ({
           ...x,
           start_time: new Date(x.start_time),
