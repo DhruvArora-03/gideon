@@ -17,6 +17,7 @@ export const formatDateWithWeekday = dateWithWeekdayFormat.format;
 
 const timeFormat = new Intl.DateTimeFormat('en-US', {
   hour: 'numeric',
+  minute: '2-digit',
 });
 
 export const formatTime = timeFormat.format;
