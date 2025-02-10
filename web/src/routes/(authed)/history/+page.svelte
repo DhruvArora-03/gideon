@@ -3,9 +3,14 @@
   import type { Session } from '$lib/server/db/schema';
 
   type Props = {
-    sessions: Session[];
+    data: {
+      sessions: Session[];
+    };
   };
-  const { sessions }: Props = $props();
+  const { data }: Props = $props();
+
+  const sessions = data.sessions;
+  console.log(sessions);
 </script>
 
 <SessionHistory {sessions} />

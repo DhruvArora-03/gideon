@@ -13,6 +13,7 @@ import type { Session } from '$lib/server/db/schema';
 export async function getSessions(userId: string): Promise<Session[]> {
   const sessions = await db.query.sessions.findMany({
     where: (sessions, { eq }) => eq(sessions.user_id, userId),
+    orderBy: (sessions, { desc }) => desc(sessions.clock_in),
   });
 
   return sessions;
