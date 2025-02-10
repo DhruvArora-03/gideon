@@ -34,6 +34,12 @@ export const profiles = createTable('profiles', {
   phone_number: text().notNull(),
 });
 
+export const profileRelations = relations(profiles, ({ many }) => ({
+  assignments: many(assignments, {
+    relationName: 'profile_assignments',
+  }),
+}));
+
 export const slots = createTable('slots', {
   id: serial().primaryKey(),
   created_at: getCreatedAtColumn(),
@@ -46,13 +52,11 @@ export const slots = createTable('slots', {
 export type NewSlot = typeof slots.$inferInsert;
 export type Slot = typeof slots.$inferSelect;
 
-export const slotsRelations = relations(slots, ({ many }) => {
-  return {
-    assignments: many(assignments, {
-      relationName: 'slot_assignments',
-    }),
-  };
-});
+export const slotsRelations = relations(slots, ({ many }) => ({
+  assignments: many(assignments, {
+    relationName: 'slot_assignments',
+  }),
+}));
 
 export type SlotWithAssignments = Slot & {
   assignments: Assignment[];
@@ -82,17 +86,16 @@ export const assignments = createTable('assignments', {
 export type NewAssignment = typeof assignments.$inferInsert;
 export type Assignment = typeof assignments.$inferSelect;
 
-export const assignmentsRelations = relations(assignments, ({ one }) => {
-  return {
-    slot: one(slots, {
-      fields: [assignments.slot_id],
-      references: [slots.id],
-      relationName: 'slot_assignments',
-    }),
-    user: one(profiles, {
-      fields: [assignments.user_id],
-      references: [profiles.id],
-      relationName: 'assignment_user',
-    }),
-  };
-});
+export const assignmentsRelations = relations(assignments, ({ one }) => ({
+  slot: one(slots, {
+    fields: [assignments.slot_id],
+    references: [slots.id],
+    relationName: 'slot_assignments',
+  }),
+  user: one(profiles, {
+    fields: [assignments.user_id],
+    references: [profiles.id],
+    relationName: 'assignment_user',
+  }),
+}));
+

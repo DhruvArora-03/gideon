@@ -1,11 +1,11 @@
-import { json } from '@sveltejs/kit';
-import type { RequestHandler } from '@sveltejs/kit';
-import { joinWaitlistForSlot } from '$lib/server/db/queries';
+import queries from '$lib/server/db/queries';
+import { text } from '@sveltejs/kit';
+import type { RequestHandler } from './$types';
 
-export const POST: RequestHandler = async ({ request }: { request: Request }) => {
+export const POST: RequestHandler = async ({ request }) => {
   const { slotId, userId } = await request.json();
 
-  await joinWaitlistForSlot(slotId, userId);
+  await queries.joinWaitlistForSlot(slotId, userId);
 
-  return json({ success: true });
+  return text('');
 };

@@ -1,11 +1,11 @@
-import { json } from '@sveltejs/kit';
-import type { RequestHandler } from '@sveltejs/kit';
-import { signUpForSlot } from '$lib/server/db/queries';
+import queries from '$lib/server/db/queries';
+import { text } from '@sveltejs/kit';
+import type { RequestHandler } from './$types';
 
-export const POST: RequestHandler = async ({ request }: { request: Request }) => {
+export const POST: RequestHandler = async ({ request }) => {
   const { slotId, userId } = await request.json();
 
-  await signUpForSlot(slotId, userId);
+  await queries.signUpForSlot(slotId, userId);
 
-  return json({ success: true });
+  return text('');
 };
