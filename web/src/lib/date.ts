@@ -57,3 +57,13 @@ export const getDaysBetween = (date1: Date, date2: Date): number => {
   const diffDays = diffTime / (1000 * 60 * 60 * 24);
   return diffDays;
 };
+
+export const getDuration = (start: Date, end: Date): string => {
+  const diffTime = end.getTime() - start.getTime();
+  const totalMinutes = Math.floor(diffTime / (1000 * 60));
+
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+
+  return `${hours} hours, ${minutes} minutes`;
+};
