@@ -70,14 +70,14 @@
                   <div class="grid grid-cols-1 gap-1 lg:grid-cols-7">
                     {#each week.days as day, index}
                       <div class="flex flex-col gap-2">
-                        <h4 class="mt-2 font-semibold lg:mt-0">
-                          {formatDateWithWeekday(addDays(week.start, index))}
+                        <h4 class={'mt-2 font-semibold lg:mt-0'}>
+                          {#if getDaysBetween(week.start, new Date()) === index}
+                            <span class="text-green">Today</span>
+                          {:else}
+                            {formatDateWithWeekday(addDays(week.start, index))}
+                          {/if}
                         </h4>
-                        {#if getDaysBetween(week.start, new Date()) === index}
-                          <div class="bg-green text-green-foreground rounded-lg p-4 text-center">
-                            Today
-                          </div>
-                        {:else if day.length > 0}
+                        {#if day.length > 0}
                           <div class="flex flex-row gap-2 lg:flex-col lg:gap-0">
                             {#each day as slot}
                               <Slot data={slot} {userId} />
