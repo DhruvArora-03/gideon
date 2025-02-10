@@ -1,10 +1,10 @@
-import type { Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 import { inviteUserByEmail } from '$lib/server/supabase';
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { inviteFormSchema } from '$lib/validation';
 
-export const load = async () => {
+export const load: PageServerLoad = async () => {
   return {
     form: await superValidate(zod(inviteFormSchema)),
   };

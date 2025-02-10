@@ -1,12 +1,12 @@
 import { redirect } from '@sveltejs/kit';
 
-import type { Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { loginFormSchema } from '$lib/validation';
 import { isAuthError } from '@supabase/supabase-js';
 
-export const load = async () => {
+export const load: PageServerLoad = async () => {
   return {
     form: await superValidate(zod(loginFormSchema)),
   };

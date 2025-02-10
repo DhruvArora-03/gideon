@@ -1,6 +1,7 @@
 import type { SlotWithAssignments } from '$lib/server/db/schema.js';
+import type { PageLoad } from './$types';
 
-export async function load({ fetch }) {
+export const load: PageLoad = async ({ fetch }) => {
   const res = await fetch('/api/slots');
   const json = await res.json();
 
@@ -15,4 +16,4 @@ export async function load({ fetch }) {
         }) satisfies SlotWithAssignments,
     ),
   };
-}
+};

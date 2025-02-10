@@ -23,7 +23,7 @@
 </script>
 
 <!-- Mobile bottom nav -->
-<nav class="fixed bottom-0 left-0 right-0 z-50 border-t bg-background p-2 md:hidden">
+<nav class="bg-background fixed bottom-0 left-0 right-0 z-50 border-t p-2 md:hidden">
   <ul class="flex items-center justify-around">
     {#each navItems as item}
       {@const Icon = item.icon}
@@ -42,7 +42,7 @@
 </nav>
 
 <!-- Desktop top nav -->
-<nav class="hidden border-b bg-background md:block">
+<nav class="bg-background hidden border-b md:block">
   <div class="mx-auto flex items-center justify-between gap-6 px-6 pb-3">
     <span class="text-xl font-semibold">Gideon Admin</span>
     <ul class="flex items-center gap-4">
