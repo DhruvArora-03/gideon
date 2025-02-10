@@ -1,5 +1,6 @@
 import { relations } from 'drizzle-orm';
 import {
+  boolean,
   integer,
   pgEnum,
   pgTableCreator,
@@ -37,6 +38,9 @@ export const profiles = createTable('profiles', {
 export const profileRelations = relations(profiles, ({ many }) => ({
   assignments: many(assignments, {
     relationName: 'profile_assignments',
+  }),
+  sessions: many(sessions, {
+    relationName: 'profile_sessions',
   }),
 }));
 
@@ -99,3 +103,27 @@ export const assignmentsRelations = relations(assignments, ({ one }) => ({
   }),
 }));
 
+export const sessions = createTable('sessions', {
+  id: serial().primaryKey(),
+  created_at: getCreatedAtColumn(),
+  updated_at: getUpdatedAtColumn(),
+  user_id: uuid()
+    .notNull()
+    .references(() => profiles.id, {
+      onDelete: 'cascade',
+    }),
+  clock_in: timestamp({ withTimezone: true, mode: 'date' }).notNull(),
+  clock_out: timestamp({ withTimezone: true, mode: 'date' }),
+  was_scheduled: boolean().notNull(),
+});
+
+export type NewSession = typeof sessions.$inferInsert;
+export type Session = typeof sessions.$inferSelect;
+
+export const sessionsRelations = relations(sessions, ({ one }) => ({
+  user: one(profiles, {
+    fields: [sessions.user_id],
+    references: [profiles.id],
+    relationName: 'session_user',
+  }),
+}));
