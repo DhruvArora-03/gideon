@@ -10,7 +10,7 @@
   const { data }: Props = $props();
 
   const sessions = data.sessions;
-  console.log(sessions);
+  console.log('sessions: ', sessions.length);
 </script>
 
 <SessionHistory {sessions} />
