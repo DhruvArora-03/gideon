@@ -22,4 +22,9 @@ VALUES
 (17, '00000000-0000-0000-0000-000000000001', (now()::timestamp::date + interval'17 day' + interval'21 hours')::timestamp, (now()::timestamp::date + interval'18 day' + interval'1.5 hours')::timestamp, true),
 (18, '00000000-0000-0000-0000-000000000001', (now()::timestamp::date + interval'18 day' + interval'21 hours')::timestamp, (now()::timestamp::date + interval'19 day' + interval'1.5 hours')::timestamp, true),
 (19, '00000000-0000-0000-0000-000000000001', (now()::timestamp::date + interval'19 day' + interval'21 hours')::timestamp, (now()::timestamp::date + interval'20 day' + interval'1.5 hours')::timestamp, true),
-(20, '00000000-0000-0000-0000-000000000001', (now()::timestamp::date + interval'20 day' + interval'21 hours')::timestamp, (now()::timestamp::date + interval'21 day' + interval'1.5 hours')::timestamp, true);
+(20, '00000000-0000-0000-0000-000000000001', (now()::timestamp::date + interval'20 day' + interval'21 hours')::timestamp, (now()::timestamp::date + interval'21 day' + interval'1.5 hours')::timestamp, true),
+(21, '00000000-0000-0000-0000-000000000001', (now()::timestamp::date + interval'21 day' + interval'21 hours')::timestamp, (now()::timestamp::date + interval'22 day' + interval'1.5 hours')::timestamp, true),
+(22, '00000000-0000-0000-0000-000000000001', (now()::timestamp::date + interval'22 day' + interval'21 hours')::timestamp, (now()::timestamp::date + interval'23 day' + interval'1.5 hours')::timestamp, true),
+(23, '00000000-0000-0000-0000-000000000001', (now()::timestamp::date + interval'23 day' + interval'21 hours')::timestamp, (now()::timestamp::date + interval'24 day' + interval'1.5 hours')::timestamp, true),
+(24, '00000000-0000-0000-0000-000000000001', (now()::timestamp::date + interval'24 day' + interval'21 hours')::timestamp, (now()::timestamp::date + interval'25 day' + interval'1.5 hours')::timestamp, true),
+(25, '00000000-0000-0000-0000-000000000001', (now()::timestamp::date + interval'25 day' + interval'21 hours')::timestamp, (now()::timestamp::date + interval'26 day' + interval'1.5 hours')::timestamp, true);
