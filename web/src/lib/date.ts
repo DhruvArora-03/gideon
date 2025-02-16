@@ -59,11 +59,7 @@ export const getDaysBetween = (date1: Date, date2: Date): number => {
 };
 
 export const getDuration = (start: Date, end: Date): string => {
-  const diffTime = end.getTime() - start.getTime();
-  const totalMinutes = Math.floor(diffTime / (1000 * 60));
+  const hours = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
 
-  const hours = Math.floor(totalMinutes / 60);
-  const minutes = totalMinutes % 60;
-
-  return `${hours} hours, ${minutes} minutes`;
+  return `${hours.toFixed(2)} ${hours === 1 ? 'hour' : 'hours'}`;
 };
