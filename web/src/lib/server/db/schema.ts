@@ -114,6 +114,8 @@ export const sessions = createTable('sessions', {
     }),
   clock_in: timestamp({ withTimezone: true, mode: 'date' }).notNull(),
   clock_out: timestamp({ withTimezone: true, mode: 'date' }),
+  employee_notes: text(),
+  admin_notes: text(),
   was_scheduled: boolean().notNull(),
 });
 
