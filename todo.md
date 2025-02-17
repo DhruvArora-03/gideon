@@ -4,6 +4,7 @@
 - [ ] Look into preloading - https://svelte.dev/tutorial/kit/preload
 - [ ] Add dark mode toggle to nav bar (https://www.shadcn-svelte.com/docs/dark-mode/svelte)
 - [ ] Fix leave waitlist button
+- [ ] Fix nav bar not highlight on history when doing different month
 - [x] Add nav bar
 - [x] Wire up shift signup buttons
 - [x] Use toast to show success after inviting user
