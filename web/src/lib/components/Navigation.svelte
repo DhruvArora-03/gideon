@@ -56,7 +56,7 @@
           <Button
             variant="ghost"
             href={item.href}
-            class={page.url.pathname === item.href ? 'bg-accent' : ''}
+            class={page.url.pathname.startsWith(item.href) ? 'bg-accent' : ''}
           >
             <item.icon />
             {item.label}

@@ -1,8 +1,8 @@
 import type { Session } from '$lib/server/db/schema';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async ({ fetch }) => {
-  const res = await fetch('/api/sessions');
+export const load: PageLoad = async ({ fetch, params }) => {
+  const res = await fetch(`/api/sessions/${params.year}/${params.month}`);
   const json = await res.json();
 
   return {
