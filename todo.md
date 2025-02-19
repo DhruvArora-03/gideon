@@ -13,6 +13,7 @@
 - [ ] admin screen for managing default shifts
 - [ ] chat (admin side)
 - [ ] chat (employee side)
+- [ ] setup notifications (https://push.foo/)
 - [x] Add nav bar
 - [x] Wire up shift signup buttons
 - [x] Use toast to show success after inviting user
