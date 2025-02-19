@@ -101,7 +101,7 @@
     </div>
     <Table>
       <TableHeader>
-        <TableRow>
+        <TableRow class="text-nowrap">
           <TableHead>Date</TableHead>
           <TableHead>Clock In</TableHead>
           <TableHead>Clock Out</TableHead>
@@ -110,7 +110,7 @@
       </TableHeader>
       <TableBody>
         {#each data.sessions as s (s.id)}
-          <TableRow>
+          <TableRow class="text-nowrap">
             <TableCell>{formatDateWithWeekday(s.clock_in)}</TableCell>
             <TableCell>{formatTime(s.clock_in)}</TableCell>
             <TableCell>{s.clock_out ? formatTime(s.clock_out) : ''}</TableCell>
@@ -134,6 +134,9 @@
           {/if}
         {/each}
       </TableBody>
+      <TableCaption>
+        {`${data.sessions.length} completed shifts found in ${MONTHS[data.month]} ${data.year}`}
+      </TableCaption>
     </Table>
   </CardContent>
 </Card>
