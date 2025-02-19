@@ -8,15 +8,12 @@ const createAdminClient = async () => {
 };
 
 // TODO: stronger typing here on data
-export async function inviteUserByEmail(
-  baseUrl: string,
-  user: InviteFormSchema,
-): Promise<UserResponse> {
+export async function inviteUserByEmail(user: InviteFormSchema): Promise<UserResponse> {
   const { email, ...userData } = user;
 
   const supabase = await createAdminClient();
   return await supabase.auth.admin.inviteUserByEmail(email, {
-    redirectTo: `${baseUrl}/dashboard/settings/change-password`,
+    redirectTo: `/dashboard/settings/change-password`,
     data: userData,
   });
 }
