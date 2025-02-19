@@ -72,29 +72,12 @@
             {$message}
           </p>
         {/if}
-        <!-- <Button class="mt-2 w-full" type="submit" disabled={$submitting}>
+        <Button class="mt-2 w-full" type="submit" disabled={$submitting}>
           {#if $submitting}
             <LoaderCircle class="animate-spin" /> Verifying Login...
           {:else}
             <LogIn /> Log in
           {/if}
-        </Button> -->
-        <Button
-          class="mt-2 w-full"
-          onclick={() => {
-            fetch('https://www.google.com/', {
-              mode: 'no-cors',
-            })
-              .then(() => {
-                alert('pinged google');
-              })
-              .catch((err) => {
-                alert('error pinging google');
-                alert(err);
-              });
-          }}
-        >
-          ping google
         </Button>
       </form>
     </CardContent>
