@@ -6,6 +6,7 @@ export const load: PageLoad = async ({ fetch, params }) => {
   const json = await res.json();
 
   return {
+    ...params,
     sessions: json.map(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (x: any) =>

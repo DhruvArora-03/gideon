@@ -1,6 +1,22 @@
 <script lang="ts">
-  import { Card, CardContent, CardHeader, CardTitle } from '$lib/components/ui/card';
-  import CardDescription from '$lib/components/ui/card/card-description.svelte';
+  import { goto } from '$app/navigation';
+  import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardTitle,
+    CardDescription,
+  } from '$lib/components/ui/card';
+  import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectInput,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+  } from '$lib/components/ui/select';
   import {
     Table,
     TableBody,
@@ -10,13 +26,16 @@
     TableHeader,
     TableRow,
   } from '$lib/components/ui/table';
-  import { formatDateWithWeekday, formatTime, getDuration } from '$lib/date';
+  import { formatDateWithWeekday, formatTime, getDuration, MONTHS, YEARS } from '$lib/date';
   import type { Session } from '$lib/server/db/schema';
+  import { redirect } from '@sveltejs/kit';
   import { MessageSquare } from 'lucide-svelte';
 
   type Props = {
     data: {
       sessions: Session[];
+      month: number;
+      year: number;
     };
   };
   const { data }: Props = $props();
@@ -28,6 +47,58 @@
     <CardDescription>Your previous shifts.</CardDescription>
   </CardHeader>
   <CardContent>
+    <div class="mb-2 flex flex-row gap-2">
+      <Select
+        selected={{
+          value: data.month,
+          label: MONTHS[data.month],
+        }}
+        onSelectedChange={(res) => {
+          if (!res) {
+            return;
+          }
+          goto(`/history/${data.year}/${res.value}`);
+        }}
+      >
+        <SelectTrigger class="max-w-xs">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Month</SelectLabel>
+            {#each MONTHS as month, i (month)}
+              <SelectItem value={i}>{month}</SelectItem>
+            {/each}
+          </SelectGroup>
+        </SelectContent>
+        <SelectInput />
+      </Select>
+      <Select
+        selected={{
+          value: data.year,
+          label: '' + data.year,
+        }}
+        onSelectedChange={(res) => {
+          if (!res) {
+            return;
+          }
+          goto(`/history/${res.value}/${data.month}`);
+        }}
+      >
+        <SelectTrigger class="max-w-xs">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Year</SelectLabel>
+            {#each YEARS as year (year)}
+              <SelectItem value={year}>{year}</SelectItem>
+            {/each}
+          </SelectGroup>
+        </SelectContent>
+        <SelectInput />
+      </Select>
+    </div>
     <Table>
       <TableHeader>
         <TableRow>
