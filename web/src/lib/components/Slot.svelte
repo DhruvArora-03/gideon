@@ -134,9 +134,9 @@
     </CardTitle>
     <CardDescription>
       <p class="md:flex md:flex-col lg:block">
-        <span>{formatTime(data.start_time)}</span>
-        <span class="md:hidden lg:inline">{' - '}</span>
-        <span>{formatTime(data.end_time)}</span>
+        <span>Start: {formatTime(data.start_time)}</span>
+        <span class="md:hidden">{' - '}</span>
+        <span>End: {formatTime(data.end_time)}</span>
       </p>
       <p>
         {data.capacity - slotsLeft} / {data.capacity} taken
