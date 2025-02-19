@@ -20,8 +20,6 @@
     };
   };
   const { data }: Props = $props();
-
-  const sessions = data.sessions;
 </script>
 
 <Card>
@@ -40,7 +38,7 @@
         </TableRow>
       </TableHeader>
       <TableBody>
-        {#each sessions as s (s.id)}
+        {#each data.sessions as s (s.id)}
           <TableRow>
             <TableCell>{formatDateWithWeekday(s.clock_in)}</TableCell>
             <TableCell>{formatTime(s.clock_in)}</TableCell>
