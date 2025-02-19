@@ -1,12 +1,21 @@
 <script lang="ts">
   import PageWrapper from '$lib/components/PageWrapper.svelte';
-  import ShiftSignup from '$lib/components/ShiftSignup.svelte';
+  import { Card } from '$lib/components/ui/card';
+  import type { Profile } from '$lib/server/db/schema';
 
-  let { data } = $props();
+  type Props = {
+    data: {
+      profile: Profile;
+    };
+  };
+  const { data }: Props = $props();
 </script>
 
-<PageWrapper>
-  <div class="flex h-full items-center justify-center">
-    <ShiftSignup slots={data.slots} userId={data.user.id} random={data.random} />
-  </div>
+<PageWrapper class="p-4">
+  <h1 class="text-2xl font-semibold">
+    Welcome Back, <span class="capitalize">{data.profile.first_name}</span>
+  </h1>
+  <Card>
+    <pre>{JSON.stringify(data.profile, null, 2)}</pre>
+  </Card>
 </PageWrapper>

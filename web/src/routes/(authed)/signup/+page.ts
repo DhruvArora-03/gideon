@@ -6,7 +6,6 @@ export const load: PageLoad = async ({ fetch }) => {
   const json = await res.json();
 
   return {
-    random: Math.random(),
     slots: json.map(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (x: any) =>

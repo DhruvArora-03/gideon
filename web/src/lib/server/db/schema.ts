@@ -38,6 +38,9 @@ export const profiles = createTable('profiles', {
   role: userRole().notNull().default('employee'),
 });
 
+export type NewProfile = typeof profiles.$inferInsert;
+export type Profile = typeof profiles.$inferSelect;
+
 export const profileRelations = relations(profiles, ({ many }) => ({
   assignments: many(assignments, {
     relationName: 'profile_assignments',
@@ -58,16 +61,15 @@ export const slots = createTable('slots', {
 
 export type NewSlot = typeof slots.$inferInsert;
 export type Slot = typeof slots.$inferSelect;
+export type SlotWithAssignments = Slot & {
+  assignments: Assignment[];
+};
 
 export const slotsRelations = relations(slots, ({ many }) => ({
   assignments: many(assignments, {
     relationName: 'slot_assignments',
   }),
 }));
-
-export type SlotWithAssignments = Slot & {
-  assignments: Assignment[];
-};
 
 export const assignmentStatus = pgEnum('assignment_status', ['confirmed', 'waitlisted']);
 

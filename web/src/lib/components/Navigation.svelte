@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { Button } from '$lib/components/ui/button';
-  import { History, Home, type Icon as IconType, Settings } from 'lucide-svelte';
+  import { CalendarPlus, History, Home, type Icon as IconType, Settings } from 'lucide-svelte';
 
   type NavItem = {
     href: string;
@@ -13,6 +13,11 @@
       href: '/home',
       label: 'Home',
       icon: Home,
+    },
+    {
+      href: '/signup',
+      label: 'Sign Up',
+      icon: CalendarPlus,
     },
     {
       href: '/history',
