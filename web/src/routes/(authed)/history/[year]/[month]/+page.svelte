@@ -28,7 +28,6 @@
   } from '$lib/components/ui/table';
   import { formatDateWithWeekday, formatTime, getDuration, MONTHS, YEARS } from '$lib/date';
   import type { Session } from '$lib/server/db/schema';
-  import { redirect } from '@sveltejs/kit';
   import { MessageSquare } from 'lucide-svelte';
 
   type Props = {
@@ -44,7 +43,7 @@
 <Card>
   <CardHeader>
     <CardTitle>Previous Shifts</CardTitle>
-    <CardDescription>Your previous shifts.</CardDescription>
+    <CardDescription>Review all of your recorded shifts.</CardDescription>
   </CardHeader>
   <CardContent>
     <div class="mb-2 flex flex-row gap-2">
@@ -135,7 +134,7 @@
         {/each}
       </TableBody>
       <TableCaption>
-        {`${data.sessions.length} completed shifts found in ${MONTHS[data.month]} ${data.year}`}
+        {`${data.sessions.length === 0 ? 'No' : data.sessions.length} previous shifts found in ${MONTHS[data.month]} ${data.year}`}
       </TableCaption>
     </Table>
   </CardContent>
