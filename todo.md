@@ -4,7 +4,6 @@
 - [ ] Look into preloading - https://svelte.dev/tutorial/kit/preload
 - [ ] Add dark mode toggle to nav bar (https://www.shadcn-svelte.com/docs/dark-mode/svelte)
 - [ ] Fix leave waitlist button
-- [ ] Fix nav bar not highlight on history when doing different month
 - [ ] remove on delete cascade
 - [ ] automatically create shifts
 - [ ] admin screen to manage shifts
@@ -15,6 +14,7 @@
 - [ ] chat (employee side)
 - [ ] setup notifications (https://push.foo/)
 - [ ] fix registration flow: invite --> email --> confirm --> reset password
+- [x] Fix nav bar not highlight on history when doing different month
 - [x] Add nav bar
 - [x] Wire up shift signup buttons
 - [x] Use toast to show success after inviting user
