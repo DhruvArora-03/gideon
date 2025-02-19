@@ -15,7 +15,10 @@ export const MONTHS = [
   'December',
 ];
 
-export const YEARS = Array.from({ length: 10 }, (_, i) => new Date().getFullYear() - i);
+export const YEARS = Array.from(
+  { length: new Date().getFullYear() - 2020 },
+  (_, i) => new Date().getFullYear() - i,
+);
 
 const dateFormat = new Intl.DateTimeFormat('en-US', {
   month: 'short',
