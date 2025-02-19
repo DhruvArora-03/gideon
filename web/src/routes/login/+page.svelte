@@ -34,7 +34,7 @@
       <CardDescription>Welcome back! Use your credentials to log in</CardDescription>
     </CardHeader>
     <CardContent>
-      <form method="POST">
+      <form method="POST" use:enhance>
         <Field {form} name="email">
           <Control let:attrs>
             <Label>
