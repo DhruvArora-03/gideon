@@ -14,6 +14,7 @@
 - [ ] chat (admin side)
 - [ ] chat (employee side)
 - [ ] setup notifications (https://push.foo/)
+- [ ] fix registration flow: invite --> email --> confirm --> reset password
 - [x] Add nav bar
 - [x] Wire up shift signup buttons
 - [x] Use toast to show success after inviting user
