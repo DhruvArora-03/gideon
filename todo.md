@@ -5,6 +5,14 @@
 - [ ] Add dark mode toggle to nav bar (https://www.shadcn-svelte.com/docs/dark-mode/svelte)
 - [ ] Fix leave waitlist button
 - [ ] Fix nav bar not highlight on history when doing different month
+- [ ] remove on delete cascade
+- [ ] automatically create shifts
+- [ ] admin screen to manage shifts
+- [ ] admin screen to manage users
+- [ ] roles for users
+- [ ] admin screen for managing default shifts
+- [ ] chat (admin side)
+- [ ] chat (employee side)
 - [x] Add nav bar
 - [x] Wire up shift signup buttons
 - [x] Use toast to show success after inviting user
