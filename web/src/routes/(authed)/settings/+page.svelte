@@ -18,7 +18,7 @@
 {#snippet accountField(label: string, value: string)}
   <Label>
     <span class="text-bold">{label}</span>
-    <Input class="mt-2" {value} readonly />
+    <Input class="mt-2" {value} readonly autocomplete="off" />
   </Label>
 {/snippet}
 
@@ -39,7 +39,7 @@
       {@render accountField('Phone Number', data.profile.phone_number)}
     </CardContent>
   </Card>
-  <Button href="/dashboard/settings/change-password">
+  <Button href="/settings/change-password">
     <LockKeyholeOpen /> Change Password
   </Button>
   <Card class="max-w-md">

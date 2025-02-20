@@ -28,7 +28,7 @@
 
 <PageWrapper
   class="flex items-center justify-center"
-  previousHref="/dashboard/settings"
+  previousHref="/settings"
   previousPageTitle="Settings"
 >
   <Card class="max-w-sm">
