@@ -1,16 +1,17 @@
 <script lang="ts">
   import LogoutButton from '$lib/components/LogoutButton.svelte';
   import { Button } from '$lib/components/ui/button';
-  import { mode, resetMode } from 'mode-watcher';
+  import { resetMode } from 'mode-watcher';
   import type { PageProps } from './$types';
   import CardHeader from '$lib/components/ui/card/card-header.svelte';
   import { Card, CardContent, CardTitle } from '$lib/components/ui/card';
   import { setMode } from 'mode-watcher';
-  import { LockKeyholeOpen, Moon, Settings, Settings2, Sun } from 'lucide-svelte';
+  import { Moon, Settings2, Sun } from 'lucide-svelte';
   import CardDescription from '$lib/components/ui/card/card-description.svelte';
   import PageWrapper from '$lib/components/PageWrapper.svelte';
   import { Label } from '$lib/components/ui/label';
   import { Input } from '$lib/components/ui/input';
+  import ChangePassword from '$lib/components/ChangePassword.svelte';
 
   let { data }: PageProps = $props();
 </script>
@@ -22,10 +23,12 @@
   </Label>
 {/snippet}
 
-<PageWrapper class="space-y-4 p-4">
+<PageWrapper class="max-w-md space-y-4 p-4">
   <h1 class="text-2xl font-semibold">Settings</h1>
 
-  <Card class="max-w-md">
+  <LogoutButton supabase={data.supabase} />
+
+  <Card>
     <CardHeader>
       <CardTitle>Account Details</CardTitle>
       <CardDescription>
@@ -39,10 +42,10 @@
       {@render accountField('Phone Number', data.profile.phone_number)}
     </CardContent>
   </Card>
-  <Button href="/settings/change-password">
-    <LockKeyholeOpen /> Change Password
-  </Button>
-  <Card class="max-w-md">
+
+  <ChangePassword form={data.form} />
+
+  <Card>
     <CardHeader>
       <CardTitle>Theme</CardTitle>
       <CardDescription>
@@ -62,6 +65,4 @@
       </Button>
     </CardContent>
   </Card>
-
-  <LogoutButton supabase={data.supabase} />
 </PageWrapper>

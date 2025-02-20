@@ -1,20 +1,21 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
   import { Button } from '$lib/components/ui/button';
+  import { cn } from '$lib/utils';
   import type { SupabaseClient } from '@supabase/supabase-js';
   import { LogOut } from 'lucide-svelte';
 
   type Props = {
     supabase: SupabaseClient;
+    class?: string;
   };
-  let { supabase }: Props = $props();
+  const props: Props = $props();
 
-  async function logout() {
-    await supabase.auth.signOut();
-    goto('/login');
+  function logout() {
+    props.supabase.auth.signOut().then(() => goto('/login'));
   }
 </script>
 
-<Button class="w-full" onclick={logout}>
+<Button class={cn('w-full', props.class)} onclick={logout}>
   <LogOut /> Log out
 </Button>

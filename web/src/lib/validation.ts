@@ -37,4 +37,4 @@ export const changePasswordFormSchema = z
     message: 'Passwords must match',
     path: ['confirm_new_password'], // This specifies where the error will appear
   });
-export type ResetPasswordFormSchema = z.infer<typeof changePasswordFormSchema>;
+export type ChangePasswordFormSchema = z.infer<typeof changePasswordFormSchema>;
