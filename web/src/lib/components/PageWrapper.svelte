@@ -13,7 +13,7 @@
   let { children, class: className, previousHref, previousPageTitle }: Props = $props();
 </script>
 
-<main class={cn('h-full min-h-screen', className)}>
+<main class={cn('relative h-full min-h-screen', className)}>
   {#if previousHref && previousPageTitle}
     <Button class="absolute left-0 top-0" variant={'link'} href={previousHref}>
       <ArrowLeft />

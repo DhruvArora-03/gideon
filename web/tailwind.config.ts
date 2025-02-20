@@ -61,9 +61,6 @@ const config: Config = {
       fontFamily: {
         sans: [...fontFamily.sans],
       },
-      gridTemplateColumns: {
-        form: '120px 1fr',
-      },
     },
   },
 };
