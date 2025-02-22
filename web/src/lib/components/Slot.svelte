@@ -133,7 +133,7 @@
       {/if}
     </CardTitle>
     <CardDescription>
-      <p class="md:flex md:flex-col lg:block">
+      <p class="md:flex md:flex-col">
         <span>Start: {formatTime(data.start_time)}</span>
         <span class="md:hidden">{' - '}</span>
         <span>End: {formatTime(data.end_time)}</span>
