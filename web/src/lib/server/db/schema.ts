@@ -6,6 +6,7 @@ import {
   pgTableCreator,
   serial,
   text,
+  time,
   timestamp,
   uuid,
 } from 'drizzle-orm/pg-core';
@@ -47,6 +48,24 @@ export const profileRelations = relations(profiles, ({ many }) => ({
   }),
   sessions: many(sessions, {
     relationName: 'profile_sessions',
+  }),
+}));
+
+export const defaultSlots = createTable('default_slots', {
+  id: serial().primaryKey(),
+  created_at: getCreatedAtColumn(),
+  updated_at: getUpdatedAtColumn(),
+  start_time: time({ withTimezone: true }).notNull(),
+  end_time: time({ withTimezone: true }).notNull(),
+  capacity: integer().notNull(),
+});
+
+export type NewDefaultSlot = typeof defaultSlots.$inferInsert;
+export type DefaultSlot = typeof defaultSlots.$inferSelect;
+
+export const defaultSlotsRelations = relations(defaultSlots, ({ many }) => ({
+  slots: many(slots, {
+    relationName: 'default_slot_slots',
   }),
 }));
 
