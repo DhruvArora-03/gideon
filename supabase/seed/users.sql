@@ -30,7 +30,7 @@ insert into
             current_timestamp,
             current_timestamp,
             '{"provider":"email","providers":["email"]}',
-            format('{"first_name":"%s","last_name":"%s","phone_number":"123-456-7890"}', 'First' || row_number() over (), 'Last' || row_number() over ())::jsonb,
+            format('{"first_name":"%s","last_name":"%s","phone_number":"123-456-7890","role":"employee"}', 'First' || row_number() over (), 'Last' || row_number() over ())::jsonb,
             current_timestamp,
             current_timestamp,
             '',
