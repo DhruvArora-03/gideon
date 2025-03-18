@@ -1,3 +1,4 @@
+import { USER_ROLES } from '$lib/models';
 import { relations } from 'drizzle-orm';
 import {
   boolean,
@@ -23,7 +24,9 @@ const getUpdatedAtColumn = () =>
     .defaultNow()
     .$onUpdateFn(() => new Date());
 
-export const userRole = pgEnum('user_role', ['admin', 'manager', 'employee']);
+export const userRole = pgEnum('user_role', USER_ROLES);
+
+export type UserRole = (typeof userRole.enumValues)[number];
 
 export const profiles = createTable('profiles', {
   // Matches id from auth.users table in Supabase

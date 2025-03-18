@@ -1,4 +1,4 @@
-import { userRole } from '$lib/server/db/schema';
+import { USER_ROLES } from '$lib/models';
 import { z } from 'zod';
 
 export const inviteFormSchema = z
@@ -9,7 +9,7 @@ export const inviteFormSchema = z
     phone_number: z
       .string()
       .regex(/^\d{3}-\d{3}-\d{4}$/, 'Phone number must be in the format 123-456-7890'),
-    role: z.enum(userRole.enumValues),
+    role: z.enum(USER_ROLES),
   })
   .required();
 export type InviteFormSchema = z.infer<typeof inviteFormSchema>;
