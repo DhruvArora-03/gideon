@@ -54,7 +54,13 @@
 <!-- Desktop top nav -->
 <nav class="bg-background hidden border-b md:block">
   <div class="mx-auto flex items-center justify-between gap-6 px-6 pb-3">
-    <span class="text-xl font-semibold">Gideon Admin</span>
+    <span class="text-xl font-semibold">
+      {#if page.url.pathname.startsWith('/admin')}
+        Gideon Admin Portal
+      {:else}
+        Gideon Employee Portal
+      {/if}
+    </span>
     <ul class="flex items-center gap-4">
       {#each navItems as item}
         <li>
