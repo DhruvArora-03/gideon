@@ -1,12 +1,27 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { Button } from '$lib/components/ui/button';
-  import { CalendarPlus, History, Home, type Icon as IconType, Settings } from 'lucide-svelte';
+  import {
+    CalendarCog,
+    CalendarPlus,
+    DoorClosed,
+    DoorOpen,
+    History,
+    Home,
+    Icon,
+    Settings,
+    Users,
+  } from 'lucide-svelte';
+
+  type Props = {
+    showAdmin: boolean;
+  };
+  const { showAdmin }: Props = $props();
 
   type NavItem = {
     href: string;
     label: string;
-    icon: typeof IconType;
+    icon: typeof Icon;
   };
   const navItems: NavItem[] = [
     {
@@ -26,6 +41,23 @@
     },
     {
       href: '/settings',
+      label: 'Settings',
+      icon: Settings,
+    },
+  ];
+  const adminNavItems: NavItem[] = [
+    {
+      href: '/admin/users',
+      label: 'Users',
+      icon: Users,
+    },
+    {
+      href: '/admin/shifts',
+      label: 'Shifts',
+      icon: CalendarCog,
+    },
+    {
+      href: '/admin/settings',
       label: 'Settings',
       icon: Settings,
     },
@@ -52,6 +84,19 @@
 </nav>
 
 <!-- Desktop top nav -->
+{#snippet topNavItem(item: NavItem)}
+  <li>
+    <Button
+      variant="ghost"
+      href={item.href}
+      class={page.url.pathname.startsWith(item.href) ? 'bg-accent' : ''}
+    >
+      <item.icon />
+      {item.label}
+    </Button>
+  </li>
+{/snippet}
+
 <nav class="bg-background hidden border-b md:block">
   <div class="mx-auto flex items-center justify-between gap-6 px-6 pb-3">
     <span class="text-xl font-semibold">
@@ -62,18 +107,28 @@
       {/if}
     </span>
     <ul class="flex items-center gap-4">
-      {#each navItems as item}
-        <li>
-          <Button
-            variant="ghost"
-            href={item.href}
-            class={page.url.pathname.startsWith(item.href) ? 'bg-accent' : ''}
-          >
-            <item.icon />
-            {item.label}
-          </Button>
-        </li>
-      {/each}
+      {#if page.url.pathname.startsWith('/admin')}
+        {@render topNavItem({
+          href: '/home',
+          label: 'Employee Portal',
+          icon: DoorOpen,
+        })}
+
+        {#each adminNavItems as item}
+          {@render topNavItem(item)}
+        {/each}
+      {:else}
+        {#if showAdmin}
+          {@render topNavItem({
+            href: '/admin/dashboard',
+            label: 'Admin Portal',
+            icon: DoorClosed,
+          })}
+        {/if}
+        {#each navItems as item}
+          {@render topNavItem(item)}
+        {/each}
+      {/if}
     </ul>
   </div>
 </nav>
