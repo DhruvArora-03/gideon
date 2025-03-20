@@ -17,5 +17,5 @@
   previousHref="/settings"
   previousPageTitle="Settings"
 >
-  <ChangePassword class="max-w-md" form={data.form} />
+  <ChangePassword class="mx-auto max-w-md" form={data.form} />
 </PageWrapper>

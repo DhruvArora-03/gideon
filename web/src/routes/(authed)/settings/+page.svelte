@@ -23,7 +23,7 @@
   </Label>
 {/snippet}
 
-<PageWrapper class="max-w-md space-y-4 p-4">
+<PageWrapper class="mx-auto max-w-md space-y-4 p-4">
   <h1 class="text-2xl font-semibold">Settings</h1>
 
   <LogoutButton supabase={data.supabase} />

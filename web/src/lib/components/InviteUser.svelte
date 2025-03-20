@@ -50,7 +50,7 @@
   const { form: formData, message, enhance, submitting } = form;
 </script>
 
-<Card class="max-w-md">
+<Card class="mx-auto max-w-md">
   <CardHeader>
     <CardTitle>Invite User</CardTitle>
     <CardDescription>
