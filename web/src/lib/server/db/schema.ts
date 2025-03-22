@@ -1,4 +1,4 @@
-import { USER_ROLES } from '$lib/models';
+import { USER_ROLES } from '../../models';
 import { relations } from 'drizzle-orm';
 import {
   boolean,
@@ -58,6 +58,7 @@ export const defaultSlots = createTable('default_slots', {
   id: serial().primaryKey(),
   created_at: getCreatedAtColumn(),
   updated_at: getUpdatedAtColumn(),
+  dotw: integer().notNull(),
   start_time: time({ withTimezone: true }).notNull(),
   end_time: time({ withTimezone: true }).notNull(),
   capacity: integer().notNull(),
