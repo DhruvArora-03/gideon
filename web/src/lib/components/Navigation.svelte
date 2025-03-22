@@ -9,6 +9,7 @@
     History,
     Home,
     Icon,
+    LayoutDashboard,
     Settings,
     Users,
   } from 'lucide-svelte';
@@ -47,13 +48,18 @@
   ];
   const adminNavItems: NavItem[] = [
     {
+      href: '/admin/dashboard',
+      label: 'Dashboard',
+      icon: LayoutDashboard,
+    },
+    {
       href: '/admin/users',
       label: 'Users',
       icon: Users,
     },
     {
-      href: '/admin/shifts',
-      label: 'Shifts',
+      href: '/admin/slots',
+      label: 'Slots',
       icon: CalendarCog,
     },
     {

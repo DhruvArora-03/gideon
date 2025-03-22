@@ -3,5 +3,5 @@
 </script>
 
 <PageWrapper class="space-y-4 p-4">
-  <h1 class="text-2xl font-semibold">Manage Shifts</h1>
+  <h1 class="text-2xl font-semibold">Manage Slots</h1>
 </PageWrapper>
