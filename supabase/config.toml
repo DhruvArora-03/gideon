@@ -46,6 +46,7 @@ max_client_conn = 100
 # If enabled, seeds the database after migrations during a db reset.
 enabled = true
 sql_paths = [
+    './seed/default_slots.sql',
     './seed/users.sql',
     './seed/slots.sql',
     './seed/assignments.sql',
