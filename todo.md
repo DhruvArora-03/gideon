@@ -7,7 +7,7 @@
 - [ ] automatically create shifts
 - [ ] admin screen to manage shifts
 - [ ] admin screen to manage users
-- [ ] roles for users
+- [x] roles for users
 - [ ] admin screen for managing default shifts
 - [ ] chat (admin side)
 - [ ] chat (employee side)
