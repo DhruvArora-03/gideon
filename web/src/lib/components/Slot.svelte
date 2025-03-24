@@ -123,9 +123,9 @@
       class={cn('flex w-full items-center gap-1 text-sm font-semibold [&>svg]:h-4 [&>svg]:w-4')}
     >
       {#if status === 'confirmed'}
-        <CalendarCheck /> Confirmed
+        <CalendarCheck class="mr-2 size-4" /> Confirmed
       {:else if status === 'waitlisted'}
-        <CalendarClock /> Waitlisted
+        <CalendarClock class="mr-2 size-4" /> Waitlisted
       {:else if slotsLeft === 0}
         <span class="text-destructive">Unavailable</span>
       {:else}
@@ -149,7 +149,7 @@
         {#if loading}
           <LoaderCircle class="animate-spin" />
         {:else}
-          <LogOut /> Cancel
+          <LogOut class="mr-2 size-4" /> Cancel
         {/if}
       </Button>
     {:else if slotsLeft === 0}
@@ -157,7 +157,7 @@
         {#if loading}
           <LoaderCircle class="animate-spin" />
         {:else}
-          <UserPlus /> Join Waitlist
+          <UserPlus class="mr-2 size-4" /> Join Waitlist
         {/if}
       </Button>
     {:else}
@@ -165,7 +165,7 @@
         {#if loading}
           <LoaderCircle class="animate-spin" />
         {:else}
-          <CalendarPlus /> Sign up
+          <CalendarPlus class="mr-2 size-4" /> Sign up
         {/if}
       </Button>
     {/if}

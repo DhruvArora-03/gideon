@@ -17,5 +17,5 @@
 </script>
 
 <Button class={cn('w-full', props.class)} onclick={logout}>
-  <LogOut /> Log out
+  <LogOut class="mr-2 size-4" /> Log out
 </Button>

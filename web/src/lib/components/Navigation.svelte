@@ -1,6 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { Button } from '$lib/components/ui/button';
+  import { cn } from '$lib/utils';
   import {
     CalendarCog,
     CalendarPlus,
@@ -24,6 +25,7 @@
     label: string;
     icon: typeof Icon;
   };
+
   const navItems: NavItem[] = [
     {
       href: '/home',
@@ -46,6 +48,7 @@
       icon: Settings,
     },
   ];
+
   const adminNavItems: NavItem[] = [
     {
       href: '/admin/dashboard',
@@ -71,34 +74,59 @@
 </script>
 
 <!-- Mobile bottom nav -->
+{#snippet bottomNavItem(item: NavItem)}
+  {@const Icon = item.icon}
+  <li>
+    <Button
+      variant="ghost"
+      href={item.href}
+      class={cn(page.url.pathname === item.href && 'bg-accent', 'flex h-fit flex-col gap-1')}
+    >
+      <Icon class="block size-5" />
+      <span class="text-2xs block">{item.label}</span>
+    </Button>
+  </li>
+{/snippet}
+
 <nav class="bg-background fixed bottom-0 left-0 right-0 z-50 border-t p-2 md:hidden">
   <ul class="flex items-center justify-around">
-    {#each navItems as item}
-      {@const Icon = item.icon}
-      <li>
-        <Button
-          variant="ghost"
-          href={item.href}
-          class={page.url.pathname === item.href ? 'bg-accent' : ''}
-        >
-          <Icon class="h-5 w-5" />
-          <span class="text-xs">{item.label}</span>
-        </Button>
-      </li>
-    {/each}
+    {#if page.url.pathname.startsWith('/admin')}
+      {@render bottomNavItem({
+        href: '/home',
+        label: 'Employee Portal',
+        icon: DoorOpen,
+      })}
+
+      {#each adminNavItems as item}
+        {@render bottomNavItem(item)}
+      {/each}
+    {:else}
+      {#if showAdmin}
+        {@render bottomNavItem({
+          href: '/admin/dashboard',
+          label: 'Admin Portal',
+          icon: DoorClosed,
+        })}
+      {/if}
+
+      {#each navItems as item}
+        {@render bottomNavItem(item)}
+      {/each}
+    {/if}
   </ul>
 </nav>
 
 <!-- Desktop top nav -->
 {#snippet topNavItem(item: NavItem)}
+  {@const Icon = item.icon}
   <li>
     <Button
       variant="ghost"
       href={item.href}
       class={page.url.pathname.startsWith(item.href) ? 'bg-accent' : ''}
     >
-      <item.icon />
-      {item.label}
+      <Icon class="mr-2 size-4" />
+      <span>{item.label}</span>
     </Button>
   </li>
 {/snippet}
@@ -131,6 +159,7 @@
             icon: DoorClosed,
           })}
         {/if}
+
         {#each navItems as item}
           {@render topNavItem(item)}
         {/each}
