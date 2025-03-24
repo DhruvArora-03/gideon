@@ -36,9 +36,9 @@
         <CardTitle>Shift Signup</CardTitle>
         <CardDescription class="flex w-full gap-4">
           <p>
-            View information for all upcoming shifts. Use the buttons on each shift to take action.
+            Use the buttons on each shift to take action.
             <span class={cn({ hidden: carouselOrientation === 'vertical' })}>
-              Click or drag horizontally to view more weeks.
+              Click the arrows or drag horizontally to view more weeks.
             </span>
           </p>
           <div
