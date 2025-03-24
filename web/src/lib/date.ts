@@ -113,5 +113,5 @@ export const getDaysBetween = (date1: Date, date2: Date): number => {
 export const getDuration = (start: Date, end: Date): string => {
   const hours = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
 
-  return `${hours.toFixed(2)} ${hours === 1 ? 'hour' : 'hours'}`;
+  return `${hours.toFixed(2)} ${hours === 1 ? 'hr' : 'hrs'}`;
 };
