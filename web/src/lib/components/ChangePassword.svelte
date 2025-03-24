@@ -73,7 +73,7 @@
         </p>
       {/if}
       <Button class="mt-4 w-full " type="submit">
-        <LockKeyhole class="mr-2 size-4" /> Confirm Password Change
+        <LockKeyhole class="mr-2" size={16} /> Confirm Password Change
       </Button>
     </form>
   </CardContent>

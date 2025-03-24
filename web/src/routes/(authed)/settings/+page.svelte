@@ -55,13 +55,13 @@
     </CardHeader>
     <CardContent>
       <Button variant="secondary" class="mt-4" on:click={() => setMode('light')}>
-        <Sun class="mr-2 size-4" /> Light
+        <Sun class="mr-2" size={16} /> Light
       </Button>
       <Button variant="secondary" class="mt-4" on:click={() => setMode('dark')}>
-        <Moon class="mr-2 size-4" /> Dark
+        <Moon class="mr-2" size={16} /> Dark
       </Button>
       <Button variant="secondary" class="mt-4" on:click={() => resetMode()}>
-        <Settings2 class="mr-2 size-4" /> System
+        <Settings2 class="mr-2" size={16} /> System
       </Button>
     </CardContent>
   </Card>

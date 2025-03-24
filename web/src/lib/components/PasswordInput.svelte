@@ -21,9 +21,9 @@
     }}
   >
     {#if showPassword}
-      <Eye class="mr-2 size-4" />
+      <Eye class="mr-2" size={16} />
     {:else}
-      <EyeOff class="mr-2 size-4" />
+      <EyeOff class="mr-2" size={16} />
     {/if}
     <span class="sr-only">
       {showPassword ? 'Hide Password' : 'Show Password'} password

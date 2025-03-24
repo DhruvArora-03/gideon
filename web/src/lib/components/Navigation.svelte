@@ -82,8 +82,8 @@
       href={item.href}
       class={cn(page.url.pathname === item.href && 'bg-accent', 'flex h-fit flex-col gap-1')}
     >
-      <Icon class="block size-5" />
-      <span class="text-2xs block">{item.label}</span>
+      <Icon size={20} />
+      <span class="text-2xs">{item.label}</span>
     </Button>
   </li>
 {/snippet}
@@ -125,7 +125,7 @@
       href={item.href}
       class={page.url.pathname.startsWith(item.href) ? 'bg-accent' : ''}
     >
-      <Icon class="mr-2 size-4" />
+      <Icon class="mr-2" size={20} />
       <span>{item.label}</span>
     </Button>
   </li>
