@@ -61,6 +61,9 @@ const config: Config = {
       fontFamily: {
         sans: [...fontFamily.sans],
       },
+      fontSize: {
+        '2xs': '10px',
+      },
     },
   },
 };
