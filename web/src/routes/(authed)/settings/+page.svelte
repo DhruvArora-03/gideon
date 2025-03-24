@@ -53,14 +53,14 @@
         or you can use your device's default setting.
       </CardDescription>
     </CardHeader>
-    <CardContent>
-      <Button variant="secondary" class="mt-4" on:click={() => setMode('light')}>
+    <CardContent class="flex flex-col gap-2 pt-4 sm:flex-row">
+      <Button variant="secondary" on:click={() => setMode('light')}>
         <Sun class="mr-2" size={16} /> Light
       </Button>
-      <Button variant="secondary" class="mt-4" on:click={() => setMode('dark')}>
+      <Button variant="secondary" on:click={() => setMode('dark')}>
         <Moon class="mr-2" size={16} /> Dark
       </Button>
-      <Button variant="secondary" class="mt-4" on:click={() => resetMode()}>
+      <Button variant="secondary" on:click={() => resetMode()}>
         <Settings2 class="mr-2" size={16} /> System
       </Button>
     </CardContent>
