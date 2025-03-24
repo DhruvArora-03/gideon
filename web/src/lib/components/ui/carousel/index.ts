@@ -4,4 +4,11 @@ import { default as CarouselItem } from './carousel-item.svelte';
 import { default as CarouselPrevious } from './carousel-previous.svelte';
 import { default as CarouselNext } from './carousel-next.svelte';
 
-export { CarouselRoot, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext };
+export {
+  CarouselRoot as Carousel,
+  CarouselRoot,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+};

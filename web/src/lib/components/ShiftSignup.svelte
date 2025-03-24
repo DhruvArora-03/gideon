@@ -8,12 +8,12 @@
     CardTitle,
   } from '$lib/components/ui/card';
   import {
+    Carousel,
+    CarouselContent,
     CarouselItem,
     CarouselNext,
     CarouselPrevious,
-    CarouselRoot,
   } from '$lib/components/ui/carousel';
-  import CarouselContent from '$lib/components/ui/carousel/carousel-content.svelte';
   import type { Week } from '$lib/date';
   import { addDays, formatDate, formatDateWithWeekday, getDaysBetween } from '$lib/date';
   import type { SlotWithAssignments } from '$lib/server/db/schema';
@@ -30,7 +30,7 @@
 </script>
 
 {#snippet mainContent(carouselOrientation: 'horizontal' | 'vertical')}
-  <CarouselRoot orientation={carouselOrientation} opts={{ align: 'start' }}>
+  <Carousel orientation={carouselOrientation} opts={{ align: 'start' }}>
     <Card class="w-full border-none shadow-none [&>*]:px-0 sm:[&>*]:px-6">
       <CardHeader>
         <CardTitle>Shift Signup</CardTitle>
@@ -98,7 +98,7 @@
         </CarouselContent>
       </CardContent>
     </Card>
-  </CarouselRoot>
+  </Carousel>
 {/snippet}
 
 <div class="lg:hidden">
