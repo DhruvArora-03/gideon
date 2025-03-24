@@ -58,8 +58,7 @@
       <TableRow>
         <TableHead>Start</TableHead>
         <TableHead>End</TableHead>
-        <TableHead>Capacity</TableHead>
-        <TableHead>Edit</TableHead>
+        <TableHead colspan={2}>Capacity</TableHead>
       </TableRow>
     </TableHeader>
     <TableBody>
@@ -73,13 +72,13 @@
           <TableCell class="pl-4">{formatTime(parseTime(s.start_time))}</TableCell>
           <TableCell>{formatTime(parseTime(s.end_time))}</TableCell>
           <TableCell>{s.capacity}</TableCell>
-          <TableCell>
+          <TableCell align="right">
             {#if desktop.current}
-              <DialogTrigger class={cn(buttonVariants({ variant: 'secondary' }))}>
-                <Edit class="mr-2" size={16} /> Edit
+              <DialogTrigger class={cn(buttonVariants({ variant: 'ghost' }))}>
+                <Edit size={16} />
               </DialogTrigger>
             {:else}
-              <SheetTrigger class={buttonVariants({ variant: 'secondary' })}>
+              <SheetTrigger class={buttonVariants({ variant: 'ghost' })}>
                 <Edit size={16} />
               </SheetTrigger>
             {/if}
