@@ -1,7 +1,8 @@
+import * as defaultSlotsQueries from './defaultSlots';
 import * as profileQueries from './profile';
-import * as slotsQueries from './slots';
 import * as sessionsQueries from './sessions';
+import * as slotsQueries from './slots';
 
-const queries = { ...profileQueries, ...slotsQueries, ...sessionsQueries };
+const queries = { ...defaultSlotsQueries, ...profileQueries, ...sessionsQueries, ...slotsQueries };
 
 export default queries;
