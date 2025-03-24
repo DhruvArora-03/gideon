@@ -41,7 +41,7 @@
   const { data }: Props = $props();
 </script>
 
-<PageWrapper class="md:p-4">
+<PageWrapper class="pb-10 md:p-4">
   <Card>
     <CardHeader>
       <CardTitle>Previous Shifts</CardTitle>
