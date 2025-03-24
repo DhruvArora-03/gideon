@@ -32,7 +32,7 @@
     <CardHeader>
       <CardTitle>Account Details</CardTitle>
       <CardDescription>
-        These account details are only editable by members of the admin team.
+        These fields are only editable by members of the admin team.
       </CardDescription>
     </CardHeader>
     <CardContent class="flex flex-col gap-4">
