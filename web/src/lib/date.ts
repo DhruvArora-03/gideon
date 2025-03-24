@@ -42,6 +42,38 @@ const timeFormat = new Intl.DateTimeFormat('en-US', {
 
 export const formatTime = timeFormat.format;
 
+const dotwFormat = new Intl.DateTimeFormat('en-US', {
+  weekday: 'long',
+});
+
+export const formatDotw = (dotw: number): string => dotwFormat.format(new Date(0, 0, dotw));
+
+export const parseTime = (time: string): number => {
+  const regex = /^(\d{2}):(\d{2}):(\d{2})([-+])(\d{2}):(\d{2})?$/;
+
+  const match = time.match(regex);
+  if (!match) {
+    throw new Error(`Invalid time format: ${time}`);
+  }
+
+  const [, hours, minutes, seconds, sign, offsetHours, offsetMinutes] = match;
+
+  const oh = Number.parseInt(offsetHours);
+  const om = offsetMinutes ? Number.parseInt(offsetMinutes) : 0;
+
+  const totalOffsetMinutes = (sign === '-' ? -1 : 1) * (oh * 60 + om);
+
+  return Date.UTC(
+    0,
+    0,
+    0,
+    Number.parseInt(hours),
+    Number.parseInt(minutes) + totalOffsetMinutes,
+    Number.parseInt(seconds),
+    0,
+  );
+};
+
 export type Week = {
   start: Date;
   days: SlotWithAssignments[][];
