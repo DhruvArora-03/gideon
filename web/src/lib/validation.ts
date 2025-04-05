@@ -40,3 +40,11 @@ export const changePasswordFormSchema = z
     path: ['confirm_new_password'], // This specifies where the error will appear
   });
 export type ChangePasswordFormSchema = z.infer<typeof changePasswordFormSchema>;
+
+export const updateDefaultSlotSchema = z.object({
+  dotw: z.number().min(0).max(6),
+  start_time: z.string().date(),
+  end_time: z.string().date(),
+  capacity: z.number().nonnegative(),
+});
+export type UpdateDefaultSlotSchema = z.infer<typeof updateDefaultSlotSchema>;
