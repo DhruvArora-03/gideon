@@ -28,15 +28,11 @@
     TableRow,
   } from '$lib/components/ui/table';
   import { formatDateWithWeekday, formatTime, getDuration, MONTHS, YEARS } from '$lib/date';
-  import type { Session } from '$lib/server/db/schema';
   import { MessageSquare } from 'lucide-svelte';
+  import type { PageData } from './$types';
 
   type Props = {
-    data: {
-      sessions: Session[];
-      month: number;
-      year: number;
-    };
+    data: PageData;
   };
   const { data }: Props = $props();
 </script>

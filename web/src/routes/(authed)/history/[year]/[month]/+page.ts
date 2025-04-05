@@ -6,7 +6,8 @@ export const load: PageLoad = async ({ fetch, params }) => {
   const json = await res.json();
 
   return {
-    ...params,
+    month: Number.parseInt(params.month),
+    year: Number.parseInt(params.year),
     sessions: json.map(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (x: any) =>

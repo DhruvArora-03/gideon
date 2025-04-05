@@ -1,9 +1,8 @@
+import { changePasswordFormSchema } from '$lib/validation';
 import { redirect } from '@sveltejs/kit';
-
-import type { Actions, PageServerLoad } from './$types';
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { changePasswordFormSchema } from '$lib/validation';
+import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
   return {

@@ -1,12 +1,10 @@
 <script lang="ts">
   import PageWrapper from '$lib/components/PageWrapper.svelte';
   import { Card } from '$lib/components/ui/card';
-  import type { Profile } from '$lib/server/db/schema';
+  import type { PageData } from './$types';
 
   type Props = {
-    data: {
-      profile: Profile;
-    };
+    data: PageData;
   };
   const { data }: Props = $props();
 </script>

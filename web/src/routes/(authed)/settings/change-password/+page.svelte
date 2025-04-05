@@ -1,13 +1,10 @@
 <script lang="ts">
   import ChangePassword from '$lib/components/ChangePassword.svelte';
   import PageWrapper from '$lib/components/PageWrapper.svelte';
-  import type { ChangePasswordFormSchema } from '$lib/validation';
-  import type { SuperValidated } from 'sveltekit-superforms';
+  import type { PageData } from '../$types';
 
   type Props = {
-    data: {
-      form: SuperValidated<ChangePasswordFormSchema>;
-    };
+    data: PageData;
   };
   let { data }: Props = $props();
 </script>
