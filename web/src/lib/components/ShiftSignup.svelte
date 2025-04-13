@@ -25,7 +25,7 @@
   };
   let { userId, slots }: Props = $props();
 
-  let weeks = organizeSlots(slots);
+  let weeks = $derived(organizeSlots(slots));
 </script>
 
 {#snippet mainContent(carouselOrientation: 'horizontal' | 'vertical')}
