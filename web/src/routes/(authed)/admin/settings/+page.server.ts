@@ -1,8 +1,8 @@
-import { updateDefaultSlotSchema } from '$lib/validation';
+import queries from '$lib/server/db/queries';
+import { createDefaultSlotSchema, updateDefaultSlotSchema } from '$lib/validation';
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { Actions, PageServerLoad } from './$types';
-import queries from '$lib/server/db/queries';
 
 export const load: PageServerLoad = async ({ depends }) => {
   depends('data:default-slots');
@@ -14,6 +14,23 @@ export const load: PageServerLoad = async ({ depends }) => {
 };
 
 export const actions: Actions = {
+  createDefaultSlot: async (event) => {
+    const form = await superValidate(event, zod(createDefaultSlotSchema));
+
+    if (!form.valid) {
+      return message(form, 'Please fix the invalid fields', {
+        status: 400,
+      });
+    }
+
+    event.fetch(`/api/admin/default-slots`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(form.data),
+    });
+  },
   updateDefaultSlot: async (event) => {
     const form = await superValidate(event, zod(updateDefaultSlotSchema));
 
@@ -23,12 +40,14 @@ export const actions: Actions = {
       });
     }
 
-    event.fetch(`/api/admin/default-slots/${form.data.defaultSlotId}`, {
+    const { defaultSlotId, ...body } = form.data;
+
+    event.fetch(`/api/admin/default-slots/${defaultSlotId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(form.data),
+      body: JSON.stringify(body),
     });
   },
 };

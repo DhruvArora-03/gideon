@@ -39,7 +39,7 @@
   } from '$lib/components/ui/table';
   import { DAYS, formatDotw, formatTime, parseTime } from '$lib/date';
   import { updateDefaultSlotSchema } from '$lib/validation';
-  import { Edit } from 'lucide-svelte';
+  import { Edit, Plus } from 'lucide-svelte';
   import { MediaQuery } from 'svelte/reactivity';
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
@@ -52,15 +52,17 @@
 
   const desktop = new MediaQuery('(min-width: 768px)');
 
-  let current = $state<number>();
+  let current = $state<number | null>(null);
   let open = $state(false);
   let isDirty = $state(false);
 
   const form = superForm(data.form, {
     validators: zodClient(updateDefaultSlotSchema),
-    onResult: () => {
-      invalidate('data:default-slots');
-      open = false;
+    onResult: (e) => {
+      if (e.result.type === 'success') {
+        invalidate('data:default-slots');
+        open = false;
+      }
     },
   });
 
@@ -76,9 +78,9 @@
 
   <Card class="border-none shadow-none [&>*]:px-0 sm:[&>*]:px-6">
     <CardHeader>
-      <CardTitle>Default Slots</CardTitle>
+      <CardTitle>Default Shifts</CardTitle>
       <CardDescription>
-        These are the default settings that will be used to create new slots. To make changes click
+        These are the default settings that will be used to create new shifts. To make changes click
         the edit button and update the fields accordingly.
       </CardDescription>
     </CardHeader>
@@ -87,6 +89,15 @@
       {#await data.defaultSlots}
         Loading...
       {:then slots}
+        <Button
+          class="mb-2 w-full"
+          onclick={() => {
+            open = true;
+          }}
+        >
+          <Plus class="mr-2" size={16} /> Create New Default Shift
+        </Button>
+
         <Table>
           <TableHeader class="border-1">
             <TableRow>
@@ -136,7 +147,7 @@
         <SheetContent
           side={desktop.current ? 'right' : 'bottom'}
           onclose={() => {
-            current = undefined;
+            current = null;
             form.reset();
           }}
         >
@@ -153,7 +164,9 @@
             action={current === null ? '?/createDefaultSlot' : '?/updateDefaultSlot'}
             use:enhance
           >
-            <input hidden name="defaultSlotId" value={current} />
+            {#if current !== null}
+              <input hidden name="defaultSlotId" value={current} />
+            {/if}
 
             <Field {form} name="dotw">
               <Control let:attrs>
