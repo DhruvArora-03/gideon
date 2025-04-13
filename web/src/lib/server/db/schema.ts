@@ -59,8 +59,8 @@ export const defaultSlots = createTable('default_slots', {
   created_at: getCreatedAtColumn(),
   updated_at: getUpdatedAtColumn(),
   dotw: integer().notNull(),
-  start_time: time({ withTimezone: true }).notNull(),
-  end_time: time({ withTimezone: true }).notNull(),
+  start_time: time().notNull(),
+  end_time: time().notNull(),
   capacity: integer().notNull(),
 });
 
@@ -77,8 +77,8 @@ export const slots = createTable('slots', {
   id: serial().primaryKey(),
   created_at: getCreatedAtColumn(),
   updated_at: getUpdatedAtColumn(),
-  start_time: timestamp({ withTimezone: true, mode: 'date' }).notNull(),
-  end_time: timestamp({ withTimezone: true, mode: 'date' }).notNull(),
+  start_time: timestamp({ mode: 'date' }).notNull(),
+  end_time: timestamp({ mode: 'date' }).notNull(),
   capacity: integer().notNull(),
 });
 
@@ -140,8 +140,8 @@ export const sessions = createTable('sessions', {
     .references(() => profiles.id, {
       onDelete: 'cascade',
     }),
-  clock_in: timestamp({ withTimezone: true, mode: 'date' }).notNull(),
-  clock_out: timestamp({ withTimezone: true, mode: 'date' }),
+  clock_in: timestamp({ mode: 'date' }).notNull(),
+  clock_out: timestamp({ mode: 'date' }),
   employee_notes: text(),
   admin_notes: text(),
   was_scheduled: boolean().notNull(),

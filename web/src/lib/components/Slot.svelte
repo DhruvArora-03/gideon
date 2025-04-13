@@ -36,6 +36,7 @@
 
   let loading = $state(false);
 
+  // todo: change this to form
   async function signUp() {
     loading = true;
 
@@ -49,7 +50,7 @@
         throw new Error('Failed to sign up');
       }
 
-      invalidate('/api/slots');
+      invalidate('data:slots');
       toast.success('Signed up!', {
         description: `Confirmed shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
       });
@@ -63,6 +64,7 @@
     }
   }
 
+  // todo: change this to form
   async function waitlist() {
     loading = true;
 
@@ -76,7 +78,7 @@
         throw new Error('Failed to join waitlist');
       }
 
-      invalidate('/api/slots');
+      invalidate('data:slots');
       toast.success('Waitlisted!', {
         description: `Joined waitlist for shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
       });
@@ -90,6 +92,7 @@
     }
   }
 
+  // todo: change this to form
   async function cancel() {
     loading = true;
     try {
@@ -102,7 +105,7 @@
         throw new Error('Failed to cancel shift');
       }
 
-      invalidate('/api/slots');
+      invalidate('data:slots');
       toast.success('Cancelled!', {
         description: `Cancelled shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
       });

@@ -8,6 +8,7 @@
     "SUPABASE",
     "superforms",
     "turbopack",
+    "untaint",
     "Waitlist",
     "waitlisted"
   ]

@@ -72,7 +72,7 @@
           {$message}
         </p>
       {/if}
-      <Button class="mt-4 w-full " type="submit">
+      <Button class="mt-4 w-full" type="submit">
         <LockKeyhole class="mr-2" size={16} /> Confirm Password Change
       </Button>
     </form>

@@ -1,7 +1,9 @@
 import queries from '$lib/server/db/queries';
-import type { ServerLoad } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
 
-export const load: ServerLoad = async () => {
+export const load: PageServerLoad = async ({ depends }) => {
+  depends('data:slots');
+
   return {
     slots: queries.getSlots(),
   };

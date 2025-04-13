@@ -14,9 +14,9 @@
 </script>
 
 <main class={cn('relative h-full min-h-screen', className)}>
-  {#if previousHref && previousPageTitle}
-    <Button class="absolute left-0 top-0" variant={'link'} href={previousHref}>
-      <ArrowLeft />
+  {#if previousHref}
+    <Button class="h-fit p-0" variant="link" href={previousHref}>
+      <ArrowLeft class="mr-2 size-4" />
       {previousPageTitle ? `Back to ${previousPageTitle}` : 'Back'}
     </Button>
   {/if}

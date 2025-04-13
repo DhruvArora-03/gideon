@@ -1,5 +1,7 @@
 import type { SlotWithAssignments } from '$lib/server/db/schema';
 
+export const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
 export const MONTHS = [
   'January',
   'February',
@@ -42,6 +44,14 @@ const timeFormat = new Intl.DateTimeFormat('en-US', {
 
 export const formatTime = timeFormat.format;
 
+const timeInputFormat = new Intl.DateTimeFormat('en-US', {
+  hour: '2-digit',
+  minute: '2-digit',
+  hour12: false,
+});
+
+export const formatTimeInput = timeInputFormat.format;
+
 const dotwFormat = new Intl.DateTimeFormat('en-US', {
   weekday: 'long',
 });
@@ -49,29 +59,16 @@ const dotwFormat = new Intl.DateTimeFormat('en-US', {
 export const formatDotw = (dotw: number): string => dotwFormat.format(new Date(0, 0, dotw));
 
 export const parseTime = (time: string): number => {
-  const regex = /^(\d{2}):(\d{2}):(\d{2})([-+])(\d{2}):(\d{2})?$/;
+  const regex = /^(\d{2}):(\d{2}):00$/;
 
   const match = time.match(regex);
   if (!match) {
     throw new Error(`Invalid time format: ${time}`);
   }
 
-  const [, hours, minutes, seconds, sign, offsetHours, offsetMinutes] = match;
+  const [, hours, minutes] = match;
 
-  const oh = Number.parseInt(offsetHours);
-  const om = offsetMinutes ? Number.parseInt(offsetMinutes) : 0;
-
-  const totalOffsetMinutes = (sign === '-' ? -1 : 1) * (oh * 60 + om);
-
-  return Date.UTC(
-    0,
-    0,
-    0,
-    Number.parseInt(hours),
-    Number.parseInt(minutes) + totalOffsetMinutes,
-    Number.parseInt(seconds),
-    0,
-  );
+  return new Date(0, 0, 0, Number.parseInt(hours), Number.parseInt(minutes)).getTime();
 };
 
 export type Week = {
@@ -114,4 +111,15 @@ export const getDuration = (start: Date, end: Date): string => {
   const hours = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
 
   return `${hours.toFixed(2)} ${hours === 1 ? 'hr' : 'hrs'}`;
+};
+
+export const appendLocalTimezoneOffset = (time: string) => {
+  const offsetMinutes = new Date().getTimezoneOffset();
+  const sign = offsetMinutes > 0 ? '-' : '+';
+
+  const absMinutes = Math.abs(offsetMinutes);
+  const hours = `${Math.floor(absMinutes / 60)}`.padStart(2, '0');
+  const minutes = `${absMinutes % 60}`.padStart(2, '0');
+
+  return `${time}${sign}${hours}:${minutes}`;
 };

@@ -14,7 +14,6 @@
     CarouselNext,
     CarouselPrevious,
   } from '$lib/components/ui/carousel';
-  import type { Week } from '$lib/date';
   import { addDays, formatDate, formatDateWithWeekday, getDaysBetween } from '$lib/date';
   import type { SlotWithAssignments } from '$lib/server/db/schema';
   import { organizeSlots } from '$lib/slots';
@@ -26,7 +25,7 @@
   };
   let { userId, slots }: Props = $props();
 
-  let weeks: Week[] = $derived(organizeSlots(slots));
+  let weeks = organizeSlots(slots);
 </script>
 
 {#snippet mainContent(carouselOrientation: 'horizontal' | 'vertical')}

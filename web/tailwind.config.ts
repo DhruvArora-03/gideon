@@ -64,6 +64,9 @@ const config: Config = {
       fontSize: {
         '2xs': '10px',
       },
+      borderWidth: {
+        '1': '1px',
+      },
     },
   },
 };

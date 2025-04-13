@@ -1,7 +1,8 @@
 import queries from '$lib/server/db/queries';
-import { error, type ServerLoad } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
 
-export const load: ServerLoad = async ({ locals: { user }, params }) => {
+export const load: PageServerLoad = async ({ locals: { user }, params }) => {
   if (!user) {
     error(401, 'unauthorized');
   }
