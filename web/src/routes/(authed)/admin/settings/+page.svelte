@@ -23,6 +23,7 @@
   } from '$lib/components/ui/select';
   import {
     Sheet,
+    SheetClose,
     SheetContent,
     SheetDescription,
     SheetFooter,
@@ -143,14 +144,18 @@
         </Table>
       {/await}
 
-      <Sheet closeOnEscape={!isDirty} closeOnOutsideClick={!isDirty} bind:open>
-        <SheetContent
-          side={desktop.current ? 'right' : 'bottom'}
-          onclose={() => {
+      <Sheet
+        bind:open
+        closeOnEscape={!isDirty}
+        closeOnOutsideClick={!isDirty}
+        onOpenChange={(v) => {
+          if (!v) {
             current = null;
             form.reset();
-          }}
-        >
+          }
+        }}
+      >
+        <SheetContent side={desktop.current ? 'right' : 'bottom'}>
           <SheetHeader class="text-left">
             <SheetTitle>Edit</SheetTitle>
             <SheetDescription>
@@ -261,7 +266,9 @@
             {/if}
 
             <SheetFooter class="mt-4 flex flex-row justify-end gap-2">
-              <Button type="reset" variant="secondary">Cancel</Button>
+              <SheetClose>
+                <Button type="reset" variant="secondary">Cancel</Button>
+              </SheetClose>
               <Button type="submit">Save Changes</Button>
             </SheetFooter>
           </form>
