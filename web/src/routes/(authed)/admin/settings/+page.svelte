@@ -143,6 +143,14 @@
                   </Button>
                 </TableCell>
               </TableRow>
+            {:else}
+              {#each { length: 7 }, i}
+                <TableRow class="bg-secondary text-secondary-foreground">
+                  <TableCell colspan={4} class="font-semibold">
+                    {formatDotw(i)}
+                  </TableCell>
+                </TableRow>
+              {/each}
             {/each}
           </TableBody>
         </Table>
