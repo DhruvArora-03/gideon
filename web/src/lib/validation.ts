@@ -55,3 +55,8 @@ export const updateDefaultSlotSchema = createDefaultSlotSchema.extend({
   defaultSlotId: z.number(),
 });
 export type UpdateDefaultSlotSchema = z.infer<typeof updateDefaultSlotSchema>;
+
+export const deleteDefaultSlotSchema = z.object({
+  defaultSlotId: z.number(),
+});
+export type DeleteDefaultSlotSchema = z.infer<typeof deleteDefaultSlotSchema>;

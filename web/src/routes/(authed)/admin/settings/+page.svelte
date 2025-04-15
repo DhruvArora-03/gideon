@@ -40,7 +40,7 @@
   } from '$lib/components/ui/table';
   import { DAYS, formatDotw, formatTime, parseTime } from '$lib/date';
   import { updateDefaultSlotSchema } from '$lib/validation';
-  import { Edit, Plus } from 'lucide-svelte';
+  import { Edit, Plus, Trash2 } from 'lucide-svelte';
   import { MediaQuery } from 'svelte/reactivity';
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
@@ -90,14 +90,15 @@
       {#await data.defaultSlots}
         Loading...
       {:then slots}
-        <Button
-          class="mb-2 w-full"
-          onclick={() => {
-            open = true;
-          }}
-        >
-          <Plus class="mr-2" size={16} /> Create New Default Shift
-        </Button>
+        <div class="mb-2 ml-auto w-fit">
+          <Button
+            onclick={() => {
+              open = true;
+            }}
+          >
+            <Plus class="mr-2" size={16} /> New Default Shift
+          </Button>
+        </div>
 
         <Table>
           <TableHeader class="border-1">
@@ -110,31 +111,34 @@
 
           <TableBody class="border-1">
             {#each slots as s, i (s.id)}
-              {#if i === 0 || slots[i - 1].dotw !== s.dotw}
+              {@const prevDotw = i === 0 ? -1 : slots[i - 1].dotw}
+              {#each { length: s.dotw - prevDotw }, j}
                 <TableRow class="bg-secondary text-secondary-foreground">
-                  <TableCell colspan={4} class="font-semibold">{formatDotw(s.dotw)}</TableCell>
+                  <TableCell colspan={4} class="font-semibold">
+                    {formatDotw(prevDotw + j + 1)}
+                  </TableCell>
                 </TableRow>
-              {/if}
-              <TableRow>
+              {/each}
+
+              <TableRow
+                onclick={() => {
+                  current = s.id;
+                  form.reset({
+                    data: {
+                      dotw: s.dotw,
+                      start_time: s.start_time.substring(0, 5),
+                      end_time: s.end_time.substring(0, 5),
+                      capacity: s.capacity,
+                    },
+                  });
+                  open = true;
+                }}
+              >
                 <TableCell class="pl-4">{formatTime(parseTime(s.start_time))}</TableCell>
                 <TableCell>{formatTime(parseTime(s.end_time))}</TableCell>
                 <TableCell>{s.capacity}</TableCell>
                 <TableCell align="right">
-                  <Button
-                    variant="ghost"
-                    onclick={() => {
-                      current = s.id;
-                      form.reset({
-                        data: {
-                          dotw: s.dotw,
-                          start_time: s.start_time.substring(0, 5),
-                          end_time: s.end_time.substring(0, 5),
-                          capacity: s.capacity,
-                        },
-                      });
-                      open = true;
-                    }}
-                  >
+                  <Button variant="ghost">
                     <Edit size={16} />
                   </Button>
                 </TableCell>
@@ -265,11 +269,22 @@
               </p>
             {/if}
 
-            <SheetFooter class="mt-4 flex flex-row justify-end gap-2">
-              <SheetClose>
-                <Button type="reset" variant="secondary">Cancel</Button>
-              </SheetClose>
-              <Button type="submit">Save Changes</Button>
+            <SheetFooter class="mt-4 flex flex-row justify-between gap-2">
+              {#if current !== null}
+                <Button type="submit" variant="destructive" formaction="?/deleteDefaultSlot">
+                  <Trash2 size={16} class="mr-2" /> Delete
+                </Button>
+              {:else}
+                <div></div>
+                <!-- intentional empty div to force spacing -->
+              {/if}
+
+              <div>
+                <SheetClose>
+                  <Button type="reset" variant="secondary">Cancel</Button>
+                </SheetClose>
+                <Button class="ml-1" type="submit">Save Changes</Button>
+              </div>
             </SheetFooter>
           </form>
         </SheetContent>

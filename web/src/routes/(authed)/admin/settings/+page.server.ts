@@ -50,4 +50,22 @@ export const actions: Actions = {
       body: JSON.stringify(body),
     });
   },
+  deleteDefaultSlot: async (event) => {
+    const form = await superValidate(event, zod(updateDefaultSlotSchema));
+
+    if (!form.valid) {
+      return message(form, 'Please fix the invalid fields', {
+        status: 400,
+      });
+    }
+
+    const { defaultSlotId } = form.data;
+
+    event.fetch(`/api/admin/default-slots/${defaultSlotId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+  },
 };
