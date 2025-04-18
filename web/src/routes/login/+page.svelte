@@ -30,7 +30,7 @@
 <PageWrapper class="flex items-center justify-center">
   <Card>
     <CardHeader>
-      <CardTitle>Log in</CardTitle>
+      <CardTitle tag="h2">Log in</CardTitle>
       <CardDescription>Welcome back! Use your credentials to log in</CardDescription>
     </CardHeader>
 
