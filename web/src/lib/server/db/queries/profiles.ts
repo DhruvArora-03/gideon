@@ -12,3 +12,9 @@ export async function getProfile(userId: string): Promise<Profile> {
 
   return profile;
 }
+
+export async function getUsers(): Promise<Profile[]> {
+  return await db.query.profiles.findMany({
+    orderBy: (profiles) => [profiles.first_name, profiles.last_name],
+  });
+}

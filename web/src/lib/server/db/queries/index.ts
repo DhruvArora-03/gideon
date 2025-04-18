@@ -1,5 +1,5 @@
 import * as defaultSlotsQueries from './defaultSlots';
-import * as profileQueries from './profile';
+import * as profileQueries from './profiles';
 import * as sessionsQueries from './sessions';
 import * as slotsQueries from './slots';
 
