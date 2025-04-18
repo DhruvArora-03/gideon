@@ -79,7 +79,7 @@
 
         <Button class="mt-2 w-full" type="submit" disabled={$submitting}>
           {#if $submitting}
-            <LoaderCircle class="animate-spin" /> Verifying Login...
+            <LoaderCircle size={16} class="animate-spin mr-2" /> Verifying Login...
           {:else}
             <LogIn size={16} class="mr-2" /> Log in
           {/if}
