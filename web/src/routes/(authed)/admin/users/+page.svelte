@@ -27,6 +27,7 @@
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
   import type { PageData } from './$types';
+  import { cn } from '$lib/utils';
 
   type Props = {
     data: PageData;
@@ -101,11 +102,16 @@
 
       <TableBody class="border-1">
         {#each users as u (u.id)}
-          <TableRow onclick={() => alert('todo: edit user')}>
+          <TableRow class={!u.active ? 'bg-muted' : ''} onclick={() => alert('todo: edit user')}>
             <TableCell>{`${u.first_name} ${u.last_name}`}</TableCell>
             <TableCell>{u.email}</TableCell>
             <TableCell>{u.phone_number}</TableCell>
-            <TableCell>{u.role}</TableCell>
+            <TableCell>
+              {u.role}
+              {#if !u.active}
+                <span class="text-destructive">{' '}(deactivated)</span>
+              {/if}
+            </TableCell>
             <TableCell align="right">
               <Button variant="ghost">
                 <Edit size={16} />

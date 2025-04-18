@@ -15,6 +15,10 @@ export async function getProfile(userId: string): Promise<Profile> {
 
 export async function getUsers(): Promise<Profile[]> {
   return await db.query.profiles.findMany({
-    orderBy: (profiles) => [profiles.first_name, profiles.last_name],
+    orderBy: (profiles, { desc }) => [
+      desc(profiles.active),
+      profiles.first_name,
+      profiles.last_name,
+    ],
   });
 }
