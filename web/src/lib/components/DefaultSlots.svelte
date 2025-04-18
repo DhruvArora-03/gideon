@@ -67,11 +67,11 @@
     },
   });
 
-  const { form: formData, message, enhance, submitting } = form;
+  const { form: formData, message, enhance, submitting, tainted } = form;
 
-  form.tainted.subscribe((t) => {
-    isDirty = (t?.capacity || t?.end_time || t?.start_time || t?.dotw) ?? false;
-  });
+  tainted.subscribe(
+    (t) => (isDirty = (t?.capacity || t?.end_time || t?.start_time || t?.dotw) ?? false),
+  );
 </script>
 
 <Card class="border-none shadow-none [&>*]:px-0">
@@ -88,11 +88,7 @@
       Loading...
     {:then slots}
       <div class="mb-2 ml-auto w-fit">
-        <Button
-          onclick={() => {
-            open = true;
-          }}
-        >
+        <Button onclick={() => (open = true)}>
           <Plus class="mr-2" size={16} /> New Default Shift
         </Button>
       </div>
@@ -164,21 +160,23 @@
         }
       }}
     >
+      {@const isEdit = current !== null}
       <SheetContent side={desktop.current ? 'right' : 'bottom'}>
-        <SheetHeader class="text-left">
-          <SheetTitle>Edit</SheetTitle>
+        <SheetHeader>
+          <SheetTitle>{isEdit ? 'Edit' : 'New'} Default Shift</SheetTitle>
           <SheetDescription>
-            Editing default shift; confirm changes once done or press cancel to exit.
+            {isEdit ? 'Editing' : 'Creating new'} default shift; confirm changes once done or press cancel
+            to exit.
           </SheetDescription>
         </SheetHeader>
 
         <form
           class="mt-4 flex flex-col gap-2"
           method="POST"
-          action={current === null ? '?/createDefaultSlot' : '?/updateDefaultSlot'}
+          action={isEdit ? '?/updateDefaultSlot' : '?/createDefaultSlot'}
           use:enhance
         >
-          {#if current !== null}
+          {#if isEdit}
             <input hidden name="defaultSlotId" value={current} />
           {/if}
 
@@ -275,20 +273,21 @@
           {/if}
 
           <SheetFooter class="mt-4 flex flex-row justify-between gap-2">
-            {#if current !== null}
+            {#if isEdit}
               <Button type="submit" variant="destructive" formaction="?/deleteDefaultSlot">
                 <Trash2 size={16} class="mr-2" /> Delete
               </Button>
             {:else}
-              <div></div>
-              <!-- intentional empty div to force spacing -->
+              <div>
+                <!-- intentional empty div to force spacing -->
+              </div>
             {/if}
 
             <div>
               <SheetClose>
                 <Button type="reset" variant="secondary">Cancel</Button>
               </SheetClose>
-              <Button class="ml-1" type="submit">Save Changes</Button>
+              <Button class="ml-1" type="submit" disabled={$submitting}>Save Changes</Button>
             </div>
           </SheetFooter>
         </form>
