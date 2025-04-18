@@ -23,5 +23,6 @@
 <div class="mx-auto h-full min-h-screen w-full p-4 pb-16 md:pb-0">
   <ModeWatcher />
   <Toaster richColors />
+  <title>Gideon Admin</title>
   {@render children()}
 </div>
