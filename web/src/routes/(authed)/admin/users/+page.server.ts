@@ -3,9 +3,11 @@ import { inviteUserByEmail } from '$lib/server/supabase';
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { inviteFormSchema } from '$lib/validation';
+import queries from '$lib/server/db/queries';
 
 export const load: PageServerLoad = async () => {
   return {
+    users: queries.getUsers(),
     form: await superValidate(zod(inviteFormSchema)),
   };
 };
