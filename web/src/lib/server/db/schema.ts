@@ -30,7 +30,7 @@ export const profiles = createTable('profiles', {
   // Matches id from auth.users table in Supabase
   id: uuid()
     .primaryKey()
-    .references(() => authUsers.id, { onDelete: 'cascade' }),
+    .references(() => authUsers.id),
   created_at: getCreatedAtColumn(),
   updated_at: getUpdatedAtColumn(),
   active: boolean().notNull().default(true),
@@ -103,14 +103,10 @@ export const assignments = createTable('assignments', {
   updated_at: getUpdatedAtColumn(),
   user_id: uuid()
     .notNull()
-    .references(() => profiles.id, {
-      onDelete: 'cascade',
-    }),
+    .references(() => profiles.id),
   slot_id: integer()
     .notNull()
-    .references(() => slots.id, {
-      onDelete: 'cascade',
-    }),
+    .references(() => slots.id),
   assignment_status: assignmentStatus().notNull(),
 });
 
@@ -136,9 +132,7 @@ export const sessions = createTable('sessions', {
   updated_at: getUpdatedAtColumn(),
   user_id: uuid()
     .notNull()
-    .references(() => profiles.id, {
-      onDelete: 'cascade',
-    }),
+    .references(() => profiles.id),
   clock_in: timestamp({ mode: 'date' }).notNull(),
   clock_out: timestamp({ mode: 'date' }),
   employee_notes: text(),
