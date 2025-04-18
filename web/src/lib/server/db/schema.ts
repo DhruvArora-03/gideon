@@ -26,8 +26,6 @@ const getUpdatedAtColumn = () =>
 
 export const userRole = pgEnum('user_role', USER_ROLES);
 
-export type UserRole = (typeof userRole.enumValues)[number];
-
 export const profiles = createTable('profiles', {
   // Matches id from auth.users table in Supabase
   id: uuid()
@@ -35,6 +33,7 @@ export const profiles = createTable('profiles', {
     .references(() => authUsers.id, { onDelete: 'cascade' }),
   created_at: getCreatedAtColumn(),
   updated_at: getUpdatedAtColumn(),
+  active: boolean().notNull().default(true),
   email: text().notNull().unique(),
   first_name: text().notNull(),
   last_name: text().notNull(),
