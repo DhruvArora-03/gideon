@@ -33,6 +33,7 @@
       <CardTitle>Log in</CardTitle>
       <CardDescription>Welcome back! Use your credentials to log in</CardDescription>
     </CardHeader>
+
     <CardContent>
       <form method="POST" use:enhance>
         <Field {form} name="email">
@@ -50,6 +51,7 @@
           <Description class="sr-only">The email address associated with your account</Description>
           <FieldErrors />
         </Field>
+
         <Field {form} name="password">
           <Control let:attrs>
             <Label>
@@ -66,17 +68,20 @@
           <Description class="sr-only">The password associated with your account</Description>
           <FieldErrors />
         </Field>
+
         <Turnstile siteKey={PUBLIC_TURNSTILE_SITE_KEY} size="flexible" />
+
         {#if $message}
           <p class="mt-4">
             {$message}
           </p>
         {/if}
+
         <Button class="mt-2 w-full" type="submit" disabled={$submitting}>
           {#if $submitting}
             <LoaderCircle class="animate-spin" /> Verifying Login...
           {:else}
-            <LogIn /> Log in
+            <LogIn size={16} class="mr-2" /> Log in
           {/if}
         </Button>
       </form>
