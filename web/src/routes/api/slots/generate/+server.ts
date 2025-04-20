@@ -1,5 +1,5 @@
 import queries from '$lib/server/db/queries';
-import { text } from '@sveltejs/kit';
+import { error, text } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import type { DefaultSlot } from '$lib/server/db/schema';
 import { getDaysBetween, parseTime } from '$lib/date';
@@ -58,12 +58,16 @@ export const POST: RequestHandler = async () => {
 
       newSlots.sort((a, b) => a.start_time.getTime() - b.start_time.getTime());
 
-      await queries.createSlots(newSlots);
-      console.log('created slots', newSlots);
+      const res = await queries.createSlots(newSlots);
+      console.log(
+        'created slots with ids:',
+        res.map((slot) => slot.id),
+      );
     })
     .catch((err) => {
       console.error('Error fetching slots or defaults:', err);
+      return error(500, 'Error fetching slots or defaults:');
     });
 
-  return text('done');
+  return text('');
 };
