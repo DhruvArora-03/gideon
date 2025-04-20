@@ -58,17 +58,17 @@ const dotwFormat = new Intl.DateTimeFormat('en-US', {
 
 export const formatDotw = (dotw: number): string => dotwFormat.format(new Date(0, 0, dotw));
 
-export const parseTime = (time: string): number => {
+export const parseTime = (timeStr: string): Date => {
   const regex = /^(\d{2}):(\d{2}):00$/;
 
-  const match = time.match(regex);
+  const match = timeStr.match(regex);
   if (!match) {
-    throw new Error(`Invalid time format: ${time}`);
+    throw new Error(`Invalid time format: ${timeStr}`);
   }
 
   const [, hours, minutes] = match;
 
-  return new Date(0, 0, 0, Number.parseInt(hours), Number.parseInt(minutes)).getTime();
+  return new Date(0, 0, 0, Number.parseInt(hours), Number.parseInt(minutes));
 };
 
 export type Week = {
