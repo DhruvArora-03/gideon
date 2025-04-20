@@ -3,12 +3,6 @@
 - [ ] https://svelte.dev/tutorial/kit/error-pages - error page
 - [ ] Look into preloading - https://svelte.dev/tutorial/kit/preload
 - [ ] Fix leave waitlist button
-- [ ] remove on delete cascade
-- [ ] automatically create shifts
-- [ ] admin screen to manage shifts
-- [ ] admin screen to manage users
-- [x] roles for users
-- [ ] admin screen for managing default shifts
 - [ ] chat (admin side)
 - [ ] chat (employee side)
 - [ ] setup notifications (https://push.foo/)
@@ -18,3 +12,9 @@
 - [x] Add nav bar
 - [x] Wire up shift signup buttons
 - [x] Use toast to show success after inviting user
+- [x] remove on delete cascade
+- [x] automatically create shifts
+- [x] admin screen to manage shifts
+- [x] admin screen to manage users
+- [x] roles for users
+- [x] admin screen for managing default shifts
