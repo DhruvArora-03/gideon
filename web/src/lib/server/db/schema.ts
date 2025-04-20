@@ -9,6 +9,7 @@ import {
   text,
   time,
   timestamp,
+  unique,
   uuid,
 } from 'drizzle-orm/pg-core';
 import { authUsers } from 'drizzle-orm/supabase';
@@ -97,18 +98,22 @@ export const assignmentStatus = pgEnum('assignment_status', ['confirmed', 'waitl
 
 export type AssignmentStatus = (typeof assignmentStatus.enumValues)[number];
 
-export const assignments = createTable('assignments', {
-  id: serial().primaryKey(),
-  created_at: getCreatedAtColumn(),
-  updated_at: getUpdatedAtColumn(),
-  user_id: uuid()
-    .notNull()
-    .references(() => profiles.id),
-  slot_id: integer()
-    .notNull()
-    .references(() => slots.id),
-  assignment_status: assignmentStatus().notNull(),
-});
+export const assignments = createTable(
+  'assignments',
+  {
+    id: serial().primaryKey(),
+    created_at: getCreatedAtColumn(),
+    updated_at: getUpdatedAtColumn(),
+    user_id: uuid()
+      .notNull()
+      .references(() => profiles.id),
+    slot_id: integer()
+      .notNull()
+      .references(() => slots.id),
+    assignment_status: assignmentStatus().notNull(),
+  },
+  (t) => [unique().on(t.user_id, t.slot_id)],
+);
 
 export type NewAssignment = typeof assignments.$inferInsert;
 export type Assignment = typeof assignments.$inferSelect;
