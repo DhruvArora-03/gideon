@@ -3,20 +3,15 @@ import { assignments, type SlotWithAssignments } from '$lib/server/db/schema';
 import { and, eq } from 'drizzle-orm';
 
 export async function getSlots(): Promise<SlotWithAssignments[]> {
-  const slots = await db.query.slots.findMany({
+  return db.query.slots.findMany({
     with: {
-      assignments: true,
+      assignments: {
+        orderBy: (a) => [a.updated_at],
+      },
     },
-    where: (slots, { gt }) => gt(slots.start_time, new Date()),
+    where: (s, { gt }) => gt(s.start_time, new Date()),
+    orderBy: (s) => [s.start_time],
   });
-
-  return slots.map((slot) => ({
-    ...slot,
-    // find unique assignments by user_id
-    assignments: slot.assignments
-      .sort((a, b) => b.created_at.getTime() - a.created_at.getTime())
-      .filter((curr, i, sorted) => sorted.findIndex((a) => a.user_id === curr.user_id) === i),
-  }));
 }
 
 export async function signUpForSlot(slotId: number, userId: string): Promise<void> {
