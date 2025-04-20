@@ -130,8 +130,8 @@
               <TableCell class="pl-4">{formatTime(parseTime(s.start_time))}</TableCell>
               <TableCell>{formatTime(parseTime(s.end_time))}</TableCell>
               <TableCell>{s.capacity}</TableCell>
-              <TableCell align="right">
-                <Button variant="ghost">
+              <TableCell align="right" class="p-0">
+                <Button variant="ghost" size="icon" class="mr-2">
                   <Edit size={16} />
                 </Button>
               </TableCell>
