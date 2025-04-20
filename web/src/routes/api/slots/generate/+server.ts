@@ -5,6 +5,8 @@ import type { DefaultSlot } from '$lib/server/db/schema';
 import { getDaysBetween, parseTime } from '$lib/date';
 
 export const POST: RequestHandler = async () => {
+  console.log('Generating slots...');
+
   const slots = queries.getSlots();
 
   const defaults = queries.getDefaultSlots();
