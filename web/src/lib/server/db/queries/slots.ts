@@ -1,5 +1,5 @@
 import { db } from '$lib/server/db';
-import { assignments, type SlotWithAssignments } from '$lib/server/db/schema';
+import { assignments, slots, type NewSlot, type SlotWithAssignments } from '$lib/server/db/schema';
 import { and, eq } from 'drizzle-orm';
 
 export async function getSlots(): Promise<SlotWithAssignments[]> {
@@ -12,6 +12,14 @@ export async function getSlots(): Promise<SlotWithAssignments[]> {
     where: (s, { gt }) => gt(s.start_time, new Date()),
     orderBy: (s) => [s.start_time],
   });
+}
+
+export async function createSlots(newSlots: NewSlot[]): Promise<void> {
+  if (newSlots.length === 0) {
+    throw new Error('No slots to create');
+  }
+
+  await db.insert(slots).values(newSlots);
 }
 
 export async function signUpForSlot(slotId: number, userId: string): Promise<void> {
