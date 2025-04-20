@@ -1,5 +1,11 @@
 import { db } from '$lib/server/db';
-import { assignments, slots, type NewSlot, type SlotWithAssignments } from '$lib/server/db/schema';
+import {
+  assignments,
+  slots,
+  type NewSlot,
+  type Slot,
+  type SlotWithAssignments,
+} from '$lib/server/db/schema';
 import { and, eq } from 'drizzle-orm';
 
 export async function getSlots(): Promise<SlotWithAssignments[]> {
@@ -14,12 +20,13 @@ export async function getSlots(): Promise<SlotWithAssignments[]> {
   });
 }
 
-export async function createSlots(newSlots: NewSlot[]): Promise<void> {
+export async function createSlots(newSlots: NewSlot[]): Promise<Slot[]> {
   if (newSlots.length === 0) {
-    throw new Error('No slots to create');
+    console.warn('createSlots called with empty array');
+    return [];
   }
 
-  await db.insert(slots).values(newSlots);
+  return db.insert(slots).values(newSlots).returning();
 }
 
 export async function signUpForSlot(slotId: number, userId: string): Promise<void> {
