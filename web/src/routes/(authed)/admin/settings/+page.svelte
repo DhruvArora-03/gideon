@@ -7,10 +7,9 @@
     data: PageData;
   };
   const props: Props = $props();
-  const { defaultSlots, form } = props.data;
 </script>
 
 <PageWrapper class="mx-auto max-w-md space-y-4 p-4">
   <h1 class="text-2xl font-semibold">Admin Settings</h1>
-  <DefaultSlots {defaultSlots} {form} />
+  <DefaultSlots {...props.data} />
 </PageWrapper>

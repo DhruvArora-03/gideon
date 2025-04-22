@@ -21,7 +21,7 @@ export const actions: Actions = {
       });
     }
 
-    event.fetch(`/api/admin/default-slots`, {
+    await event.fetch(`/api/admin/default-slots`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export const actions: Actions = {
 
     const { defaultSlotId, ...body } = form.data;
 
-    event.fetch(`/api/admin/default-slots/${defaultSlotId}`, {
+    await event.fetch(`/api/admin/default-slots/${defaultSlotId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export const actions: Actions = {
 
     const { defaultSlotId } = form.data;
 
-    event.fetch(`/api/admin/default-slots/${defaultSlotId}`, {
+    await event.fetch(`/api/admin/default-slots/${defaultSlotId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
