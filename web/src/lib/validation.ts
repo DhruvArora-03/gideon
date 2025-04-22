@@ -60,3 +60,13 @@ export const deleteDefaultSlotSchema = z.object({
   defaultSlotId: z.number(),
 });
 export type DeleteDefaultSlotSchema = z.infer<typeof deleteDefaultSlotSchema>;
+
+export const updateUserInfoSchema = z.object({
+  first_name: z.string().min(2, 'Too short'),
+  last_name: z.string().min(2, 'Too short'),
+  phone_number: z
+    .string()
+    .regex(/^\d{3}-\d{3}-\d{4}$/, 'Phone number must be in the format 123-456-7890'),
+  role: z.enum(USER_ROLES),
+});
+export type UpdateUserInfoSchema = z.infer<typeof updateUserInfoSchema>;

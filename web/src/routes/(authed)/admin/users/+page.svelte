@@ -28,6 +28,7 @@
   import { zodClient } from 'sveltekit-superforms/adapters';
   import type { PageData } from './$types';
   import { cn } from '$lib/utils';
+  import { goto } from '$app/navigation';
 
   type Props = {
     data: PageData;
@@ -102,7 +103,10 @@
 
       <TableBody class="border-1">
         {#each users as u (u.id)}
-          <TableRow class={!u.active ? 'bg-muted' : ''} onclick={() => alert('todo: edit user')}>
+          <TableRow
+            class={!u.active ? 'bg-muted' : ''}
+            onclick={() => goto('/admin/users/' + u.id)}
+          >
             <TableCell>{`${u.first_name} ${u.last_name}`}</TableCell>
             <TableCell>{u.email}</TableCell>
             <TableCell>{u.phone_number}</TableCell>
