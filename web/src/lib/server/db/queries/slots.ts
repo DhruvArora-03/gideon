@@ -75,3 +75,14 @@ export async function cancelAssignmentForSlot(slotId: number, userId: string): P
     .delete(assignments)
     .where(and(eq(assignments.slot_id, slotId), eq(assignments.user_id, userId)));
 }
+
+export async function getUpcomingAssignments(userId: string): Promise<SlotWithAssignments[]> {
+  return db.query.slots.findMany({
+    with: {
+      assignments: {
+        where: (a) => eq(a.user_id, userId),
+      },
+    },
+    where: (s, { gt }) => gt(s.start_time, new Date()),
+  });
+}
