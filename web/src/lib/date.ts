@@ -1,4 +1,5 @@
 import type { SlotWithAssignments } from '$lib/server/db/schema';
+import { CalendarDateTime, toZoned } from '@internationalized/date';
 
 export const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -73,7 +74,10 @@ export const parseTime = (
 
   const [, hours, minutes] = match;
 
-  return new Date(year, month, date, Number.parseInt(hours), Number.parseInt(minutes));
+  return toZoned(
+    new CalendarDateTime(year, month, date, Number.parseInt(hours), Number.parseInt(minutes)),
+    'America/Chicago',
+  ).toDate();
 };
 
 export type Week = {
