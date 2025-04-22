@@ -8,6 +8,6 @@
   export { className as class };
 </script>
 
-<div class={cn('flex-row justify-end space-x-2', className)} {...$$restProps}>
+<div class={cn('flex flex-row justify-end gap-1', className)} {...$$restProps}>
   <slot />
 </div>

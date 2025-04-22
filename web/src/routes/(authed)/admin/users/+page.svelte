@@ -215,7 +215,7 @@
           </p>
         {/if}
 
-        <SheetFooter class="flex flex-row">
+        <SheetFooter>
           <SheetClose>
             <Button type="reset" variant="secondary">Cancel</Button>
           </SheetClose>

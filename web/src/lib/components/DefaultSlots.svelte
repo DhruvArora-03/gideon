@@ -274,7 +274,7 @@
             </p>
           {/if}
 
-          <SheetFooter class="mt-4 flex flex-row justify-between gap-2 space-x-0">
+          <SheetFooter class="mt-4 justify-between gap-2">
             {#if isEdit}
               <ConfirmationDialog
                 variant="destructive"
@@ -299,7 +299,7 @@
               <SheetClose>
                 <Button type="reset" variant="secondary">Cancel</Button>
               </SheetClose>
-              <Button class="ml-1" type="submit" disabled={$submitting}>Save Changes</Button>
+              <Button  type="submit" disabled={$submitting}>Save Changes</Button>
             </div>
           </SheetFooter>
         </form>
