@@ -4,9 +4,7 @@ import { message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import type { Actions, PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ depends }) => {
-  depends('data:default-slots');
-
+export const load: PageServerLoad = async () => {
   return {
     defaultSlots: queries.getDefaultSlots(),
     form: await superValidate(zod(updateDefaultSlotSchema)),

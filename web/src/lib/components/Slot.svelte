@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { invalidate } from '$app/navigation';
+  import { invalidateAll } from '$app/navigation';
   import { Button } from '$lib/components/ui/button';
   import {
     Card,
@@ -50,7 +50,7 @@
         throw new Error('Failed to sign up');
       }
 
-      invalidate('data:slots');
+      invalidateAll();
       toast.success('Signed up!', {
         description: `Confirmed shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
       });
@@ -78,7 +78,7 @@
         throw new Error('Failed to join waitlist');
       }
 
-      invalidate('data:slots');
+      invalidateAll();
       toast.success('Waitlisted!', {
         description: `Joined waitlist for shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
       });
@@ -105,7 +105,7 @@
         throw new Error('Failed to cancel shift');
       }
 
-      invalidate('data:slots');
+      invalidateAll();
       toast.success('Cancelled!', {
         description: `Cancelled shift on ${formatDateWithWeekday(data.start_time)} at ${formatTime(data.start_time)}`,
       });

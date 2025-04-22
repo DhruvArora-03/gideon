@@ -39,7 +39,7 @@
   import { DAYS, formatDotw, formatTime, parseTime } from '$lib/date';
   import type { DefaultSlot } from '$lib/server/db/schema';
   import { Edit, Plus, Trash2 } from 'lucide-svelte';
-  import { invalidate } from '$app/navigation';
+  import { invalidateAll } from '$app/navigation';
   import { updateDefaultSlotSchema, type UpdateDefaultSlotSchema } from '$lib/validation';
   import { MediaQuery } from 'svelte/reactivity';
   import { superForm, type SuperValidated } from 'sveltekit-superforms';
@@ -63,7 +63,7 @@
     validators: zodClient(updateDefaultSlotSchema),
     onResult: (e) => {
       if (e.result.type === 'success') {
-        invalidate('data:default-slots');
+        invalidateAll();
         open = false;
       }
     },
