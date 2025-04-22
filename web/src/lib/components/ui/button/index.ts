@@ -44,5 +44,7 @@ export {
   Root as Button,
   type Props as ButtonProps,
   type Events as ButtonEvents,
+  type Variant as ButtonVariant,
+  type Size as ButtonSize,
   buttonVariants,
 };

@@ -44,6 +44,8 @@
   import { MediaQuery } from 'svelte/reactivity';
   import { superForm, type SuperValidated } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
+  import ConfirmationDialog from '$lib/components/ConfirmationDialog.svelte';
+  import { DialogClose } from '$lib/components/ui/dialog';
 
   type Props = {
     defaultSlots: Promise<DefaultSlot[]>;
@@ -272,11 +274,21 @@
             </p>
           {/if}
 
-          <SheetFooter class="mt-4 flex flex-row justify-between gap-2">
+          <SheetFooter class="mt-4 flex flex-row justify-between gap-2 space-x-0">
             {#if isEdit}
-              <Button type="submit" variant="destructive" formaction="?/deleteDefaultSlot">
-                <Trash2 size={16} class="mr-2" /> Delete
-              </Button>
+              <ConfirmationDialog
+                variant="destructive"
+                description="Deleting this default shift will not impact any shifts that have already been created, however, no more will be automatically generated."
+              >
+                {#snippet label()}
+                  <Trash2 size={16} class="mr-2" /> Delete
+                {/snippet}
+
+                <DialogClose><Button variant="secondary">Cancel</Button></DialogClose>
+                <Button type="submit" variant="destructive" formaction="?/deleteDefaultSlot">
+                  Confirm
+                </Button>
+              </ConfirmationDialog>
             {:else}
               <div>
                 <!-- intentional empty div to force spacing -->
