@@ -8,7 +8,7 @@ import {
 } from '$lib/server/db/schema';
 import { and, eq } from 'drizzle-orm';
 
-export async function getSlots(): Promise<SlotWithAssignments[]> {
+export async function getFutureSlots(): Promise<SlotWithAssignments[]> {
   return db.query.slots.findMany({
     with: {
       assignments: {

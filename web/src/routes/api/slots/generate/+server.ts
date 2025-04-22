@@ -7,7 +7,7 @@ import { getDaysBetween, parseTime } from '$lib/date';
 export const POST: RequestHandler = async () => {
   console.log('Generating slots...');
 
-  const slots = queries.getSlots();
+  const slots = queries.getFutureSlots();
 
   const defaults = queries.getDefaultSlots();
 

@@ -75,7 +75,7 @@ export const parseTime = (
   const [, hours, minutes] = match;
 
   return toZoned(
-    new CalendarDateTime(year, month, date, Number.parseInt(hours), Number.parseInt(minutes)),
+    new CalendarDateTime(year, month + 1, date, Number.parseInt(hours), Number.parseInt(minutes)),
     'America/Chicago',
   ).toDate();
 };

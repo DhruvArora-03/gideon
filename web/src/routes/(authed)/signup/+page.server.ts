@@ -5,6 +5,6 @@ export const load: PageServerLoad = async ({ depends }) => {
   depends('data:slots');
 
   return {
-    slots: queries.getSlots(),
+    slots: queries.getFutureSlots(),
   };
 };
