@@ -70,8 +70,8 @@
         if (!res) {
           return;
         }
-        $page.url.searchParams.set('year', String(res.value));
-        goto(`?${$page.url.searchParams.toString()}`, {
+        page.url.searchParams.set('year', String(res.value));
+        goto(`?${page.url.searchParams.toString()}`, {
           invalidateAll: true,
         });
       }}
