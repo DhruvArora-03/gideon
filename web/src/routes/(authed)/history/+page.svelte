@@ -1,12 +1,14 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
+  import { page } from '$app/stores';
   import PageWrapper from '$lib/components/PageWrapper.svelte';
+  import SessionTable from '$lib/components/SessionTable.svelte';
   import {
     Card,
     CardContent,
+    CardDescription,
     CardHeader,
     CardTitle,
-    CardDescription,
   } from '$lib/components/ui/card';
   import {
     Select,
@@ -18,19 +20,8 @@
     SelectTrigger,
     SelectValue,
   } from '$lib/components/ui/select';
-  import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-  } from '$lib/components/ui/table';
-  import { formatDateWithWeekday, formatTime, getDuration, MONTHS, YEARS } from '$lib/date';
-  import { MessageSquare } from 'lucide-svelte';
+  import { MONTHS, YEARS } from '$lib/date';
   import type { PageData } from './$types';
-  import SessionTable from '$lib/components/SessionTable.svelte';
 
   type Props = {
     data: PageData;
@@ -49,7 +40,10 @@
         if (!res) {
           return;
         }
-        goto(`/history/${data.year}/${res.value}`);
+        $page.url.searchParams.set('month', String(res.value));
+        goto(`?${$page.url.searchParams.toString()}`, {
+          invalidateAll: true,
+        });
       }}
       {disabled}
     >
@@ -76,7 +70,10 @@
         if (!res) {
           return;
         }
-        goto(`/history/${res.value}/${data.month}`);
+        $page.url.searchParams.set('year', String(res.value));
+        goto(`?${$page.url.searchParams.toString()}`, {
+          invalidateAll: true,
+        });
       }}
       {disabled}
     >

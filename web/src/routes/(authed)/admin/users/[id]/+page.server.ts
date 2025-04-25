@@ -11,6 +11,8 @@ export const load: PageServerLoad = async ({ params: { id } }) => {
 
   return {
     user: queries.getProfile(id),
+    assignments: queries.getUpcomingAssignments(id),
+    sessions: queries.getSessions(id),
     form: await superValidate(zod(updateUserInfoSchema)),
   };
 };
