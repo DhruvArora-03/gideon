@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from '$app/navigation';
-  import { page } from '$app/stores';
+  import { page } from '$app/state';
   import PageWrapper from '$lib/components/PageWrapper.svelte';
   import SessionTable from '$lib/components/SessionTable.svelte';
   import {
@@ -40,8 +40,8 @@
         if (!res) {
           return;
         }
-        $page.url.searchParams.set('month', String(res.value));
-        goto(`?${$page.url.searchParams.toString()}`, {
+        page.url.searchParams.set('month', String(res.value));
+        goto(`?${page.url.searchParams.toString()}`, {
           invalidateAll: true,
         });
       }}
