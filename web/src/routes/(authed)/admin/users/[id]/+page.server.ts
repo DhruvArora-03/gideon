@@ -4,15 +4,17 @@ import { zod } from 'sveltekit-superforms/adapters';
 import { updateUserInfoSchema } from '$lib/validation';
 import queries from '$lib/server/db/queries';
 
-export const load: PageServerLoad = async ({ params: { id } }) => {
-  // supabase.auth.updateUser({
-  //   email: 'dhruvarora@gmail.com',
-  // });
+export const load: PageServerLoad = async ({ params: { id }, url }) => {
+  const today = new Date();
+  const month = Number.parseInt(url.searchParams.get('month') ?? String(today.getMonth()));
+  const year = Number.parseInt(url.searchParams.get('year') ?? String(today.getFullYear()));
 
   return {
     user: queries.getProfile(id),
     assignments: queries.getUpcomingAssignments(id),
-    sessions: queries.getSessions(id),
+    month,
+    year,
+    sessions: queries.getSessions(id, year, month),
     form: await superValidate(zod(updateUserInfoSchema)),
   };
 };
