@@ -16,15 +16,7 @@ export const load: PageServerLoad = async ({ params: { id }, url }) => {
     month,
     year,
     sessions: queries.getSessions(id, year, month),
-    form: await superValidate(zod(updateAccountDetailsSchema), {
-      defaults: {
-        first_name: 'Loading...',
-        last_name: 'Loading...',
-        email: 'Loading...',
-        phone_number: 'Loading...',
-        role: 'employee',
-      },
-    }),
+    form: await superValidate(zod(updateAccountDetailsSchema)),
   };
 };
 

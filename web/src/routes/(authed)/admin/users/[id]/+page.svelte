@@ -53,56 +53,70 @@
 </script>
 
 {#snippet updateAccountDetails(userInfo?: UpdateAccountDetailsSchema)}
-  <form class="flex flex-col gap-2" method="POST" action="?/updateAccountDetails" use:enhance>
-    <Card>
-      <CardHeader>
-        <CardTitle>Account Details</CardTitle>
-        <CardDescription>You can update the current user's information here.</CardDescription>
-      </CardHeader>
+  <Card class="flex-1">
+    <CardHeader>
+      <CardTitle>Account Details</CardTitle>
+      <CardDescription>You can update the current user's information here.</CardDescription>
+    </CardHeader>
 
+    <form class="flex flex-col gap-2" method="POST" action="?/updateAccountDetails" use:enhance>
       <CardContent>
-        <Field {form} name="first_name">
-          <Control let:attrs>
-            <Label>
-              <div class="mb-2">First Name</div>
-              <Input
-                {...attrs}
-                type="text"
-                bind:value={$formData.first_name}
-                disabled={$submitting || !userInfo}
-              />
-            </Label>
-          </Control>
-          <Description class="sr-only">User's first name</Description>
-          <FieldErrors />
-        </Field>
+        <div class="flex gap-4">
+          <Field {form} name="first_name">
+            <Control let:attrs>
+              <Label>
+                <div class="mb-2">First Name</div>
+                {#if userInfo}
+                  <Input
+                    {...attrs}
+                    type="text"
+                    bind:value={$formData.first_name}
+                    disabled={$submitting || !userInfo}
+                  />
+                {:else}
+                  <Input {...attrs} value="Loading..." disabled />
+                {/if}
+              </Label>
+            </Control>
+            <Description class="sr-only">User's first name</Description>
+            <FieldErrors />
+          </Field>
 
-        <Field {form} name="last_name">
-          <Control let:attrs>
-            <Label>
-              <div class="mb-2">Last Name</div>
-              <Input
-                {...attrs}
-                type="text"
-                bind:value={$formData.last_name}
-                disabled={$submitting || !userInfo}
-              />
-            </Label>
-          </Control>
-          <Description class="sr-only">User's last name</Description>
-          <FieldErrors />
-        </Field>
+          <Field {form} name="last_name">
+            <Control let:attrs>
+              <Label>
+                <div class="mb-2">Last Name</div>
+                {#if userInfo}
+                  <Input
+                    {...attrs}
+                    type="text"
+                    bind:value={$formData.last_name}
+                    disabled={$submitting || !userInfo}
+                  />
+                {:else}
+                  <Input {...attrs} value="Loading..." disabled />
+                {/if}
+              </Label>
+            </Control>
+            <Description class="sr-only">User's last name</Description>
+            <FieldErrors />
+          </Field>
+        </div>
 
         <Field {form} name="email">
           <Control let:attrs>
             <Label>
               <div class="mb-2">Email</div>
-              <Input
-                {...attrs}
-                type="text"
-                bind:value={$formData.email}
-                disabled={$submitting || !userInfo}
-              />
+              {#if userInfo}
+                <Input
+                  {...attrs}
+                  type="text"
+                  bind:value={$formData.email}
+                  disabled={$submitting || !userInfo}
+                />
+              {:else}
+                <Input {...attrs} value="Loading..." disabled />
+              {/if}
             </Label>
           </Control>
           <Description class="sr-only">User's email address</Description>
@@ -113,12 +127,16 @@
           <Control let:attrs>
             <Label>
               <div class="mb-2">Phone Number</div>
-              <Input
-                {...attrs}
-                type="text"
-                bind:value={$formData.phone_number}
-                disabled={$submitting || !userInfo}
-              />
+              {#if userInfo}
+                <Input
+                  {...attrs}
+                  type="text"
+                  bind:value={$formData.phone_number}
+                  disabled={$submitting || !userInfo}
+                />
+              {:else}
+                <Input {...attrs} value="Loading..." disabled />
+              {/if}
             </Label>
           </Control>
           <Description class="sr-only">User's phone number</Description>
@@ -132,7 +150,7 @@
               <Select
                 selected={{
                   value: $formData.role,
-                  label: $formData.role,
+                  label: userInfo ? $formData.role : 'Loading...',
                 }}
                 onSelectedChange={(res) => {
                   if (res) {
@@ -183,8 +201,8 @@
         </Button>
         <Button class="ml-1" type="submit" disabled={$submitting || !userInfo}>Save Changes</Button>
       </CardFooter>
-    </Card>
-  </form>
+    </form>
+  </Card>
 {/snippet}
 
 {#snippet dateSelect(disabled: boolean)}
@@ -252,7 +270,7 @@
 {/snippet}
 
 {#snippet userHistory()}
-  <Card>
+  <Card class="flex-1">
     <CardHeader>
       <CardTitle>Previous Shifts</CardTitle>
       <CardDescription>
@@ -279,7 +297,7 @@
 {/snippet}
 
 {#snippet upcomingShifts()}
-  <Card>
+  <Card class="flex-1">
     <CardHeader>
       <CardTitle>Upcoming Shifts</CardTitle>
       <CardDescription>
@@ -309,7 +327,7 @@
     <h1 class="text-2xl font-semibold">Loading...</h1>
 
     <div class="flex flex-row items-start gap-4">
-      <div class="shrink-0">{@render updateAccountDetails()}</div>
+      {@render updateAccountDetails()}
       {@render userHistory()}
       {@render upcomingShifts()}
     </div>
@@ -320,7 +338,7 @@
     </h1>
 
     <div class="flex flex-row items-start gap-4">
-      <div class="shrink-0">{@render updateAccountDetails(userInfo)}</div>
+      {@render updateAccountDetails(userInfo)}
       {@render userHistory()}
       {@render upcomingShifts()}
     </div>
