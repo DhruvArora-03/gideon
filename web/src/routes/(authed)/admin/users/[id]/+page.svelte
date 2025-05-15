@@ -49,7 +49,9 @@
 
   const { form: formData, message, enhance, submitting } = form;
 
-  data.userInfo.then(formData.set);
+  $effect(() => {
+    data.userInfo.then(formData.set);
+  });
 </script>
 
 {#snippet updateAccountDetails(userInfo?: UpdateAccountDetailsSchema)}
@@ -199,7 +201,7 @@
         >
           Reset
         </Button>
-        <Button class="ml-1" type="submit" disabled={$submitting || !userInfo}>Save Changes</Button>
+        <Button class="ml-2" type="submit" disabled={$submitting || !userInfo}>Save Changes</Button>
       </CardFooter>
     </form>
   </Card>
