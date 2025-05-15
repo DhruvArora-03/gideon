@@ -4,5 +4,9 @@
   let { children, data } = $props();
 </script>
 
-<Navigation showAdmin={data.profile.role === 'manager' || data.profile.role === 'admin'} />
+{#await data.profile}
+  <Navigation showAdmin={false} />
+{:then profile}
+  <Navigation showAdmin={profile.role === 'manager' || profile.role === 'admin'} />
+{/await}
 {@render children()}

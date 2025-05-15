@@ -1,15 +1,19 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
+  import { goto, invalidateAll } from '$app/navigation';
   import { page } from '$app/state';
   import PageWrapper from '$lib/components/PageWrapper.svelte';
   import SessionTable from '$lib/components/SessionTable.svelte';
+  import Button from '$lib/components/ui/button/button.svelte';
   import {
     Card,
     CardContent,
     CardDescription,
+    CardFooter,
     CardHeader,
     CardTitle,
   } from '$lib/components/ui/card';
+  import { Control, Description, Field, FieldErrors, Label } from '$lib/components/ui/form';
+  import { Input } from '$lib/components/ui/input';
   import {
     Select,
     SelectContent,
@@ -20,14 +24,168 @@
     SelectTrigger,
     SelectValue,
   } from '$lib/components/ui/select';
+  import UpcomingAssignmentsTable from '$lib/components/UpcomingAssignmentsTable.svelte';
   import { MONTHS, YEARS } from '$lib/date';
+  import { updateAccountDetailsSchema, type UpdateAccountDetailsSchema } from '$lib/validation';
+  import { superForm } from 'sveltekit-superforms';
+  import { zodClient } from 'sveltekit-superforms/adapters';
   import type { PageData } from './$types';
+  import { USER_ROLES } from '$lib/models';
 
   type Props = {
     data: PageData;
   };
   const { data }: Props = $props();
+
+  const form = superForm(data.form, {
+    validators: zodClient(updateAccountDetailsSchema),
+    resetForm: false,
+    onResult: (e) => {
+      if (e.result.type === 'success') {
+        invalidateAll();
+      }
+    },
+  });
+
+  const { form: formData, message, enhance, submitting } = form;
+
+  data.userInfo.then(formData.set);
 </script>
+
+{#snippet updateAccountDetails(userInfo?: UpdateAccountDetailsSchema)}
+  <form class="flex flex-col gap-2" method="POST" action="?/updateAccountDetails" use:enhance>
+    <Card>
+      <CardHeader>
+        <CardTitle>Account Details</CardTitle>
+        <CardDescription>You can update the current user's information here.</CardDescription>
+      </CardHeader>
+
+      <CardContent>
+        <Field {form} name="first_name">
+          <Control let:attrs>
+            <Label>
+              <div class="mb-2">First Name</div>
+              <Input
+                {...attrs}
+                type="text"
+                bind:value={$formData.first_name}
+                disabled={$submitting || !userInfo}
+              />
+            </Label>
+          </Control>
+          <Description class="sr-only">User's first name</Description>
+          <FieldErrors />
+        </Field>
+
+        <Field {form} name="last_name">
+          <Control let:attrs>
+            <Label>
+              <div class="mb-2">Last Name</div>
+              <Input
+                {...attrs}
+                type="text"
+                bind:value={$formData.last_name}
+                disabled={$submitting || !userInfo}
+              />
+            </Label>
+          </Control>
+          <Description class="sr-only">User's last name</Description>
+          <FieldErrors />
+        </Field>
+
+        <Field {form} name="email">
+          <Control let:attrs>
+            <Label>
+              <div class="mb-2">Email</div>
+              <Input
+                {...attrs}
+                type="text"
+                bind:value={$formData.email}
+                disabled={$submitting || !userInfo}
+              />
+            </Label>
+          </Control>
+          <Description class="sr-only">User's email address</Description>
+          <FieldErrors />
+        </Field>
+
+        <Field {form} name="phone_number">
+          <Control let:attrs>
+            <Label>
+              <div class="mb-2">Phone Number</div>
+              <Input
+                {...attrs}
+                type="text"
+                bind:value={$formData.phone_number}
+                disabled={$submitting || !userInfo}
+              />
+            </Label>
+          </Control>
+          <Description class="sr-only">User's phone number</Description>
+          <FieldErrors />
+        </Field>
+
+        <Field {form} name="role">
+          <Control let:attrs>
+            <Label>
+              <div class="mb-2">Role</div>
+              <Select
+                selected={{
+                  value: $formData.role,
+                  label: $formData.role,
+                }}
+                onSelectedChange={(res) => {
+                  if (res) {
+                    $formData.role = res?.value;
+                  }
+                }}
+                disabled={$submitting || !userInfo}
+              >
+                <SelectTrigger class="max-w-40">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>Role</SelectLabel>
+                    {#each USER_ROLES as role (role)}
+                      <SelectItem value={role}>{role}</SelectItem>
+                    {/each}
+                  </SelectGroup>
+                </SelectContent>
+
+                <SelectInput {...attrs} bind:value={$formData.role} />
+              </Select>
+            </Label>
+          </Control>
+          <Description class="sr-only">User's role</Description>
+          <FieldErrors />
+        </Field>
+
+        {#if $message}
+          <p class="mt-4">
+            {$message}
+          </p>
+        {/if}
+      </CardContent>
+
+      <CardFooter>
+        <Button
+          class="ml-auto"
+          type="button"
+          variant="secondary"
+          disabled={!userInfo}
+          onclick={() =>
+            form.reset({
+              data: userInfo,
+            })}
+        >
+          Reset
+        </Button>
+        <Button class="ml-1" type="submit" disabled={$submitting || !userInfo}>Save Changes</Button>
+      </CardFooter>
+    </Card>
+  </form>
+{/snippet}
 
 {#snippet dateSelect(disabled: boolean)}
   <div class="mb-2 flex flex-row gap-2">
@@ -97,7 +255,10 @@
   <Card>
     <CardHeader>
       <CardTitle>Previous Shifts</CardTitle>
-      <CardDescription>Review recorded shifts for TODO.</CardDescription>
+      <CardDescription>
+        Review all previously recorded shifts; clicking on a shift will allow you to manually make
+        changes and leave comments.
+      </CardDescription>
     </CardHeader>
 
     <CardContent>
@@ -117,24 +278,51 @@
   </Card>
 {/snippet}
 
+{#snippet upcomingShifts()}
+  <Card>
+    <CardHeader>
+      <CardTitle>Upcoming Shifts</CardTitle>
+      <CardDescription>
+        Review all upcoming shift assignments; clicking on a shift will allow you to manually remove
+        a user's assignment.
+      </CardDescription>
+    </CardHeader>
+
+    <CardContent>
+      {#await Promise.all([data.assignments, data.userInfo])}
+        Loading...
+      {:then [assignments, userInfo]}
+        <UpcomingAssignmentsTable
+          userId={userInfo.id}
+          {assignments}
+          caption={`${assignments.length === 0 ? 'No' : assignments.length} upcoming shifts found`}
+        />
+      {:catch error}
+        Could not load upcoming shifts: {error.message}
+      {/await}
+    </CardContent>
+  </Card>
+{/snippet}
+
 <PageWrapper class="space-y-4 p-4" previousHref="/admin/users" previousPageTitle="All Users">
-  <h1 class="text-2xl font-semibold">Manage User</h1>
-  {#await data.user}
-    <p class="text-muted-foreground text-sm">
-      Currently accessing user info for
-      <!-- {user.first_name} -->
-      <!-- {user.last_name} -->
-    </p>
+  {#await data.userInfo}
+    <h1 class="text-2xl font-semibold">Loading...</h1>
 
-    Loading...
+    <div class="flex flex-row items-start gap-4">
+      <div class="shrink-0">{@render updateAccountDetails()}</div>
+      {@render userHistory()}
+      {@render upcomingShifts()}
+    </div>
+  {:then userInfo}
+    <h1 class="text-2xl font-semibold">
+      {userInfo.first_name}
+      {userInfo.last_name}
+    </h1>
 
-    {@render userHistory()}
-  {:then user}
-    <p class="text-muted-foreground text-sm">
-      Currently accessing user info for
-      {user.first_name}
-      {user.last_name}
-    </p>
-    {@render userHistory()}
+    <div class="flex flex-row items-start gap-4">
+      <div class="shrink-0">{@render updateAccountDetails(userInfo)}</div>
+      {@render userHistory()}
+      {@render upcomingShifts()}
+    </div>
   {/await}
 </PageWrapper>

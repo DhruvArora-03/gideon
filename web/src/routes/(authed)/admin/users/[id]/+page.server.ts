@@ -1,8 +1,9 @@
 import type { Actions, PageServerLoad } from './$types';
 import { message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
-import { updateUserInfoSchema } from '$lib/validation';
+import { updateAccountDetailsSchema } from '$lib/validation';
 import queries from '$lib/server/db/queries';
+import { text } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async ({ params: { id }, url }) => {
   const today = new Date();
@@ -10,18 +11,26 @@ export const load: PageServerLoad = async ({ params: { id }, url }) => {
   const year = Number.parseInt(url.searchParams.get('year') ?? String(today.getFullYear()));
 
   return {
-    user: queries.getProfile(id),
+    userInfo: queries.getProfile(id),
     assignments: queries.getUpcomingAssignments(id),
     month,
     year,
     sessions: queries.getSessions(id, year, month),
-    form: await superValidate(zod(updateUserInfoSchema)),
+    form: await superValidate(zod(updateAccountDetailsSchema), {
+      defaults: {
+        first_name: 'Loading...',
+        last_name: 'Loading...',
+        email: 'Loading...',
+        phone_number: 'Loading...',
+        role: 'employee',
+      },
+    }),
   };
 };
 
 export const actions: Actions = {
-  invite: async (event) => {
-    const form = await superValidate(event, zod(updateUserInfoSchema));
+  updateAccountDetails: async (event) => {
+    const form = await superValidate(event, zod(updateAccountDetailsSchema));
 
     if (!form.valid) {
       return message(form, 'Please fix the invalid fields', {
@@ -30,13 +39,13 @@ export const actions: Actions = {
     }
 
     await event.fetch(`/api/admin/users/${event.params.id}`, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(form.data),
     });
 
-    return message(form, 'Updated user info!');
+    return text('Account details updated successfully', { status: 200 });
   },
 };

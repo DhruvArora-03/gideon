@@ -1,6 +1,6 @@
 import queries from '$lib/server/db/queries';
 import { error } from '@sveltejs/kit';
-import type { PageServerLoad } from './[year]/[month]/$types';
+import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals: { user }, url }) => {
   if (!user) {

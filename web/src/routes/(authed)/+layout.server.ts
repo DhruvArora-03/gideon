@@ -7,7 +7,9 @@ export const load: LayoutServerLoad = async ({ locals: { session, user } }) => {
     error(401, 'Unauthorized');
   }
 
-  const profile = await queries.getProfile(user.id);
-
-  return { session, user, profile };
+  return {
+    session,
+    user,
+    profile: queries.getProfile(user.id),
+  };
 };
