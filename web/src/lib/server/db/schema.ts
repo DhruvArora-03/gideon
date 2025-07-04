@@ -87,6 +87,9 @@ export type Slot = typeof slots.$inferSelect;
 export type SlotWithAssignments = Slot & {
   assignments: Assignment[];
 };
+export type AssignmentWithSlot = Assignment & {
+  slot: Slot
+}
 
 export const slotsRelations = relations(slots, ({ many }) => ({
   assignments: many(assignments, {

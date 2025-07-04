@@ -43,11 +43,23 @@
     onResult: (e) => {
       if (e.result.type === 'success') {
         invalidateAll();
+      } else {
+        alert('unknown failure');
       }
     },
   });
 
-  const { form: formData, message, enhance, submitting } = form;
+  const { form: formData, message, enhance, submitting, tainted } = form;
+
+  let dirty =
+    $tainted?.first_name ||
+    $tainted?.last_name ||
+    $tainted?.email ||
+    $tainted?.phone_number ||
+    $tainted?.role ||
+    false;
+
+  let editing = $state(false);
 
   $effect(() => {
     data.userInfo.then(formData.set);
@@ -71,9 +83,8 @@
                 {#if userInfo}
                   <Input
                     {...attrs}
-                    type="text"
                     bind:value={$formData.first_name}
-                    disabled={$submitting || !userInfo}
+                    disabled={!editing || $submitting || !userInfo}
                   />
                 {:else}
                   <Input {...attrs} value="Loading..." disabled />
@@ -91,9 +102,8 @@
                 {#if userInfo}
                   <Input
                     {...attrs}
-                    type="text"
                     bind:value={$formData.last_name}
-                    disabled={$submitting || !userInfo}
+                    disabled={!editing || $submitting || !userInfo}
                   />
                 {:else}
                   <Input {...attrs} value="Loading..." disabled />
@@ -112,9 +122,8 @@
               {#if userInfo}
                 <Input
                   {...attrs}
-                  type="text"
                   bind:value={$formData.email}
-                  disabled={$submitting || !userInfo}
+                  disabled={!editing || $submitting || !userInfo}
                 />
               {:else}
                 <Input {...attrs} value="Loading..." disabled />
@@ -132,9 +141,8 @@
               {#if userInfo}
                 <Input
                   {...attrs}
-                  type="text"
                   bind:value={$formData.phone_number}
-                  disabled={$submitting || !userInfo}
+                  disabled={!editing || $submitting || !userInfo}
                 />
               {:else}
                 <Input {...attrs} value="Loading..." disabled />
@@ -159,7 +167,7 @@
                     $formData.role = res?.value;
                   }
                 }}
-                disabled={$submitting || !userInfo}
+                disabled={!editing || $submitting || !userInfo}
               >
                 <SelectTrigger class="max-w-40">
                   <SelectValue />
@@ -189,19 +197,27 @@
       </CardContent>
 
       <CardFooter>
-        <Button
-          class="ml-auto"
-          type="button"
-          variant="secondary"
-          disabled={!userInfo}
-          onclick={() =>
-            form.reset({
-              data: userInfo,
-            })}
-        >
-          Reset
-        </Button>
-        <Button class="ml-2" type="submit" disabled={$submitting || !userInfo}>Save Changes</Button>
+        {#if editing}
+          <Button
+            class="ml-auto"
+            type="button"
+            variant="secondary"
+            disabled={!userInfo}
+            onclick={() => {
+              editing = false;
+              form.reset({
+                data: userInfo,
+              });
+            }}
+          >
+            Cancel
+          </Button>
+          <Button class="ml-2" type="submit" disabled={$submitting || !userInfo || dirty}>
+            Save Changes
+          </Button>
+        {:else}
+          <Button class="ml-auto" onclick={() => (editing = true)}>Edit</Button>
+        {/if}
       </CardFooter>
     </form>
   </Card>
@@ -286,7 +302,7 @@
         {@render dateSelect(true)}
         Loading...
       {:then sessions}
-        {@render dateSelect(false)}
+        {@render dateSelect(editing)}
         <SessionTable
           {sessions}
           caption={`${sessions.length === 0 ? 'No' : sessions.length} previous shifts found in ${MONTHS[data.month]} ${data.year}`}
@@ -313,7 +329,6 @@
         Loading...
       {:then [assignments, userInfo]}
         <UpcomingAssignmentsTable
-          userId={userInfo.id}
           {assignments}
           caption={`${assignments.length === 0 ? 'No' : assignments.length} upcoming shifts found`}
         />

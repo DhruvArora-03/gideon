@@ -2,11 +2,12 @@ import { db } from '$lib/server/db';
 import {
   assignments,
   slots,
+  type AssignmentWithSlot,
   type NewSlot,
   type Slot,
   type SlotWithAssignments,
 } from '$lib/server/db/schema';
-import { and, eq } from 'drizzle-orm';
+import { and, eq, getTableColumns, gt } from 'drizzle-orm';
 
 export async function getFutureSlots(): Promise<SlotWithAssignments[]> {
   return db.query.slots.findMany({
@@ -31,7 +32,7 @@ export async function createSlots(newSlots: NewSlot[]): Promise<Slot[]> {
 
 export async function signUpForSlot(slotId: number, userId: string): Promise<void> {
   const existingAssignment = await db.query.assignments.findFirst({
-    where: and(eq(assignments.slot_id, slotId), eq(assignments.user_id, userId)),
+    where: (a, { and, eq }) => and(eq(a.slot_id, slotId), eq(a.user_id, userId)),
   });
 
   if (existingAssignment) {
@@ -47,7 +48,7 @@ export async function signUpForSlot(slotId: number, userId: string): Promise<voi
 
 export async function joinWaitlistForSlot(slotId: number, userId: string): Promise<void> {
   const existingAssignment = await db.query.assignments.findFirst({
-    where: and(eq(assignments.slot_id, slotId), eq(assignments.user_id, userId)),
+    where: (a, { and, eq }) => and(eq(a.slot_id, slotId), eq(a.user_id, userId)),
   });
 
   if (existingAssignment) {
@@ -76,13 +77,13 @@ export async function cancelAssignmentForSlot(slotId: number, userId: string): P
     .where(and(eq(assignments.slot_id, slotId), eq(assignments.user_id, userId)));
 }
 
-export async function getUpcomingAssignments(userId: string): Promise<SlotWithAssignments[]> {
-  return db.query.slots.findMany({
-    with: {
-      assignments: {
-        where: (a) => eq(a.user_id, userId),
-      },
-    },
-    where: (s, { gt }) => gt(s.start_time, new Date()),
-  });
+export async function getUpcomingAssignments(userId: string): Promise<AssignmentWithSlot[]> {
+  return db
+    .select({
+      ...getTableColumns(assignments),
+      slot: getTableColumns(slots),
+    })
+    .from(assignments)
+    .where(and(eq(assignments.user_id, userId), gt(slots.start_time, new Date())))
+    .innerJoin(slots, eq(assignments.slot_id, slots.id));
 }

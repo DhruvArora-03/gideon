@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { SlotWithAssignments } from '$lib/server/db/schema';
+  import type { AssignmentWithSlot } from '$lib/server/db/schema';
   import { formatDate } from '$lib/date';
   import {
     Table,
@@ -13,11 +13,10 @@
   import { formatDateWithWeekday, formatTime, getDuration, MONTHS } from '$lib/date';
 
   type Props = {
-    userId: string;
-    assignments: SlotWithAssignments[];
+    assignments: AssignmentWithSlot[];
     caption?: string;
   };
-  const { userId, assignments, caption }: Props = $props();
+  const { assignments, caption }: Props = $props();
 </script>
 
 <Table>
@@ -33,10 +32,10 @@
   <TableBody>
     {#each assignments as a (a.id)}
       <TableRow class="text-nowrap">
-        <TableCell>{formatDateWithWeekday(a.start_time)}</TableCell>
-        <TableCell>{formatTime(a.start_time)}</TableCell>
-        <TableCell>{formatTime(a.end_time)}</TableCell>
-        <TableCell>{a.assignments.find((a) => a.user_id === userId)?.assignment_status}</TableCell>
+        <TableCell>{formatDateWithWeekday(a.slot.start_time)}</TableCell>
+        <TableCell>{formatTime(a.slot.start_time)}</TableCell>
+        <TableCell>{formatTime(a.slot.end_time)}</TableCell>
+        <TableCell>{a.assignment_status}</TableCell>
       </TableRow>
     {/each}
   </TableBody>
