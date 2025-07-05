@@ -13,11 +13,11 @@
     Select,
     SelectContent,
     SelectGroup,
-    SelectInput,
+    // SelectInput,
     SelectItem,
     SelectLabel,
     SelectTrigger,
-    SelectValue,
+    // SelectValue,
   } from '$lib/components/ui/select';
   import {
     Sheet,
@@ -27,6 +27,7 @@
     SheetFooter,
     SheetHeader,
     SheetTitle,
+    SheetTrigger,
   } from '$lib/components/ui/sheet';
   import {
     Table,
@@ -120,7 +121,7 @@
                 current = s.id;
                 form.reset({
                   data: {
-                    dotw: s.dotw,
+                    dotw: '' + s.dotw,
                     start_time: s.start_time.substring(0, 5),
                     end_time: s.end_time.substring(0, 5),
                     capacity: s.capacity,
@@ -153,8 +154,6 @@
 
     <Sheet
       bind:open
-      closeOnEscape={!isDirty}
-      closeOnOutsideClick={!isDirty}
       onOpenChange={(v) => {
         if (!v) {
           current = null;
@@ -163,7 +162,11 @@
       }}
     >
       {@const isEdit = current !== null}
-      <SheetContent side={desktop.current ? 'right' : 'bottom'}>
+      <SheetContent
+        escapeKeydownBehavior={isDirty ? 'ignore' : 'close'}
+        interactOutsideBehavior={isDirty ? 'ignore' : 'close'}
+        side={desktop.current ? 'right' : 'bottom'}
+      >
         <SheetHeader>
           <SheetTitle>{isEdit ? 'Edit' : 'New'} Default Shift</SheetTitle>
           <SheetDescription>
@@ -186,30 +189,18 @@
             <Control let:attrs>
               <Label>
                 <div class="mb-2">Day</div>
-                <Select
-                  selected={{
-                    value: $formData.dotw,
-                    label: DAYS[$formData.dotw],
-                  }}
-                  onSelectedChange={(res) => {
-                    if (res) {
-                      $formData.dotw = res?.value;
-                    }
-                  }}
-                  disabled={$submitting}
-                >
+                <Select {...attrs} type="single" bind:value={$formData.dotw} disabled={$submitting}>
                   <SelectTrigger class="max-w-40">
-                    <SelectValue />
+                    {DAYS[Number($formData.dotw)]}
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Day</SelectLabel>
                       {#each DAYS as day, i (day)}
-                        <SelectItem value={i}>{day}</SelectItem>
+                        <SelectItem value={'' + i}>{day}</SelectItem>
                       {/each}
                     </SelectGroup>
                   </SelectContent>
-                  <SelectInput {...attrs} bind:value={$formData.dotw} />
                 </Select>
               </Label>
             </Control>
@@ -299,7 +290,7 @@
               <SheetClose>
                 <Button type="reset" variant="secondary">Cancel</Button>
               </SheetClose>
-              <Button  type="submit" disabled={$submitting}>Save Changes</Button>
+              <Button type="submit" disabled={$submitting || !isDirty}>Save Changes</Button>
             </div>
           </SheetFooter>
         </form>

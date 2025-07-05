@@ -43,7 +43,7 @@ export type ChangePasswordFormSchema = z.infer<typeof changePasswordFormSchema>;
 
 export const createDefaultSlotSchema = z
   .object({
-    dotw: z.number().min(0).max(6),
+    dotw: z.string().regex(/^[0-6]$/),
     start_time: z.string().regex(/^\d{2}:\d{2}$/),
     end_time: z.string().regex(/^\d{2}:\d{2}$/),
     capacity: z.number().nonnegative(),

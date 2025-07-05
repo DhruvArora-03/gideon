@@ -3,7 +3,6 @@ import { message, superValidate } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 import { updateAccountDetailsSchema } from '$lib/validation';
 import queries from '$lib/server/db/queries';
-import { text } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async ({ params: { id }, url }) => {
   const today = new Date();
@@ -30,6 +29,8 @@ export const actions: Actions = {
       });
     }
 
+    // await queries.updateProfile(event.params.id, form.data);
+
     await event.fetch(`/api/admin/users/${event.params.id}`, {
       method: 'PUT',
       headers: {
@@ -38,6 +39,6 @@ export const actions: Actions = {
       body: JSON.stringify(form.data),
     });
 
-    return text('Account details updated successfully', { status: 200 });
+    return { success: true };
   },
 };

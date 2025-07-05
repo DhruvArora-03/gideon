@@ -18,11 +18,9 @@
     Select,
     SelectContent,
     SelectGroup,
-    SelectInput,
     SelectItem,
     SelectLabel,
     SelectTrigger,
-    SelectValue,
   } from '$lib/components/ui/select';
   import UpcomingAssignmentsTable from '$lib/components/UpcomingAssignmentsTable.svelte';
   import { MONTHS, YEARS } from '$lib/date';
@@ -84,7 +82,8 @@
                   <Input
                     {...attrs}
                     bind:value={$formData.first_name}
-                    disabled={!editing || $submitting || !userInfo}
+                    readonly={!editing}
+                    disabled={$submitting || !userInfo}
                   />
                 {:else}
                   <Input {...attrs} value="Loading..." disabled />
@@ -103,7 +102,8 @@
                   <Input
                     {...attrs}
                     bind:value={$formData.last_name}
-                    disabled={!editing || $submitting || !userInfo}
+                    readonly={!editing}
+                    disabled={$submitting || !userInfo}
                   />
                 {:else}
                   <Input {...attrs} value="Loading..." disabled />
@@ -123,7 +123,8 @@
                 <Input
                   {...attrs}
                   bind:value={$formData.email}
-                  disabled={!editing || $submitting || !userInfo}
+                  readonly={!editing}
+                  disabled={$submitting || !userInfo}
                 />
               {:else}
                 <Input {...attrs} value="Loading..." disabled />
@@ -142,7 +143,8 @@
                 <Input
                   {...attrs}
                   bind:value={$formData.phone_number}
-                  disabled={!editing || $submitting || !userInfo}
+                  readonly={!editing}
+                  disabled={$submitting || !userInfo}
                 />
               {:else}
                 <Input {...attrs} value="Loading..." disabled />
@@ -153,41 +155,47 @@
           <FieldErrors />
         </Field>
 
-        <Field {form} name="role">
+        <!-- <Field {form} name="role">
           <Control let:attrs>
             <Label>
               <div class="mb-2">Role</div>
-              <Select
-                selected={{
-                  value: $formData.role,
-                  label: userInfo ? $formData.role : 'Loading...',
-                }}
-                onSelectedChange={(res) => {
-                  if (res) {
-                    $formData.role = res?.value;
-                  }
-                }}
-                disabled={!editing || $submitting || !userInfo}
-              >
-                <SelectTrigger class="max-w-40">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Role</SelectLabel>
-                    {#each USER_ROLES as role (role)}
-                      <SelectItem value={role}>{role}</SelectItem>
-                    {/each}
-                  </SelectGroup>
-                </SelectContent>
+              {#if editing}
+                <Select
+                  selected={{
+                    value: $formData.role,
+                    label: userInfo ? $formData.role : 'Loading...',
+                  }}
+                  onSelectedChange={(res) => {
+                    if (res) {
+                      $formData.role = res?.value;
+                    }
+                  }}
+                  disabled={$submitting || !userInfo}
+                >
+                  <SelectTrigger class="max-w-40">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Role</SelectLabel>
+                      {#each USER_ROLES as role (role)}
+                        <SelectItem value={role}>{role}</SelectItem>
+                      {/each}
+                    </SelectGroup>
+                  </SelectContent>
 
-                <SelectInput {...attrs} bind:value={$formData.role} />
-              </Select>
+                  <SelectInput {...attrs} bind:value={$formData.role} />
+                </Select>
+              {:else if userInfo}
+                <Input class="max-w-40" value={userInfo.role} readonly />
+              {:else}
+                <Input class="max-w-40" value="Loading..." readonly />
+              {/if}
             </Label>
           </Control>
           <Description class="sr-only">User's role</Description>
           <FieldErrors />
-        </Field>
+        </Field> -->
 
         {#if $message}
           <p class="mt-4">
@@ -226,6 +234,57 @@
 {#snippet dateSelect(disabled: boolean)}
   <div class="mb-2 flex flex-row gap-2">
     <Select
+      type="single"
+      name="month"
+      bind:value={
+        () => '' + data.month,
+        (v) => {
+          console.log(v);
+          page.url.searchParams.set('month', v);
+          goto(`?${page.url.searchParams.toString()}`, {
+            invalidateAll: true,
+          });
+        }
+      }
+    >
+      <SelectTrigger >{MONTHS[data.month]}</SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>Months</SelectLabel>
+          {#each MONTHS as month, i (month)}
+            <SelectItem value={'' + i} label={month} />
+          {/each}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+
+    <Select
+      type="single"
+      name="month"
+      bind:value={
+        () => '' + data.month,
+        (v) => {
+          console.log(v);
+          page.url.searchParams.set('month', v);
+          goto(`?${page.url.searchParams.toString()}`, {
+            invalidateAll: true,
+          });
+        }
+      }
+    >
+      <SelectTrigger>{MONTHS[data.month]}</SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>Months</SelectLabel>
+          {#each MONTHS as month, i (month)}
+            <SelectItem value={'' + i} label={month} />
+          {/each}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+    <!-- <Select
+      type="single"
+      value={'' + data.month}
       selected={{
         value: data.month,
         label: MONTHS[data.month],
@@ -248,14 +307,14 @@
         <SelectGroup>
           <SelectLabel>Month</SelectLabel>
           {#each MONTHS as month, i (month)}
-            <SelectItem value={i}>{month}</SelectItem>
+            <SelectItem value={'' + i}>{month}</SelectItem>
           {/each}
         </SelectGroup>
       </SelectContent>
       <SelectInput />
-    </Select>
+    </Select> -->
 
-    <Select
+    <!-- <Select
       selected={{
         value: data.year,
         label: '' + data.year,
@@ -283,7 +342,7 @@
         </SelectGroup>
       </SelectContent>
       <SelectInput />
-    </Select>
+    </Select> -->
   </div>
 {/snippet}
 
@@ -325,9 +384,9 @@
     </CardHeader>
 
     <CardContent>
-      {#await Promise.all([data.assignments, data.userInfo])}
+      {#await data.assignments}
         Loading...
-      {:then [assignments, userInfo]}
+      {:then assignments}
         <UpcomingAssignmentsTable
           {assignments}
           caption={`${assignments.length === 0 ? 'No' : assignments.length} upcoming shifts found`}

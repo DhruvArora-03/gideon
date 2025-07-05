@@ -14,11 +14,9 @@
     Select,
     SelectContent,
     SelectGroup,
-    SelectInput,
     SelectItem,
     SelectLabel,
     SelectTrigger,
-    SelectValue,
   } from '$lib/components/ui/select';
   import { MONTHS, YEARS } from '$lib/date';
   import type { PageData } from './$types';
@@ -32,87 +30,73 @@
 {#snippet dateSelect(disabled: boolean)}
   <div class="mb-2 flex flex-row gap-2">
     <Select
-      selected={{
-        value: data.month,
-        label: MONTHS[data.month],
-      }}
-      onSelectedChange={(res) => {
-        if (!res) {
-          return;
+      type="single"
+      bind:value={
+        () => '' + data.month,
+        (v) => {
+          page.url.searchParams.set('month', v);
+          goto(`?${page.url.searchParams.toString()}`, {
+            invalidateAll: true,
+          });
         }
-        page.url.searchParams.set('month', String(res.value));
-        goto(`?${page.url.searchParams.toString()}`, {
-          invalidateAll: true,
-        });
-      }}
+      }
       {disabled}
     >
-      <SelectTrigger class="max-w-xs">
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent>
+      <SelectTrigger class="w-[150px]">{MONTHS[data.month]}</SelectTrigger>
+      <SelectContent class="w-[150px]">
         <SelectGroup>
           <SelectLabel>Month</SelectLabel>
           {#each MONTHS as month, i (month)}
-            <SelectItem value={i}>{month}</SelectItem>
+            <SelectItem value={'' + i}>{month}</SelectItem>
           {/each}
         </SelectGroup>
       </SelectContent>
-      <SelectInput />
     </Select>
 
     <Select
-      selected={{
-        value: data.year,
-        label: '' + data.year,
-      }}
-      onSelectedChange={(res) => {
-        if (!res) {
-          return;
+      type="single"
+      bind:value={
+        () => '' + data.year,
+        (v) => {
+          page.url.searchParams.set('year', v);
+          goto(`?${page.url.searchParams.toString()}`, {
+            invalidateAll: true,
+          });
         }
-        page.url.searchParams.set('year', String(res.value));
-        goto(`?${page.url.searchParams.toString()}`, {
-          invalidateAll: true,
-        });
-      }}
+      }
       {disabled}
     >
-      <SelectTrigger class="max-w-xs">
-        <SelectValue />
+      <SelectTrigger class="w-[150px]">
+        {data.year}
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent class="w-[150px]">
         <SelectGroup>
           <SelectLabel>Year</SelectLabel>
           {#each YEARS as year (year)}
-            <SelectItem value={year}>{year}</SelectItem>
+            <SelectItem value={'' + year}>{year}</SelectItem>
           {/each}
         </SelectGroup>
       </SelectContent>
-      <SelectInput />
     </Select>
   </div>
 {/snippet}
 
-<PageWrapper class="pb-10 md:p-4">
-  <Card>
-    <CardHeader>
-      <CardTitle>Previous Shifts</CardTitle>
-      <CardDescription>Review all of your recorded shifts.</CardDescription>
-    </CardHeader>
+<PageWrapper class="pt-4">
+  <div class="pb-6">
+    <h1 class="text-2xl font-semibold tracking-tight">Previous Shifts</h1>
+    <h2 class="text-muted-foreground">Review all of your recorded shifts.</h2>
+  </div>
 
-    <CardContent>
-      {#await data.sessions}
-        {@render dateSelect(true)}
-        Loading...
-      {:then sessions}
-        {@render dateSelect(false)}
-        <SessionTable
-          {sessions}
-          caption={`${sessions.length === 0 ? 'No' : sessions.length} previous shifts found in ${MONTHS[data.month]} ${data.year}`}
-        />
-      {:catch error}
-        Could not load history: {error.message}
-      {/await}
-    </CardContent>
-  </Card>
+  {#await data.sessions}
+    {@render dateSelect(true)}
+    Loading...
+  {:then sessions}
+    {@render dateSelect(false)}
+    <SessionTable
+      {sessions}
+      caption={`${sessions.length === 0 ? 'No' : sessions.length} previous shifts found in ${MONTHS[data.month]} ${data.year}`}
+    />
+  {:catch error}
+    Could not load history: {error.message}
+  {/await}
 </PageWrapper>

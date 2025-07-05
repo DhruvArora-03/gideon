@@ -1,5 +1,6 @@
 import { db } from '$lib/server/db';
-import type { Profile } from '$lib/server/db/schema';
+import { profiles, type Profile } from '$lib/server/db/schema';
+import { eq } from 'drizzle-orm';
 
 export async function getProfile(userId: string): Promise<Profile> {
   const profile = await db.query.profiles.findFirst({
@@ -11,6 +12,13 @@ export async function getProfile(userId: string): Promise<Profile> {
   }
 
   return profile;
+}
+
+export async function updateProfile(
+  userId: string,
+  data: Partial<Omit<Profile, 'id' | 'created_at' | 'updated_at'>>, // todo: check if we want to allow updating of email
+): Promise<void> {
+  await db.update(profiles).set(data).where(eq(profiles.id, userId));
 }
 
 export async function getUsers(): Promise<Profile[]> {

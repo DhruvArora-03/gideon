@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { buttonVariants } from '$lib/components/ui/button';
   import {
     Table,
     TableBody,
@@ -8,15 +9,21 @@
     TableHeader,
     TableRow,
   } from '$lib/components/ui/table';
+  import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+  } from '$lib/components/ui/tooltip';
   import { formatDateWithWeekday, formatTime, getDuration, MONTHS } from '$lib/date';
   import type { Session } from '$lib/server/db/schema';
-  import { MessageSquare } from 'lucide-svelte';
+  import { MessageSquare, TriangleAlertIcon } from 'lucide-svelte';
 
   type Props = {
     sessions: Session[];
     caption?: string;
   };
-  const { sessions,caption }: Props = $props();
+  const { sessions, caption }: Props = $props();
 </script>
 
 <Table>
@@ -36,6 +43,20 @@
         <TableCell>{formatTime(s.clock_in)}</TableCell>
         <TableCell>{s.clock_out ? formatTime(s.clock_out) : ''}</TableCell>
         <TableCell>{s.clock_out ? getDuration(s.clock_in, s.clock_out) : ''}</TableCell>
+        <TableCell>
+          {#if !s.was_scheduled}
+            <TooltipProvider>
+              <Tooltip delayDuration={0}>
+                <TooltipTrigger class={buttonVariants({ variant: 'ghost' })}>
+                  <TriangleAlertIcon size={16} />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Add to library</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          {/if}
+        </TableCell>
       </TableRow>
       {#if s.employee_notes}
         <TableRow class="bg-secondary text-secondary-foreground">
@@ -57,9 +78,8 @@
   </TableBody>
 
   {#if caption}
-  <TableCaption>
-    {caption}
-  </TableCaption>
-
+    <TableCaption>
+      {caption}
+    </TableCaption>
   {/if}
 </Table>
