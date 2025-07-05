@@ -40,6 +40,7 @@
       {@render accountField('Last Name', data.profile.last_name)}
       {@render accountField('Email', data.profile.email)}
       {@render accountField('Phone Number', data.profile.phone_number)}
+      {@render accountField('Role', data.profile.role)}
     </CardContent>
   </Card>
 
