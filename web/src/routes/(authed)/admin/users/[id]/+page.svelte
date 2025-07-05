@@ -29,6 +29,7 @@
   import { zodClient } from 'sveltekit-superforms/adapters';
   import type { PageData } from './$types';
   import { USER_ROLES } from '$lib/models';
+  import { Separator } from '$lib/components/ui/separator';
 
   type Props = {
     data: PageData;
@@ -247,7 +248,7 @@
         }
       }
     >
-      <SelectTrigger >{MONTHS[data.month]}</SelectTrigger>
+      <SelectTrigger>{MONTHS[data.month]}</SelectTrigger>
       <SelectContent>
         <SelectGroup>
           <SelectLabel>Months</SelectLabel>
@@ -408,10 +409,24 @@
       {@render upcomingShifts()}
     </div>
   {:then userInfo}
-    <h1 class="text-2xl font-semibold">
-      {userInfo.first_name}
-      {userInfo.last_name}
-    </h1>
+    <div class="flex flex-row gap-2">
+      <h1 class="text-2xl font-bold tracking-tight">
+        {userInfo.first_name}
+        {userInfo.last_name}
+      </h1>
+      <Separator orientation="vertical" />
+      <div class="self-center">
+        {userInfo.role}
+      </div>
+      <Separator orientation="vertical" />
+      <div class="self-center">
+        {userInfo.email}
+      </div>
+      <Separator orientation="vertical" />
+      <div class="self-center">
+        {userInfo.phone_number}
+      </div>
+    </div>
 
     <div class="flex flex-row items-start gap-4">
       {@render updateAccountDetails(userInfo)}
