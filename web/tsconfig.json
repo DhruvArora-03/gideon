@@ -9,7 +9,9 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "strict": true
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true
     // disabled these bc of some warning with './$types' and now it works, pls dont ask why
     // "module": "NodeNext",
     // "moduleResolution": "NodeNext"

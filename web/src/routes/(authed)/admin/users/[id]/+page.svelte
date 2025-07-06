@@ -23,15 +23,12 @@
   import type { PageData } from './$types';
   import EditUserDialog from '$lib/components/EditUserDialog.svelte';
   import { Button } from '$lib/components/ui/button';
-  import { MediaQuery } from 'svelte/reactivity';
   import RoleBadge from '$lib/components/RoleBadge.svelte';
 
   type Props = {
     data: PageData;
   };
   const { data }: Props = $props();
-
-  const desktop = new MediaQuery('(min-width: 768px)');
 </script>
 
 {#snippet dateSelect(disabled: boolean)}
