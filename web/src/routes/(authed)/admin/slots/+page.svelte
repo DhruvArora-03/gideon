@@ -30,7 +30,7 @@
       </p>
     </div>
     <Button class="w-full md:ml-auto md:w-fit" onclick={() => (open = true)}>
-      <ClockPlusIcon class="mr-2" size={16} />Invite New User
+      <ClockPlusIcon class="mr-2" size={16} />Create Shift
     </Button>
   </div>
 
