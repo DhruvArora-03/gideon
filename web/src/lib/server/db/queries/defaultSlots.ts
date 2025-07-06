@@ -6,7 +6,12 @@ type DefaultSlotMutation = Omit<NewDefaultSlot, 'id' | 'created_at' | 'updated_a
 
 export async function getDefaultSlots(): Promise<DefaultSlot[]> {
   return await db.query.defaultSlots.findMany({
-    orderBy: (defaultSlots) => [defaultSlots.dotw, defaultSlots.start_time, defaultSlots.end_time, defaultSlots.capacity],
+    orderBy: (defaultSlots) => [
+      defaultSlots.dotw,
+      defaultSlots.start_time,
+      defaultSlots.end_time,
+      defaultSlots.capacity,
+    ],
   });
 }
 
