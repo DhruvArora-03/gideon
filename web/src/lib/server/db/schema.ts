@@ -88,8 +88,8 @@ export type SlotWithAssignments = Slot & {
   assignments: Assignment[];
 };
 export type AssignmentWithSlot = Assignment & {
-  slot: Slot
-}
+  slot: Slot;
+};
 
 export const slotsRelations = relations(slots, ({ many }) => ({
   assignments: many(assignments, {
