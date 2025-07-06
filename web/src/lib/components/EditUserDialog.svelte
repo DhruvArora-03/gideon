@@ -25,6 +25,7 @@
   import type { Profile } from '$lib/server/db/schema';
   import { cn } from '$lib/utils';
   import { updateAccountDetailsSchema, type UpdateAccountDetailsSchema } from '$lib/validation';
+  import { EditIcon } from 'lucide-svelte';
   import { superForm, type SuperValidated } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
 
@@ -73,7 +74,7 @@
   }}
 >
   <DialogTrigger class={cn(buttonVariants({ variant: 'default' }), props.class)}>
-    Edit User Info
+    <EditIcon size={16} class="mr-2" /> Edit User Info
   </DialogTrigger>
 
   <DialogContent

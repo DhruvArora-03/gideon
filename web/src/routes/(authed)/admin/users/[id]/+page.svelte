@@ -21,10 +21,10 @@
   import UpcomingAssignmentsTable from '$lib/components/UpcomingAssignmentsTable.svelte';
   import { MONTHS, YEARS } from '$lib/date';
   import type { PageData } from './$types';
-  import { Separator } from '$lib/components/ui/separator';
   import EditUserDialog from '$lib/components/EditUserDialog.svelte';
   import { Button } from '$lib/components/ui/button';
   import { MediaQuery } from 'svelte/reactivity';
+  import RoleBadge from '$lib/components/RoleBadge.svelte';
 
   type Props = {
     data: PageData;
@@ -99,36 +99,23 @@
       <Button disabled>Loading...</Button>
     </div>
   {:then userInfo}
-    <div class="flex flex-row gap-2">
-      <h1 class="self-center text-2xl font-bold tracking-tight">
-        {userInfo.first_name}
-        {userInfo.last_name}
-      </h1>
-      {#if desktop.current}
-        <Separator orientation="vertical" />
-        <div class="self-center">
-          {userInfo.role}
-        </div>
-        <Separator orientation="vertical" />
-        <div class="self-center">
+    <div class="flex flex-col justify-between gap-2 md:flex-row">
+      <div>
+        <h1
+          class="flex flex-row items-center gap-2 text-2xl font-semibold tracking-tight md:self-center"
+        >
+          {userInfo.first_name}
+          {userInfo.last_name}
+          <RoleBadge {userInfo} />
+        </h1>
+        <p class="text-muted-foreground text-sm">
           {userInfo.email}
-        </div>
-        <Separator orientation="vertical" />
-        <div class="self-center">
+          <br />
           {userInfo.phone_number}
-        </div>
-      {/if}
-      <EditUserDialog class="ml-auto" {userInfo} form={data.form} />
-    </div>
-    {#if !desktop.current}
-      <div class="flex flex-row gap-2">
-        {userInfo.role}
-        <Separator orientation="vertical" />
-        {userInfo.email}
-        <Separator orientation="vertical" />
-        {userInfo.phone_number}
+        </p>
       </div>
-    {/if}
+      <EditUserDialog class="w-full md:ml-auto md:w-fit" {userInfo} form={data.form} />
+    </div>
   {/await}
 
   <div class="flex flex-row flex-wrap items-start gap-4">

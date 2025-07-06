@@ -21,13 +21,14 @@
     TableRow,
   } from '$lib/components/ui/table';
   import { inviteFormSchema } from '$lib/validation';
-  import { Edit, Plus, Send } from 'lucide-svelte';
+  import { Edit, MailPlusIcon, Send } from 'lucide-svelte';
   import { toast } from 'svelte-sonner';
   import { MediaQuery } from 'svelte/reactivity';
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
   import type { PageData } from './$types';
   import { goto } from '$app/navigation';
+  import RoleBadge from '$lib/components/RoleBadge.svelte';
 
   type Props = {
     data: PageData;
@@ -74,16 +75,15 @@
 </script>
 
 <PageWrapper class="mx-auto max-w-screen-lg space-y-4 p-4">
-  <div class="space-y-2">
-    <h1 class="text-2xl font-semibold tracking-tight">Manage Users</h1>
-    <p class="text-muted-foreground text-sm">
-      View user info here; to make changes to a user, click on their corresponding row
-    </p>
-  </div>
-
-  <div class="md:ml-auto md:w-fit">
-    <Button class="w-full" onclick={() => (open = true)}>
-      <Plus class="mr-2" size={16} />Invite New User
+  <div class="flex flex-col justify-between gap-2 md:flex-row">
+    <div>
+      <h1 class="text-2xl font-semibold tracking-tight">Manage Users</h1>
+      <p class="text-muted-foreground text-sm">
+        View user info here; to make changes to a user click on their corresponding row
+      </p>
+    </div>
+    <Button class="w-full md:ml-auto md:w-fit" onclick={() => (open = true)}>
+      <MailPlusIcon class="mr-2" size={16} />Invite New User
     </Button>
   </div>
 
@@ -94,27 +94,24 @@
       <TableHeader class="border-1">
         <TableRow>
           <TableHead>Name</TableHead>
-          <TableHead class="hidden md:table-cell">Phone Number</TableHead>
+          <TableHead>Role</TableHead>
           <TableHead class="hidden md:table-cell">Email</TableHead>
-          <TableHead colspan={2}>Role</TableHead>
+          <TableHead class="hidden md:table-cell">Phone Number</TableHead>
+          <TableHead class="sr-only">Edit</TableHead>
         </TableRow>
       </TableHeader>
 
       <TableBody class="border-1">
-        {#each users as u (u.id)}
-          <TableRow
-            class={!u.active ? 'bg-muted' : ''}
-            onclick={() => goto('/admin/users/' + u.id)}
-          >
-            <TableCell>{`${u.first_name} ${u.last_name}`}</TableCell>
-            <TableCell class="hidden md:table-cell">{u.phone_number}</TableCell>
-            <TableCell class="hidden md:table-cell">{u.email}</TableCell>
+        {#each users as userInfo (userInfo.id)}
+          <TableRow onclick={() => goto('/admin/users/' + userInfo.id)}>
             <TableCell>
-              {u.role}
-              {#if !u.active}
-                <span class="text-destructive">{' '}(deactivated)</span>
-              {/if}
+              {`${userInfo.first_name} ${userInfo.last_name}`}
             </TableCell>
+            <TableCell>
+              <RoleBadge {userInfo} />
+            </TableCell>
+            <TableCell class="hidden md:table-cell">{userInfo.email}</TableCell>
+            <TableCell class="hidden md:table-cell">{userInfo.phone_number}</TableCell>
             <TableCell align="right">
               <Button variant="ghost">
                 <Edit size={16} />
