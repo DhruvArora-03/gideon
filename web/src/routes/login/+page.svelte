@@ -14,7 +14,7 @@
   import { zodClient } from 'sveltekit-superforms/adapters';
   import { Turnstile } from 'svelte-turnstile';
   import { PUBLIC_TURNSTILE_SITE_KEY } from '$env/static/public';
-  import { LoaderCircle, LogIn } from 'lucide-svelte';
+  import { LoaderCircle, LogIn } from '@lucide/svelte';
   import { Button } from '$lib/components/ui/button/';
 
   let { data } = $props();

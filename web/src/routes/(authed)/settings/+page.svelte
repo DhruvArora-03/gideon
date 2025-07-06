@@ -6,7 +6,7 @@
   import CardHeader from '$lib/components/ui/card/card-header.svelte';
   import { Card, CardContent, CardTitle } from '$lib/components/ui/card';
   import { setMode } from 'mode-watcher';
-  import { Moon, Settings2, Sun } from 'lucide-svelte';
+  import { Moon, Settings2, Sun } from '@lucide/svelte';
   import CardDescription from '$lib/components/ui/card/card-description.svelte';
   import PageWrapper from '$lib/components/PageWrapper.svelte';
   import { Label } from '$lib/components/ui/label';

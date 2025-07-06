@@ -27,7 +27,6 @@
     SheetFooter,
     SheetHeader,
     SheetTitle,
-    SheetTrigger,
   } from '$lib/components/ui/sheet';
   import {
     Table,
@@ -39,7 +38,7 @@
   } from '$lib/components/ui/table';
   import { DAYS, formatDotw, formatTime, parseTime } from '$lib/date';
   import type { DefaultSlot } from '$lib/server/db/schema';
-  import { Edit, Plus, Trash2 } from 'lucide-svelte';
+  import { Edit, Plus, Trash2 } from '@lucide/svelte';
   import { invalidateAll } from '$app/navigation';
   import { updateDefaultSlotSchema, type UpdateDefaultSlotSchema } from '$lib/validation';
   import { MediaQuery } from 'svelte/reactivity';

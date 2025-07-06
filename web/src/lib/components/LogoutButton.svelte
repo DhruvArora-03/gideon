@@ -3,7 +3,7 @@
   import { Button } from '$lib/components/ui/button';
   import { cn } from '$lib/utils';
   import type { SupabaseClient } from '@supabase/supabase-js';
-  import { LogOut } from 'lucide-svelte';
+  import { LogOut } from '@lucide/svelte';
 
   type Props = {
     supabase: SupabaseClient;

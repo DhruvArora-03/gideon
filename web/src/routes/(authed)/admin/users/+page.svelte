@@ -21,7 +21,7 @@
     TableRow,
   } from '$lib/components/ui/table';
   import { inviteFormSchema } from '$lib/validation';
-  import { Edit, MailPlusIcon, Send } from 'lucide-svelte';
+  import { Edit, MailPlusIcon, Send } from '@lucide/svelte';
   import { toast } from 'svelte-sonner';
   import { MediaQuery } from 'svelte/reactivity';
   import { superForm } from 'sveltekit-superforms';

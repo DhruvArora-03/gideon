@@ -11,7 +11,7 @@
   import { Field, Control, Description, FieldErrors } from '$lib/components/ui/form';
   import { Label } from '$lib/components/ui/label';
   import { changePasswordFormSchema, type ChangePasswordFormSchema } from '$lib/validation';
-  import { LockKeyhole } from 'lucide-svelte';
+  import { LockKeyhole } from '@lucide/svelte';
   import { superForm, type SuperValidated } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
 

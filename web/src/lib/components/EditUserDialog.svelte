@@ -25,7 +25,7 @@
   import type { Profile } from '$lib/server/db/schema';
   import { cn } from '$lib/utils';
   import { updateAccountDetailsSchema, type UpdateAccountDetailsSchema } from '$lib/validation';
-  import { EditIcon } from 'lucide-svelte';
+  import { EditIcon } from '@lucide/svelte';
   import { superForm, type SuperValidated } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
 

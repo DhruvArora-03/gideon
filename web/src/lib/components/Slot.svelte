@@ -18,7 +18,7 @@
     LoaderCircle,
     LogOut,
     UserPlus,
-  } from 'lucide-svelte';
+  } from '@lucide/svelte';
   import { toast } from 'svelte-sonner';
 
   type Props = {

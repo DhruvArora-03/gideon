@@ -17,7 +17,7 @@
   } from '$lib/components/ui/tooltip';
   import { formatDateWithWeekday, formatTime, getDuration, MONTHS } from '$lib/date';
   import type { Session } from '$lib/server/db/schema';
-  import { MessageSquare, TriangleAlertIcon } from 'lucide-svelte';
+  import { MessageSquare, TriangleAlertIcon } from '@lucide/svelte';
 
   type Props = {
     sessions: Session[];

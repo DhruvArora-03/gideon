@@ -13,7 +13,7 @@
     LayoutDashboard,
     Settings,
     Users,
-  } from 'lucide-svelte';
+  } from '@lucide/svelte';
 
   type Props = {
     showAdmin: boolean;
