@@ -27,7 +27,6 @@
   import { superForm } from 'sveltekit-superforms';
   import { zodClient } from 'sveltekit-superforms/adapters';
   import type { PageData } from './$types';
-  import { cn } from '$lib/utils';
   import { goto } from '$app/navigation';
 
   type Props = {
@@ -74,29 +73,29 @@
   );
 </script>
 
-<PageWrapper class="space-y-4 p-4">
+<PageWrapper class="mx-auto max-w-screen-lg space-y-4 p-4">
   <div class="space-y-2">
-    <h1 class="text-2xl font-semibold">Manage Users</h1>
+    <h1 class="text-2xl font-semibold tracking-tight">Manage Users</h1>
     <p class="text-muted-foreground text-sm">
       View user info here; to make changes to a user, click on their corresponding row
     </p>
   </div>
 
-  {#await data.users}
-    Loading...
-  {:then users}
-    <div class="mb-2 ml-auto w-fit">
-      <Button onclick={() => (open = true)}>
-        <Plus class="mr-2" size={16} />Invite New User
-      </Button>
-    </div>
+  <div class="md:ml-auto md:w-fit">
+    <Button class="w-full" onclick={() => (open = true)}>
+      <Plus class="mr-2" size={16} />Invite New User
+    </Button>
+  </div>
 
+  {#await data.users}
+    <div>Loading...</div>
+  {:then users}
     <Table>
       <TableHeader class="border-1">
         <TableRow>
           <TableHead>Name</TableHead>
-          <TableHead>Email</TableHead>
-          <TableHead>Phone #</TableHead>
+          <TableHead class="hidden md:table-cell">Email</TableHead>
+          <TableHead class="hidden md:table-cell">Phone #</TableHead>
           <TableHead colspan={2}>Role</TableHead>
         </TableRow>
       </TableHeader>
@@ -108,8 +107,8 @@
             onclick={() => goto('/admin/users/' + u.id)}
           >
             <TableCell>{`${u.first_name} ${u.last_name}`}</TableCell>
-            <TableCell>{u.email}</TableCell>
-            <TableCell>{u.phone_number}</TableCell>
+            <TableCell class="hidden md:table-cell">{u.email}</TableCell>
+            <TableCell class="hidden md:table-cell">{u.phone_number}</TableCell>
             <TableCell>
               {u.role}
               {#if !u.active}
