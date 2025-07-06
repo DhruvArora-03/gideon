@@ -129,11 +129,17 @@
 
   <Sheet
     bind:open
-    closeOnEscape={!isDirty}
-    closeOnOutsideClick={!isDirty}
-    onOpenChange={(v) => !v && form.reset()}
+    onOpenChange={(open) => {
+      if (!open) {
+        form.reset();
+      }
+    }}
   >
-    <SheetContent side={desktop.current ? 'right' : 'bottom'}>
+    <SheetContent
+      escapeKeydownBehavior={isDirty ? 'ignore' : 'close'}
+      interactOutsideBehavior={isDirty ? 'ignore' : 'close'}
+      side={desktop.current ? 'right' : 'bottom'}
+    >
       <SheetHeader>
         <SheetTitle>Invite User</SheetTitle>
         <SheetDescription>
