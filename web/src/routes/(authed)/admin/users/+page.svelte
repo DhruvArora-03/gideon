@@ -94,8 +94,8 @@
       <TableHeader class="border-1">
         <TableRow>
           <TableHead>Name</TableHead>
+          <TableHead class="hidden md:table-cell">Phone Number</TableHead>
           <TableHead class="hidden md:table-cell">Email</TableHead>
-          <TableHead class="hidden md:table-cell">Phone #</TableHead>
           <TableHead colspan={2}>Role</TableHead>
         </TableRow>
       </TableHeader>
@@ -107,8 +107,8 @@
             onclick={() => goto('/admin/users/' + u.id)}
           >
             <TableCell>{`${u.first_name} ${u.last_name}`}</TableCell>
-            <TableCell class="hidden md:table-cell">{u.email}</TableCell>
             <TableCell class="hidden md:table-cell">{u.phone_number}</TableCell>
+            <TableCell class="hidden md:table-cell">{u.email}</TableCell>
             <TableCell>
               {u.role}
               {#if !u.active}

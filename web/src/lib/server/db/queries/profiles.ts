@@ -1,6 +1,6 @@
 import { db } from '$lib/server/db';
 import { profiles, type Profile } from '$lib/server/db/schema';
-import { eq } from 'drizzle-orm';
+import { desc, eq } from 'drizzle-orm';
 
 export async function getProfile(userId: string): Promise<Profile> {
   const profile = await db.query.profiles.findFirst({
@@ -23,10 +23,6 @@ export async function updateProfile(
 
 export async function getUsers(): Promise<Profile[]> {
   return await db.query.profiles.findMany({
-    orderBy: (profiles, { desc }) => [
-      desc(profiles.active),
-      profiles.first_name,
-      profiles.last_name,
-    ],
+    orderBy: [desc(profiles.active), profiles.role, profiles.first_name, profiles.last_name],
   });
 }
