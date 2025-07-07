@@ -96,7 +96,7 @@
       </div>
 
       <Table>
-        <TableHeader class="border-1">
+        <TableHeader>
           <TableRow>
             <TableHead>Start</TableHead>
             <TableHead>End</TableHead>
@@ -104,12 +104,12 @@
           </TableRow>
         </TableHeader>
 
-        <TableBody class="border-1">
+        <TableBody>
           {#each slots as s, i (s.id)}
             {@const prevDotw = i === 0 ? -1 : slots[i - 1].dotw}
             {#each { length: s.dotw - prevDotw }, j}
               <TableRow class="bg-secondary text-secondary-foreground">
-                <TableCell colspan={4} class="font-semibold">
+                <TableCell colspan={4} class="py-2 font-bold">
                   {formatDotw(prevDotw + j + 1)}
                 </TableCell>
               </TableRow>
