@@ -1,6 +1,5 @@
 <script lang="ts">
   import PageWrapper from '$lib/components/PageWrapper.svelte';
-  import { Card } from '$lib/components/ui/card';
   import type { PageData } from './$types';
 
   type Props = {
@@ -13,7 +12,5 @@
   <h1 class="text-2xl font-semibold">
     Welcome Back, <span class="capitalize">{data.profile.first_name}</span>
   </h1>
-  <Card>
-    <pre>{JSON.stringify(data.profile, null, 2)}</pre>
-  </Card>
+  <pre>{JSON.stringify(data.profile, null, 2)}</pre>
 </PageWrapper>
