@@ -21,7 +21,7 @@
   const { data }: Props = $props();
 </script>
 
-<PageWrapper class="mx-auto max-w-screen-lg space-y-4 p-4">
+<PageWrapper class="mx-auto max-w-screen-lg space-y-4 py-4">
   <div class="flex flex-col justify-between gap-2 md:flex-row">
     <div>
       <h1 class="text-2xl font-semibold tracking-tight">Manage Users</h1>
@@ -36,7 +36,7 @@
     <div>Loading...</div>
   {:then users}
     <Table>
-      <TableHeader class="border-1">
+      <TableHeader>
         <TableRow>
           <TableHead>Name</TableHead>
           <TableHead>Role</TableHead>
@@ -46,7 +46,7 @@
         </TableRow>
       </TableHeader>
 
-      <TableBody class="border-1">
+      <TableBody>
         {#each users as userInfo (userInfo.id)}
           <TableRow onclick={() => goto('/admin/users/' + userInfo.id)}>
             <TableCell>
