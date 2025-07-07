@@ -1,5 +1,6 @@
 <script lang="ts">
   import { invalidateAll } from '$app/navigation';
+  import RoleBadge from '$lib/components/RoleBadge.svelte';
   import { Button, buttonVariants } from '$lib/components/ui/button';
   import {
     Dialog,
@@ -150,14 +151,14 @@
           <Label>
             <div class="mb-2">Role</div>
             <Select type="single" {...attrs} bind:value={$formData.role} disabled={$submitting}>
-              <SelectTrigger class="max-w-40">
-                {$formData.role}
+              <SelectTrigger class="w-36">
+                <RoleBadge role={$formData.role} />
               </SelectTrigger>
-              <SelectContent class="max-w-40">
+              <SelectContent class="w-36">
                 <SelectGroup>
                   <SelectLabel>Role</SelectLabel>
                   {#each USER_ROLES as role (role)}
-                    <SelectItem value={role}>{role}</SelectItem>
+                    <SelectItem value={role}><RoleBadge {role} /></SelectItem>
                   {/each}
                 </SelectGroup>
               </SelectContent>

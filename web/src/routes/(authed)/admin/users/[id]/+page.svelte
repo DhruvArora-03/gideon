@@ -103,9 +103,9 @@
         >
           {userInfo.first_name}
           {userInfo.last_name}
-          <RoleBadge {userInfo} />
+          <RoleBadge role={userInfo.role} active={userInfo.active} />
         </h1>
-        <p class="text-muted-foreground text-sm">
+        <p class="text-sm text-muted-foreground">
           {userInfo.email}
           <br />
           {userInfo.phone_number}

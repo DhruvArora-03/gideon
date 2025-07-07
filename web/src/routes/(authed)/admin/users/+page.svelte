@@ -25,7 +25,7 @@
   <div class="flex flex-col justify-between gap-2 md:flex-row">
     <div>
       <h1 class="text-2xl font-semibold tracking-tight">Manage Users</h1>
-      <p class="text-muted-foreground text-sm">
+      <p class="text-sm text-muted-foreground">
         View user info here; to make changes to a user click on their corresponding row
       </p>
     </div>
@@ -53,7 +53,7 @@
               {`${userInfo.first_name} ${userInfo.last_name}`}
             </TableCell>
             <TableCell>
-              <RoleBadge {userInfo} />
+              <RoleBadge role={userInfo.role} active={userInfo.active} />
             </TableCell>
             <TableCell class="hidden md:table-cell">{userInfo.email}</TableCell>
             <TableCell class="hidden md:table-cell">{userInfo.phone_number}</TableCell>

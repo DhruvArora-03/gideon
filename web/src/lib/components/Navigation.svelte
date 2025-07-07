@@ -8,7 +8,7 @@
     DoorClosed,
     DoorOpen,
     History,
-    Home,
+    House,
     type Icon,
     LayoutDashboard,
     Settings,
@@ -30,7 +30,7 @@
     {
       href: '/home',
       label: 'Home',
-      icon: Home,
+      icon: House,
     },
     {
       href: '/signup',

@@ -1,22 +1,23 @@
 <script lang="ts">
   import { Badge } from '$lib/components/ui/badge';
-  import type { Profile } from '$lib/server/db/schema';
+    import type { UserRole } from '$lib/models';
   import { cn } from '$lib/utils';
 
   type Props = {
     class?: string;
-    userInfo: Profile;
+    role: UserRole
+    active?: boolean;
   };
-  const { class: className, userInfo }: Props = $props();
+  const { class: className, role,active }: Props = $props();
 </script>
 
 <Badge
-  variant={!userInfo.active ? 'destructive' : userInfo.role}
+  variant={active === false ? 'destructive' :role}
   class={cn('capitalize', className)}
 >
-  {#if userInfo.active}
-    {userInfo.role}
-  {:else}
+  {#if active === false}
     deactivated
+  {:else}
+    {role}
   {/if}
 </Badge>
