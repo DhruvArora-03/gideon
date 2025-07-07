@@ -9,7 +9,7 @@
     DoorOpen,
     History,
     Home,
-    Icon,
+    type Icon,
     LayoutDashboard,
     Settings,
     Users,
@@ -93,7 +93,7 @@
   </li>
 {/snippet}
 
-<nav class="bg-background fixed bottom-0 left-0 right-0 z-50 border-t p-2 md:hidden">
+<nav class="fixed bottom-0 left-0 right-0 z-50 border-t bg-background p-2 md:hidden">
   <ul class="flex items-center justify-around">
     {#if page.url.pathname.startsWith('/admin')}
       {#each adminNavItems as item}
@@ -130,7 +130,7 @@
   </li>
 {/snippet}
 
-<nav class="bg-background hidden border-b md:block">
+<nav class="hidden border-b bg-background md:block">
   <div class="mx-auto flex items-center justify-between gap-6 px-6 pb-3">
     <span class="text-xl font-semibold">
       {#if page.url.pathname.startsWith('/admin')}
