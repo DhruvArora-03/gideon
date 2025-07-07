@@ -32,6 +32,6 @@ export const actions: Actions = {
       });
     }
 
-    return message(form, `Invite sent to ${form.data.email}`);
+    return { success: true };
   },
 };

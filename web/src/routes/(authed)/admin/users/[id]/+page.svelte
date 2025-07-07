@@ -21,7 +21,7 @@
   import UpcomingAssignmentsTable from '$lib/components/UpcomingAssignmentsTable.svelte';
   import { MONTHS, YEARS } from '$lib/date';
   import type { PageData } from './$types';
-  import EditUserDialog from '$lib/components/EditUserDialog.svelte';
+  import EditUser from '$lib/components/EditUser.svelte';
   import { Button } from '$lib/components/ui/button';
   import RoleBadge from '$lib/components/RoleBadge.svelte';
 
@@ -111,7 +111,7 @@
           {userInfo.phone_number}
         </p>
       </div>
-      <EditUserDialog class="w-full md:ml-auto md:w-fit" {userInfo} form={data.form} />
+      <EditUser class="w-full md:ml-auto md:w-fit" {userInfo} form={data.form} />
     </div>
   {/await}
 

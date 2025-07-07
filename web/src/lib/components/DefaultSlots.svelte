@@ -72,7 +72,7 @@
   const { form: formData, message, enhance, submitting, tainted } = form;
 
   tainted.subscribe(
-    (t) => (isDirty = (t?.capacity || t?.end_time || t?.start_time || t?.dotw) ?? false),
+    (t) => (isDirty = t?.capacity || t?.end_time || t?.start_time || t?.dotw || false),
   );
 </script>
 

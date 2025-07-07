@@ -50,13 +50,10 @@
 
   const { form: formData, message, enhance, submitting, tainted } = form;
 
-  let isDirty = $derived(
-    $tainted?.first_name ||
-      $tainted?.last_name ||
-      $tainted?.email ||
-      $tainted?.phone_number ||
-      $tainted?.role ||
-      false,
+  let isDirty = $state(false);
+  tainted.subscribe(
+    (t) =>
+      (isDirty = t?.first_name || t?.last_name || t?.email || t?.phone_number || t?.role || false),
   );
 </script>
 
@@ -178,8 +175,8 @@
       {/if}
 
       <DialogFooter>
-        <DialogClose>
-          <Button class="ml-auto" type="button" variant="secondary">Cancel</Button>
+        <DialogClose class={cn(buttonVariants({ variant: 'secondary' }), 'ml-auto')}>
+          Cancel
         </DialogClose>
         <Button class="ml-2" type="submit" disabled={$submitting || !isDirty}>Save Changes</Button>
       </DialogFooter>

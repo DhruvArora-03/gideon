@@ -9,7 +9,7 @@ export const inviteFormSchema = z
     phone_number: z
       .string()
       .regex(/^\d{3}-\d{3}-\d{4}$/, 'Phone number must be in the format 123-456-7890'),
-    role: z.enum(USER_ROLES),
+    role: z.enum(USER_ROLES).default('employee'),
   })
   .required();
 export type InviteFormSchema = z.infer<typeof inviteFormSchema>;
