@@ -47,8 +47,8 @@
       }
       {disabled}
     >
-      <SelectTrigger class="w-[150px]">{MONTHS[data.month]}</SelectTrigger>
-      <SelectContent class="w-[150px]">
+      <SelectTrigger class="w-40">{MONTHS[data.month]}</SelectTrigger>
+      <SelectContent class="w-40">
         <SelectGroup>
           <SelectLabel>Months</SelectLabel>
           {#each MONTHS as month, i (month)}
@@ -72,8 +72,8 @@
       }
       {disabled}
     >
-      <SelectTrigger class="w-[150px]">{data.year}</SelectTrigger>
-      <SelectContent class="w-[150px]">
+      <SelectTrigger class="w-40">{data.year}</SelectTrigger>
+      <SelectContent class="w-40">
         <SelectGroup>
           <SelectLabel>Years</SelectLabel>
           {#each YEARS as year (year)}

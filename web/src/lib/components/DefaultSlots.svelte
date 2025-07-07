@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Button } from '$lib/components/ui/button';
+  import { Button, buttonVariants } from '$lib/components/ui/button';
   import {
     Card,
     CardContent,
@@ -53,12 +53,6 @@
   };
   const props: Props = $props();
 
-  const desktop = new MediaQuery('(min-width: 768px)');
-
-  let current = $state<number | null>(null);
-  let open = $state(false);
-  let isDirty = $state(false);
-
   const form = superForm(props.form, {
     validators: zodClient(updateDefaultSlotSchema),
     onResult: (e) => {
@@ -71,12 +65,20 @@
 
   const { form: formData, message, enhance, submitting, tainted } = form;
 
+  const desktop = new MediaQuery('(min-width: 768px)');
+
+  let current = $state<number | null>(null);
+  const isEdit = $derived(current !== null);
+
+  let open = $state(false);
+
+  let isDirty = $state(false);
   tainted.subscribe(
     (t) => (isDirty = t?.capacity || t?.end_time || t?.start_time || t?.dotw || false),
   );
 </script>
 
-<Card class="border-none shadow-none [&>*]:px-0">
+<Card>
   <CardHeader>
     <CardTitle>Default Shifts</CardTitle>
     <CardDescription>
@@ -160,7 +162,6 @@
         }
       }}
     >
-      {@const isEdit = current !== null}
       <SheetContent
         escapeKeydownBehavior={isDirty ? 'ignore' : 'close'}
         interactOutsideBehavior={isDirty ? 'ignore' : 'close'}
@@ -175,24 +176,22 @@
         </SheetHeader>
 
         <form
-          class="mt-4 flex flex-col gap-2"
+          class="mx-4 flex flex-col gap-2"
           method="POST"
           action={isEdit ? '?/updateDefaultSlot' : '?/createDefaultSlot'}
           use:enhance
         >
-          {#if isEdit}
-            <input hidden name="defaultSlotId" value={current} />
-          {/if}
+          <input hidden name="defaultSlotId" value={current} />
 
           <Field {form} name="dotw">
             <Control let:attrs>
               <Label>
                 <div class="mb-2">Day</div>
                 <Select {...attrs} type="single" bind:value={$formData.dotw} disabled={$submitting}>
-                  <SelectTrigger class="max-w-40">
+                  <SelectTrigger class="w-40">
                     {DAYS[Number($formData.dotw)]}
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent class="w-40">
                     <SelectGroup>
                       <SelectLabel>Day</SelectLabel>
                       {#each DAYS as day, i (day)}
@@ -259,25 +258,27 @@
           </Field>
 
           {#if $message}
-            <p class="mt-4">
+            <p>
               {$message}
             </p>
           {/if}
 
-          <SheetFooter class="mt-4 justify-between gap-2">
+          <SheetFooter class="my-4 flex flex-row justify-between gap-2 p-0">
             {#if isEdit}
               <ConfirmationDialog
+                class="w-fit"
                 variant="destructive"
                 description="Deleting this default shift will not impact any shifts that have already been created, however, no more will be automatically generated."
               >
                 {#snippet label()}
                   <Trash2 size={16} class="mr-2" /> Delete
                 {/snippet}
-
-                <DialogClose><Button variant="secondary">Cancel</Button></DialogClose>
-                <Button type="submit" variant="destructive" formaction="?/deleteDefaultSlot">
-                  Confirm
-                </Button>
+                {#snippet children()}
+                  <DialogClose class={buttonVariants({ variant: 'secondary' })}>Cancel</DialogClose>
+                  <Button type="submit" variant="destructive" formaction="?/deleteDefaultSlot">
+                    Confirm
+                  </Button>
+                {/snippet}
               </ConfirmationDialog>
             {:else}
               <div>
@@ -286,8 +287,8 @@
             {/if}
 
             <div>
-              <SheetClose>
-                <Button type="reset" variant="secondary">Cancel</Button>
+              <SheetClose type="reset" class={buttonVariants({ variant: 'secondary' })}>
+                Cancel
               </SheetClose>
               <Button type="submit" disabled={$submitting || !isDirty}>Save Changes</Button>
             </div>

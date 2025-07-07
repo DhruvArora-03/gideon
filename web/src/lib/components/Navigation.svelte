@@ -51,6 +51,11 @@
 
   const adminNavItems: NavItem[] = [
     {
+      href: '/home',
+      label: 'Home',
+      icon: DoorOpen,
+    },
+    {
       href: '/admin/dashboard',
       label: 'Dashboard',
       icon: LayoutDashboard,
@@ -91,12 +96,6 @@
 <nav class="bg-background fixed bottom-0 left-0 right-0 z-50 border-t p-2 md:hidden">
   <ul class="flex items-center justify-around">
     {#if page.url.pathname.startsWith('/admin')}
-      {@render bottomNavItem({
-        href: '/home',
-        label: 'Employee Portal',
-        icon: DoorOpen,
-      })}
-
       {#each adminNavItems as item}
         {@render bottomNavItem(item)}
       {/each}
@@ -104,7 +103,7 @@
       {#if showAdmin}
         {@render bottomNavItem({
           href: '/admin/dashboard',
-          label: 'Admin Portal',
+          label: 'Admin',
           icon: DoorClosed,
         })}
       {/if}
@@ -142,12 +141,6 @@
     </span>
     <ul class="flex items-center gap-4">
       {#if page.url.pathname.startsWith('/admin')}
-        {@render topNavItem({
-          href: '/home',
-          label: 'Employee Portal',
-          icon: DoorOpen,
-        })}
-
         {#each adminNavItems as item}
           {@render topNavItem(item)}
         {/each}
