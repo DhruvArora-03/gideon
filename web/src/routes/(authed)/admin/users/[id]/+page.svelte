@@ -86,7 +86,7 @@
 {/snippet}
 
 <PageWrapper
-  class="mx-auto max-w-screen-lg space-y-4 p-4"
+  class="mx-auto max-w-screen-lg space-y-4 pt-2 pb-8 md:py-4"
   previousHref="/admin/users"
   previousPageTitle="All Users"
 >
@@ -96,7 +96,7 @@
       <Button disabled>Loading...</Button>
     </div>
   {:then userInfo}
-    <div class="flex flex-col justify-between gap-2 md:flex-row">
+    <div class="flex w-full flex-col justify-between gap-2 md:flex-row">
       <div>
         <h1
           class="flex flex-row items-center gap-2 text-2xl font-semibold tracking-tight md:self-center"
@@ -105,7 +105,7 @@
           {userInfo.last_name}
           <RoleBadge role={userInfo.role} active={userInfo.active} />
         </h1>
-        <p class="text-sm text-muted-foreground">
+        <p class="text-muted-foreground text-sm">
           {userInfo.email}
           <br />
           {userInfo.phone_number}
@@ -116,7 +116,7 @@
   {/await}
 
   <div class="flex flex-row flex-wrap items-start gap-4">
-    <Card class="max-w-md">
+    <Card>
       <CardHeader>
         <CardTitle>Upcoming Shifts</CardTitle>
         <CardDescription>
@@ -139,7 +139,7 @@
       </CardContent>
     </Card>
 
-    <Card class="max-w-md">
+    <Card class="w-full">
       <CardHeader>
         <CardTitle>Previous Shifts</CardTitle>
         <CardDescription>
