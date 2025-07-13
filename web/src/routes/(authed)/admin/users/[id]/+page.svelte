@@ -50,7 +50,7 @@
       <SelectTrigger class="w-40">{MONTHS[data.month]}</SelectTrigger>
       <SelectContent class="w-40">
         <SelectGroup>
-          <SelectLabel>Months</SelectLabel>
+          <SelectLabel>Month</SelectLabel>
           {#each MONTHS as month, i (month)}
             <SelectItem value={'' + i} label={month} />
           {/each}
@@ -75,7 +75,7 @@
       <SelectTrigger class="w-40">{data.year}</SelectTrigger>
       <SelectContent class="w-40">
         <SelectGroup>
-          <SelectLabel>Years</SelectLabel>
+          <SelectLabel>Year</SelectLabel>
           {#each YEARS as year (year)}
             <SelectItem value={'' + year} label={'' + year} />
           {/each}
