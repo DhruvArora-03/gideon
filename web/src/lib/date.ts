@@ -117,9 +117,11 @@ export const getDaysBetween = (date1: Date, date2: Date): number => {
 };
 
 export const getDuration = (start: Date, end: Date): string => {
-  const hours = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
+  const duration = (end.getTime() - start.getTime()) / (1000 * 60 * 60);
+  const hours = Math.floor(duration)
+  const minutes = (duration % 1) * 60;
 
-  return `${hours.toFixed(2)} ${hours === 1 ? 'hr' : 'hrs'}`;
+  return `${hours}:${minutes}`;
 };
 
 export const appendLocalTimezoneOffset = (time: string) => {
