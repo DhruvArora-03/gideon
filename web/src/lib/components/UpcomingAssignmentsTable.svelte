@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { AssignmentWithSlot } from '$lib/server/db/schema';
-  import { formatDate } from '$lib/date';
   import {
     Table,
     TableBody,
@@ -10,7 +9,7 @@
     TableHeader,
     TableRow,
   } from '$lib/components/ui/table';
-  import { formatDateWithWeekday, formatTime, getDuration, MONTHS } from '$lib/date';
+  import { formatDateWithWeekday, formatTime  } from '$lib/date';
 
   type Props = {
     assignments: AssignmentWithSlot[];
@@ -35,7 +34,7 @@
         <TableCell>{formatDateWithWeekday(a.slot.start_time)}</TableCell>
         <TableCell>{formatTime(a.slot.start_time)}</TableCell>
         <TableCell>{formatTime(a.slot.end_time)}</TableCell>
-        <TableCell>{a.assignment_status}</TableCell>
+        <TableCell class='capitalize'>{a.assignment_status}</TableCell>
       </TableRow>
     {/each}
   </TableBody>

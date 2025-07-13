@@ -4,13 +4,6 @@
   import PageWrapper from '$lib/components/PageWrapper.svelte';
   import SessionTable from '$lib/components/SessionTable.svelte';
   import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-  } from '$lib/components/ui/card';
-  import {
     Select,
     SelectContent,
     SelectGroup,

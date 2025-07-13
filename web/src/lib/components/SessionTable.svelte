@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { buttonVariants } from '$lib/components/ui/button';
   import {
     Table,
     TableBody,
@@ -15,7 +14,7 @@
     TooltipProvider,
     TooltipTrigger,
   } from '$lib/components/ui/tooltip';
-  import { formatDateWithWeekday, formatTime, getDuration, MONTHS } from '$lib/date';
+  import { formatDateWithWeekday, formatTime, getDuration } from '$lib/date';
   import type { Session } from '$lib/server/db/schema';
   import { MessageSquare, TriangleAlertIcon } from '@lucide/svelte';
 
