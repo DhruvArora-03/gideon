@@ -2,6 +2,7 @@ import { USER_ROLES } from '../../models';
 import { relations } from 'drizzle-orm';
 import {
   boolean,
+  date,
   integer,
   pgEnum,
   pgTableCreator,
@@ -77,8 +78,9 @@ export const slots = createTable('slots', {
   id: serial().primaryKey(),
   created_at: getCreatedAtColumn(),
   updated_at: getUpdatedAtColumn(),
-  start_time: timestamp({ mode: 'date' }).notNull(),
-  end_time: timestamp({ mode: 'date' }).notNull(),
+  date: date().notNull(),
+  start_time: time().notNull(),
+  end_time: time().notNull(),
   capacity: integer().notNull(),
 });
 
