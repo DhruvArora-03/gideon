@@ -91,8 +91,8 @@
     {#await props.defaultSlots}
       Loading...
     {:then slots}
-      <div class="mb-2 ml-auto w-fit">
-        <Button onclick={() => (open = true)}>
+      <div class="md:grid">
+        <Button class="mb-2 w-full md:ml-auto md:w-fit" onclick={() => (open = true)}>
           <Plus class="mr-2" size={16} /> New Default Shift
         </Button>
       </div>
